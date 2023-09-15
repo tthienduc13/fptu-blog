@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 import BlogTag from "@/components/BlogTag";
 import CategoryTag from "@/components/CategoryTag";
 import BrowseMedia from "@/components/BrowseMedia";
-import BlogInputContent from "@/components/BlogInputContent";
 function EditBlog() {
   const [importedImage, setImportedImage] = useState<File | null>(null);
   const [imageURL, setImageURL] = useState<string>("");
@@ -56,14 +55,6 @@ function EditBlog() {
         </div>
         <div>
           <BlogTag></BlogTag>
-        </div>
-        <div>
-          <BlogInputContent
-            formTitle="Your content"
-            htmlString={htmlString}
-            setHtmlString={setHtmlStringg}
-            pageName="create_notification"
-          ></BlogInputContent>
         </div>
       </main>
     </>

@@ -12,25 +12,23 @@ function FilePreview({ fileStorage }: IProps) {
 
   if (fileStorage.type.includes("video/")) {
     return (
-      <div>
-        {" "}
-        <video
-          className="object-cover w-full h-48"
-          src={URL.createObjectURL(fileStorage)}
-          controls
-        />
-      </div>
+      <video
+        className="object-contain w-full h-48"
+        src={URL.createObjectURL(fileStorage)}
+        controls
+      />
     );
   } else {
     return (
-      <div className="h-48px">
-        <Image
-          className="object-cover w-full h-48"
-          src={URL.createObjectURL(fileStorage)}
-          alt="Preview"
-          layout="fill"
-        />
-      </div>
+      <Image
+        className="object-contain "
+        width={6000}
+        height={4000}
+        src={URL.createObjectURL(fileStorage)}
+        alt="Preview"
+
+        
+      />
     );
   }
 }

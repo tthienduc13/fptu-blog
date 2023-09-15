@@ -1,14 +1,11 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "target": "es6",
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
+    "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
@@ -23,52 +20,33 @@
       }
     ],
     "paths": {
-      "@/*": [
-        "./*"
-      ],
-      "@assets/*": [
-        "./assets/*"
-      ],
-      "@icons/*": [
-        "./assets/icons/*"
-      ],
-      "@image/*": [
-        "./assets/images/*"
-      ],
-      "@component/*": [
-        "./components/*"
-      ],
-      "@lexial/*": [
-        "./lexical_Lib/lexical/*"
-      ],
-      "@theme/*": [
-        "./lexical_Lib/theme/*"
-      ],
-      "@nodes/*": [
-        "./lexical_Lib/nodes/*"
-      ],
-      "@imageInput/*": [
-        "./lexical_Lib/images/*"
-      ],
-      "@plugins/*": [
-        "./lexical_Lib/plugins/*"
-      ],
-      "@ui/*": [
-        "./lexical_Lib/ui/*"
-      ],
-      "@lexicalLib/*": [
-        "./lexical_Lib/*"
-      ]
-    },
-    "forceConsistentCasingInFileNames": true
+      "@/*": ["./*"],
+      "@assets/*": ["./assets/*"],
+      "@icons/*": ["./assets/icons/*"],
+      "@image/*": ["./assets/images/*"],
+      "@component/*": ["./components/*"],
+      "@lexial/*": ["./lexical_Lib/lexical/*"],
+      "@theme/*": ["./lexical_Lib/theme/*"],
+      "@nodes/*": ["./lexical_Lib/nodes/*"],
+      "@imageInput/*": ["./lexical_Lib/images/*"],
+      "@plugins/*": ["./lexical_Lib/plugins/*"],
+      "@ui/*": ["./lexical_Lib/ui/*"],
+      "@lexicalLib/*": ["./lexical_Lib/*"]
+    }
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "components/plugins/AutoLinkPlugin.js",
+    "components/plugins/ListMaxIndentLevelPlugin.js",
+    "components/plugins/ToolbarPlugin.js",
+    "components/plugins/CodeHighlightPlugin.js",
+    "components/EditorLarge/index.tsx",
+    "components/plugins/TreeViewPlugin.js",
+    "components/SettingElement/Skills.tsx",
+    "components/SettingElement/TagField/index.tsx"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }
