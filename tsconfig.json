@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -19,9 +23,52 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"]
-    }
+      "@/*": [
+        "./*"
+      ],
+      "@assets/*": [
+        "./assets/*"
+      ],
+      "@icons/*": [
+        "./assets/icons/*"
+      ],
+      "@image/*": [
+        "./assets/images/*"
+      ],
+      "@component/*": [
+        "./components/*"
+      ],
+      "@lexial/*": [
+        "./lexical_Lib/lexical/*"
+      ],
+      "@theme/*": [
+        "./lexical_Lib/theme/*"
+      ],
+      "@nodes/*": [
+        "./lexical_Lib/nodes/*"
+      ],
+      "@imageInput/*": [
+        "./lexical_Lib/images/*"
+      ],
+      "@plugins/*": [
+        "./lexical_Lib/plugins/*"
+      ],
+      "@ui/*": [
+        "./lexical_Lib/ui/*"
+      ],
+      "@lexicalLib/*": [
+        "./lexical_Lib/*"
+      ]
+    },
+    "forceConsistentCasingInFileNames": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
