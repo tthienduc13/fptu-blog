@@ -23,8 +23,7 @@ function FilePreview({ fileStorage }: IProps) {
     );
   } else {
     return (
-      <div>
-        {" "}
+      <div className="h-48px">
         <Image
           className="object-cover w-full h-48"
           src={URL.createObjectURL(fileStorage)}

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Tags from "@yaireo/tagify/dist/react.tagify";
 import { TagifySettings } from "@yaireo/tagify";
-import "@component/ElementsSetting/TagField/styling.scss";
+import "@component/ElementsSetting/TagField/Styling.scss";
 
 interface TagFieldProps {
   suggestions: string[];
@@ -9,7 +9,6 @@ interface TagFieldProps {
   state: string[];
   placeholder: string;
 }
-
 
 const baseTagifySettings = {
   blacklist: [],
@@ -23,7 +22,12 @@ const baseTagifySettings = {
   callbacks: {} as any,
 };
 
-function BlogTagField({ suggestions = [], setState, state, placeholder }: TagFieldProps) {
+function BlogTagField({
+  suggestions = [],
+  setState,
+  state,
+  placeholder,
+}: TagFieldProps) {
   const [data, setData] = useState<string[]>(state);
 
   const handleChange = (e: CustomEvent) => {
