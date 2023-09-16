@@ -1,9 +1,35 @@
 import Image from "next/image";
 import Link from "next/link";
-import MoreIcon from "@icons/home/moreIcon.png";
-import Button from "@/components/Button";
 import SampleImage from "@image/sampleImage.png";
+import MoreIcon from "@icons/home/moreIcon.png";
+import BlogCard from "@/components/BlogCard";
 export default function Home() {
+  const sampleDate = [
+    {
+      image: SampleImage,
+      title: "Noteworthy technology acquisitions 2021",
+      author: "Nguyen Le Thien Duc",
+      category: "Sofware Engineering",
+      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
+      time: "a min ago",
+    },
+    {
+      image: SampleImage,
+      title: "Noteworthy technology acquisitions 2021",
+      author: "Nguyen Le Thien Duc",
+      category: "Language",
+      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
+      time: "a min ago",
+    },
+    {
+      image: SampleImage,
+      title: "Noteworthy technology acquisitions 2021",
+      author: "Nguyen Le Thien Duc",
+      category: "Business",
+      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
+      time: "a min ago",
+    },
+  ];
   return (
     <main className=" absolute w-[calc(100%-100px)] flex justify-center right-0 top-[64px] bottom-0 h-fit">
       <div className="w-full h-full p-[40px]">
@@ -22,43 +48,17 @@ export default function Home() {
           </Link>
         </div>
         <div className="w-full flex flex-wrap justify-between">
-          <div className="max-w-[calc((100%-60px)/3)] rounded-lg overflow-hidden w-full drop-shadow-lg shadow-lg">
-            <Image
-              src={SampleImage}
-              alt="image"
-              className="w-full object-cover"
-            ></Image>
-            <div className="w-full flex gap-2 flex-col p-4">
-              <div className="w-full items-stretch text-2xl leading-[30px] font-bold ">
-                Noteworthy technology acquisitions 2021
-              </div>
-              <div className="w-full flex items-center justify-between">
-                <p className="text-[14px] leading-[18px] text-[#0066B2] font-medium">
-                  Author
-                </p>
-                <p className="text-[14px] leading-[18px] text-[#0066B2] font-medium">
-                  Category
-                </p>
-              </div>
-              <div className="self-stretch text-base font-normal text-gray-500">
-                Here are the biggest enterprise technology acquisitions of 2021
-                so far, in reverse chronological order.
-              </div>
-              <div className="w-full flex justify-between items-center">
-                <div className="text-gray-500 text-[12px] font-medium">
-                  a min ago
-                </div>
-                <Button
-                  textContent="Read more"
-                  icon="arrowRight"
-                  iconPosition="right"
-                  backgroundColor="bg-[#0066B2]"
-                  href="/"
-                  tailwind="hover:opacity-80"
-                ></Button>
-              </div>
-            </div>
-          </div>
+          {sampleDate.map((data, index) => (
+            <BlogCard
+              key={index}
+              title={data.title}
+              author={data.author}
+              image={data.image}
+              category={data.category}
+              desc={data.desc}
+              time={data.time}
+            ></BlogCard>
+          ))}
         </div>
       </div>
     </main>
