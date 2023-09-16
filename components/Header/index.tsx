@@ -7,6 +7,7 @@ import ProfileImg from "@icons/header/profileImage.svg";
 import NotiIcon from "@icons/header/notiIcon.svg";
 import BurgerMenu from "@icons/header/burger.svg";
 import DropDown from "@/components/Dropdown/index";
+import Link from "next/link";
 function Header() {
   const [isOpenNav, setIsOpenNav] = useState<boolean>(false);
   const handleNav = () => {
@@ -23,10 +24,9 @@ function Header() {
     };
   }, []);
 
-
   return (
     <div className=" top-0 left-0 right-0 w-full fixed z-[1] bg-[#ffffff] backdrop-blur-sm border-b-2 border-b-[#E8EBED]">
-      <div className="max-w-[1440px] w-full mx-auto h-[56px] lg:h-[64px] px-[20px] md:px-[40px]  flex justify-between items-center ">
+      <div className=" w-full mx-auto h-[56px] lg:h-[64px] px-[20px] md:px-[40px]  flex justify-between items-center ">
         <Image
           src={BurgerMenu}
           alt="Burger Menu"
@@ -34,14 +34,16 @@ function Header() {
           height={20}
           className="cursor-pointer lg:hidden "
         ></Image>
-        <Image
-          priority={true}
-          src={Logo}
-          width={100}
-          height={100}
-          className="h-[32px] w-auto hidden lg:block "
-          alt="Logo of author"
-        ></Image>
+        <Link href="/">
+          <Image
+            priority={true}
+            src={Logo}
+            width={100}
+            height={100}
+            className="h-[32px] w-auto hidden lg:block "
+            alt="Logo of author"
+          ></Image>
+        </Link>
         <div className="flex items-center h-[46px] gap-[16px] cursor-pointer">
           <div
             onClick={handleNav}

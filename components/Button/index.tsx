@@ -2,15 +2,15 @@
 import React, { MouseEventHandler } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import editIcon from "@icon/components/Button/pencil-alt.svg";
-import delectIcon from "@icon/components/Button/delect.svg";
-import addUserIcon from "@icon/components/Button/user-add.svg";
-import arrowLeftIcon from "@icon/components/Button/arrow-narrow-left.svg";
-import arrowRightIcon from "@icon/components/Button/arrow-right.svg";
-import uploadIcon from "@icon/components/Button/cloud-upload.svg";
-import importIcon from "@icon/components/Button/save.svg";
-import searchIcon from "@icon/components/Button/search-outline.svg";
-import paperAirline from "@icon/components/Button/paper-airplane.svg";
+import editIcon from "@icons/components/Button/pencil-alt.svg";
+import delectIcon from "@icons/components/Button/delect.svg";
+import addUserIcon from "@icons/components/Button/user-add.svg";
+import arrowLeftIcon from "@icons/components/Button/arrow-narrow-left.svg";
+import arrowRightIcon from "@icons/components/Button/arrow-right.svg";
+import uploadIcon from "@icons/components/Button/cloud-upload.svg";
+import importIcon from "@icons/components/Button/save.svg";
+import searchIcon from "@icons/components/Button/search-outline.svg";
+import paperAirline from "@icons/components/Button/paper-airplane.svg";
 
 interface buttonPros {
   textContent: string;
@@ -28,7 +28,6 @@ interface buttonPros {
   iconPosition: "left" | "right";
   backgroundColor: string;
   href: string;
-  method: MouseEventHandler<HTMLButtonElement>;
   tailwind: string;
 }
 
@@ -38,13 +37,11 @@ function Button({
   iconPosition,
   backgroundColor,
   href,
-  method,
   tailwind,
 }: buttonPros) {
   return (
     <button
-      className={`rounded-[8px] px-[12px] py-[8px] text-[12px] ${backgroundColor} ${tailwind}`}
-      onClick={method}
+      className={`rounded-[8px] w-fit flex items-center justify-between px-[12px] py-[8px] text-[12px] ${backgroundColor} ${tailwind}`}
     >
       <Link
         href={href}
@@ -83,7 +80,7 @@ function Button({
             }}
           />
         )}
-        <p>{textContent}</p>
+        <p className="text-white">{textContent}</p>
       </Link>
     </button>
   );
