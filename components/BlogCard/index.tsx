@@ -13,7 +13,7 @@ interface Iprops {
 }
 function BlogCard({ image, title, author, category, desc, time }: Iprops) {
   return (
-    <div className="max-w-[calc((100%-60px)/3)] rounded-lg overflow-hidden w-full drop-shadow-lg shadow-lg">
+    <div className="md:max-w-[calc((100%-60px)/3)] sm:w-full rounded-lg overflow-hidden w-full drop-shadow-lg shadow-lg">
       <Image src={image} alt="image" className="w-full object-cover"></Image>
       <div className="w-full flex gap-2 flex-col p-4">
         <div className="w-full items-stretch text-[20px] leading-[25px] font-bold ">

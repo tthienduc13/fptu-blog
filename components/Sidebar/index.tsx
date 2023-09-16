@@ -65,7 +65,7 @@ function Sidebar() {
   };
 
   return (
-    <aside className="fixed top-[64px] flex flex-col gap-4 px-[13px] py-[40px] items-center left-0 z-40  h-screen border-r-2 select-none border-[#E8EBED] ">
+    <aside className="fixed top-[64px] sm:hidden  lg:flex flex-col gap-4 px-[13px] py-[40px] items-center left-0 z-40  h-screen border-r-2 select-none border-[#E8EBED] ">
       <div
         onClick={setClickAdd}
         className="h-[44px] relative w-[44px] rounded-full flex items-center justify-center cursor-pointer bg-[#E0312E]"
