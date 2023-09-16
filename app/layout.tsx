@@ -6,6 +6,8 @@ import ToastNotificationComp from "@/components/ToastNotificationComp";
 import Header from "@/components/Header";
 import Sidebar from "@/components/Sidebar";
 const inter = Inter({ subsets: ["latin"] });
+import { Provider } from "react-redux";
+import { store } from "../redux/store";
 
 // export const metadata: Metadata = {
 //   title: "FPTHub",
@@ -31,9 +33,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <body className={inter.className} suppressHydrationWarning={true}>
-        {!isSpecified && <Header></Header>}
-        {!isSpecified && !isHideSidebar && <Sidebar></Sidebar>}
-        {children} <ToastNotificationComp />
+        <Provider store={store}>
+          {!isSpecified && <Header></Header>}
+          {!isSpecified && !isHideSidebar && <Sidebar></Sidebar>}
+          {children} <ToastNotificationComp />
+        </Provider>
       </body>
     </html>
   );

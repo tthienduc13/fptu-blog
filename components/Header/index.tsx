@@ -7,8 +7,14 @@ import ProfileImg from "@icons/header/profileImage.svg";
 import NotiIcon from "@icons/header/notiIcon.svg";
 import BurgerMenu from "@icons/header/burger.svg";
 import DropDown from "@/components/Dropdown/index";
+import { useDispatch } from "react-redux";
 import Link from "next/link";
+import { toggleIsOpenSideBar } from "@/redux/slices/app";
 function Header() {
+  const dispatch = useDispatch();
+  const hanldeOpenMenu = () => {
+    dispatch(toggleIsOpenSideBar());
+  };
   const [isOpenNav, setIsOpenNav] = useState<boolean>(false);
   const handleNav = () => {
     setIsOpenNav(!isOpenNav);
@@ -33,6 +39,7 @@ function Header() {
           width={28}
           height={20}
           className="cursor-pointer lg:hidden "
+          onClick={hanldeOpenMenu}
         ></Image>
         <Link href="/">
           <Image

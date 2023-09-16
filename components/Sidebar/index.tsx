@@ -8,8 +8,11 @@ import CategoryIcon from "@icons/sidebar/categoryIcon.svg";
 import SavedIcon from "@icons/sidebar/savedIcon.svg";
 import PenIcon from "@icons/sidebar/penIcon.svg";
 import BlogIcon from "@icons/sidebar/blogIcon.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { toggleIsOpenSideBar } from "@/redux/slices/app";
 function Sidebar() {
   const sideActivity = [
     {
@@ -29,7 +32,7 @@ function Sidebar() {
       title: "Featured",
     },
     {
-      path: "/",
+      path: "/blog/category-blog",
       icon: CategoryIcon,
       alt: "Category",
       width: 20,
@@ -53,73 +56,147 @@ function Sidebar() {
       title: "Saved",
     },
   ];
+  const dispatch = useDispatch();
+  const isOpenSidebar = useSelector(
+    (state: RootState) => state.app.isOpenSideBar
+  );
+  console.log(isOpenSidebar);
   const [isClickAdd, setIsClickAdd] = useState<boolean>(false);
   const [isChosen, setIsChosen] = useState<number>(0);
   const pathname = usePathname();
   const setClickAdd = () => {
     setIsClickAdd(!isClickAdd);
   };
-  console.log(pathname);
+  const handleChoose = (index: number) => {
+    setIsChosen(index);
+  };
   const handleChosen = (index: number) => {
     setIsChosen(index);
+    dispatch(toggleIsOpenSideBar());
   };
 
   return (
-    <aside className="fixed top-[64px] sm:hidden  lg:flex flex-col gap-4 px-[13px] py-[40px] items-center left-0 z-40  h-screen border-r-2 select-none border-[#E8EBED] ">
-      <div
-        onClick={setClickAdd}
-        className="h-[44px] relative w-[44px] rounded-full flex items-center justify-center cursor-pointer bg-[#E0312E]"
-      >
-        {isClickAdd && (
-          <div className="absolute px-4  max-w-[200px] flex flex-col items-start bg-white rounded-lg drop-shadow-xl  bottom-[-45px] right-[-120px] shadow-lg py-[8px] ">
-            <Link href={"/blog/edit-blog"} className="flex gap-[10px] w-full">
+    <>
+      <aside className="fixed top-[56px] md:top-[64px] bg-white border-t-2 hidden lg:flex flex-col gap-4 px-[13px] py-[20px] lg:py-[40px] items-center left-0 z-40  h-screen border-r-2 select-none border-[#E8EBED] ">
+        <div
+          onClick={setClickAdd}
+          className="h-[44px] relative w-[44px] rounded-full flex items-center justify-center cursor-pointer bg-[#E0312E]"
+        >
+          {isClickAdd && (
+            <div className="absolute px-4  max-w-[200px] flex flex-col items-start bg-white rounded-lg drop-shadow-xl  bottom-[-45px] right-[-120px] shadow-lg py-[8px] ">
+              <Link
+                href={"/blog/edit-blog"}
+                className="flex gap-[10px] w-full"
+                onClick={() => dispatch(toggleIsOpenSideBar())}
+              >
+                <Image
+                  src={PenIcon}
+                  alt="Write Icon"
+                  width={20}
+                  height={20}
+                ></Image>
+                <div className="text-[#707070] text-lg leading-[22px] hover:text-[#14375F]">
+                  Write Blog
+                </div>
+              </Link>
+            </div>
+          )}
+          <Image
+            src={AddIcon}
+            alt="Add Blog"
+            width={18}
+            height={18}
+            className={
+              isClickAdd
+                ? "cursor-pointer hover:scale-125 duration-300 rotate-45"
+                : "cursor-pointer hover:scale-125 duration-300"
+            }
+          ></Image>
+        </div>
+        {sideActivity.map((sideActivity, index) => (
+          <Link href={sideActivity.path} key={index}>
+            <div
+              onClick={() => handleChoose(index)}
+              className={`w-[72px] h-[72px] flex flex-col gap-[6px] rounded-[12px] justify-center items-center ${
+                isChosen === index && pathname === sideActivity.path
+                  ? "bg-gray-200"
+                  : "hover:bg-gray-100"
+              }`}
+            >
               <Image
-                src={PenIcon}
-                alt="Write Icone"
-                width={20}
-                height={20}
+                src={sideActivity.icon}
+                alt={sideActivity.alt}
+                height={sideActivity.height}
+                width={sideActivity.width}
               ></Image>
-              <div className="text-[#707070] text-lg leading-[22px] hover:text-[#14375F]">
-                Write Blog
+              <div className="text-xs font-medium leading-[15px] text-[#14375F]">
+                {sideActivity.title}
+              </div>
+            </div>
+          </Link>
+        ))}
+      </aside>
+      {isOpenSidebar && (
+        <aside className="fixed top-[56px] md:top-[64px]  bg-white border-t-2 flex flex-col py-[20px] lg:py-[40px] gap-4 px-[13px]  items-center left-0 z-40  h-screen border-r-2 select-none border-[#E8EBED] ">
+          <div
+            onClick={setClickAdd}
+            className="h-[44px] relative w-[44px] rounded-full flex items-center justify-center cursor-pointer bg-[#E0312E]"
+          >
+            {isClickAdd && (
+              <div className="absolute px-4  max-w-[200px] flex flex-col items-start bg-white rounded-lg drop-shadow-xl  bottom-[-45px] right-[-120px] shadow-lg py-[8px] ">
+                <Link
+                  href={"/blog/edit-blog"}
+                  className="flex gap-[10px] w-full"
+                >
+                  <Image
+                    src={PenIcon}
+                    alt="Write Icon"
+                    width={20}
+                    height={20}
+                  ></Image>
+                  <div className="text-[#707070] text-lg leading-[22px] hover:text-[#14375F]">
+                    Write Blog
+                  </div>
+                </Link>
+              </div>
+            )}
+            <Image
+              src={AddIcon}
+              alt="Add Blog"
+              width={18}
+              height={18}
+              className={
+                isClickAdd
+                  ? "cursor-pointer hover:scale-125 duration-300 rotate-45"
+                  : "cursor-pointer hover:scale-125 duration-300"
+              }
+            ></Image>
+          </div>
+          {sideActivity.map((sideActivity, index) => (
+            <Link href={sideActivity.path} key={index}>
+              <div
+                onClick={() => handleChosen(index)}
+                className={`w-[72px] h-[72px] flex flex-col gap-[6px] rounded-[12px] justify-center items-center ${
+                  isChosen === index && pathname === sideActivity.path
+                    ? "bg-gray-200"
+                    : "hover:bg-gray-100"
+                }`}
+              >
+                <Image
+                  src={sideActivity.icon}
+                  alt={sideActivity.alt}
+                  height={sideActivity.height}
+                  width={sideActivity.width}
+                ></Image>
+                <div className="text-xs font-medium leading-[15px] text-[#14375F]">
+                  {sideActivity.title}
+                </div>
               </div>
             </Link>
-          </div>
-        )}
-        <Image
-          src={AddIcon}
-          alt="Add Blog"
-          width={18}
-          height={18}
-          className={
-            isClickAdd
-              ? "cursor-pointer hover:scale-125 duration-300 rotate-45"
-              : "cursor-pointer hover:scale-125 duration-300"
-          }
-        ></Image>
-      </div>
-      {sideActivity.map((sideActivity, index) => (
-        <Link href={sideActivity.path} key={index}>
-          <div
-            onClick={() => handleChosen(index)}
-            className={`w-[72px] h-[72px] flex flex-col gap-[6px] rounded-[12px] justify-center items-center ${
-              isChosen === index && pathname === sideActivity.path
-                ? "bg-gray-200"
-                : "hover:bg-gray-100"
-            }`}
-          >
-            <Image
-              src={sideActivity.icon}
-              alt={sideActivity.alt}
-              height={sideActivity.height}
-              width={sideActivity.width}
-            ></Image>
-            <div className="text-xs font-medium leading-[15px] text-[#14375F]">
-              {sideActivity.title}
-            </div>
-          </div>
-        </Link>
-      ))}
-    </aside>
+          ))}
+        </aside>
+      )}
+    </>
   );
 }
 

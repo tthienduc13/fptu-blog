@@ -14,17 +14,23 @@ function EditBlog() {
   const router = useRouter();
   return (
     <>
-      <main className=" absolute w-full flex flex-col gap-[20px] right-0 top-[64px] bottom-0 h-fit p-[40px]">
+      <main className=" absolute w-full flex flex-col gap-[20px] right-0 top-[56px] lg:top-[64px] bottom-0 h-fit p-[20px] lg:p-[40px]">
         <div className="w-full flex items-center justify-between">
-          <h1 className="text-[30px] leading-[45px]  font-bold select-none">
+          <h1 className="md:text-[30px] md:leading-[45px] text-2xl  font-bold select-none">
             Create Blog
           </h1>
           <div
             onClick={() => router.back()}
             className="flex items-center gap-[6px] cursor-pointer hover:gap-[10px] duration-300"
           >
-            <Image src={BackIcon} height={20} width={20} alt="Back"></Image>
-            <div className="text-[#707070] text-xl leading-[24px] font-medium ">
+            <Image
+              src={BackIcon}
+              className="md:h-[20px] md:w-[20px] w-[16px] h-[16px]"
+              height={20}
+              width={20}
+              alt="Back"
+            ></Image>
+            <div className="text-[#707070] text-base md:text-xl md:leading-[24px] font-medium ">
               Go Back
             </div>
           </div>
