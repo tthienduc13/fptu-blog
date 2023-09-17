@@ -2,8 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   isOpenSideBar: false,
-  isMouseVisit: false,
-  isDarkMode: false,
 };
 
 export const appSlice = createSlice({
@@ -13,17 +11,10 @@ export const appSlice = createSlice({
     toggleIsOpenSideBar: (state) => {
       state.isOpenSideBar = !state.isOpenSideBar;
     },
-    changeIsMouseVisit: (state, action) => {
-      state.isMouseVisit = action.payload;
-    },
-    toggleIsDarkMode: (state) => {
-      state.isDarkMode = !state.isDarkMode;
-    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { toggleIsOpenSideBar, changeIsMouseVisit, toggleIsDarkMode } =
-  appSlice.actions;
+export const { toggleIsOpenSideBar } = appSlice.actions;
 
 export default appSlice.reducer;
