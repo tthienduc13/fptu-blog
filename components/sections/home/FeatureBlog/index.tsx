@@ -5,8 +5,9 @@ import MoreIcon from "@icons/home/moreIcon.png";
 import BlogCard from "@/components/BlogCard";
 import SampleImage from "@image/sampleImage.png";
 function FeaturedBlog() {
-  const sampleDate = [
+  const sampleData = [
     {
+      id: 1,
       image: SampleImage,
       title: "Noteworthy technology acquisitions 2021",
       author: "Nguyen Le Thien Duc",
@@ -15,6 +16,7 @@ function FeaturedBlog() {
       time: "a min ago",
     },
     {
+      id: 2,
       image: SampleImage,
       title: "Noteworthy technology acquisitions 2021",
       author: "Nguyen Le Thien Duc",
@@ -23,6 +25,7 @@ function FeaturedBlog() {
       time: "a min ago",
     },
     {
+      id: 3,
       image: SampleImage,
       title: "Noteworthy technology acquisitions 2021",
       author: "Nguyen Le Thien Duc",
@@ -38,7 +41,7 @@ function FeaturedBlog() {
           Featured Blogs
         </h1>
         <Link
-          href={"/blog/featured-blog"}
+          href={"/featured-blog/list/1"}
           className="flex items-center gap-[6px] cursor-pointer hover:gap-[10px] duration-300"
         >
           <Image
@@ -54,16 +57,8 @@ function FeaturedBlog() {
         </Link>
       </div>
       <div className="w-full flex md:flex-row sm:flex-col md:gap-0 sm:gap-[16px] flex-wrap justify-between">
-        {sampleDate.map((data, index) => (
-          <BlogCard
-            key={index}
-            title={data.title}
-            author={data.author}
-            image={data.image}
-            category={data.category}
-            desc={data.desc}
-            time={data.time}
-          ></BlogCard>
+        {sampleData.map((data, index) => (
+          <BlogCard key={index} value={data}></BlogCard>
         ))}
       </div>
     </div>

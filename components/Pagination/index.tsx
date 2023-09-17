@@ -1,7 +1,7 @@
 import React, { SetStateAction, useEffect } from "react";
 import Link from "next/link";
 
-interface Ipros {
+interface IProps {
   paramID: string;
   countNumberOfPage: number;
   pages: { param: string; startIndex: number; endIndex: number }[];
@@ -19,7 +19,7 @@ function Pagination({
   increaseIndex,
   sliceSetData,
   data,
-}: Ipros) {
+}: IProps) {
   const renderPagination = () => {
     const buttons = [];
     let startIndex = 0;

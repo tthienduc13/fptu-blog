@@ -5,7 +5,7 @@ import MoreIcon from "@icons/home/moreIcon.png";
 import BlogCard from "@/components/BlogCard";
 import SampleImage from "@image/sampleImage.png";
 function MajorBlog() {
-  const sampleDate = [
+  const sampleData = [
     {
       image: SampleImage,
       title: "Noteworthy technology acquisitions 2021",
@@ -79,16 +79,8 @@ function MajorBlog() {
           </Link>
         </div>
         <div className="w-full flex md:flex-row sm:flex-col lg:gap-y-[30px] sm:gap-y-4 flex-wrap justify-between">
-          {sampleDate.map((data, index) => (
-            <BlogCard
-              key={index}
-              title={data.title}
-              author={data.author}
-              image={data.image}
-              category={data.category}
-              desc={data.desc}
-              time={data.time}
-            ></BlogCard>
+          {sampleData.map((data, index) => (
+            <BlogCard key={index} value={data}></BlogCard>
           ))}
         </div>
       </div>

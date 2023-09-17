@@ -8,9 +8,9 @@ interface pageProps {
   params: { listID: string };
 }
 function FeaturedBlog({ params }: pageProps) {
-  alert("ok");
   const sampleData = [
     {
+      id: 1,
       image: SampleImage,
       title: "Noteworthy technology acquisitions 2021",
       author: "Nguyen Le Thien Duc",
@@ -19,22 +19,7 @@ function FeaturedBlog({ params }: pageProps) {
       time: "a min ago",
     },
     {
-      image: SampleImage,
-      title: "Noteworthy technology acquisitions 2021",
-      author: "Nguyen Le Thien Duc",
-      category: "Language",
-      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-      time: "a min ago",
-    },
-    {
-      image: SampleImage,
-      title: "Noteworthy technology acquisitions 2021",
-      author: "Nguyen Le Thien Duc",
-      category: "Business",
-      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-      time: "a min ago",
-    },
-    {
+      id: 2,
       image: SampleImage,
       title: "Noteworthy technology acquisitions 2021",
       author: "Nguyen Le Thien Duc",
@@ -43,22 +28,7 @@ function FeaturedBlog({ params }: pageProps) {
       time: "a min ago",
     },
     {
-      image: SampleImage,
-      title: "Noteworthy technology acquisitions 2021",
-      author: "Nguyen Le Thien Duc",
-      category: "Language",
-      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-      time: "a min ago",
-    },
-    {
-      image: SampleImage,
-      title: "Noteworthy technology acquisitions 2021",
-      author: "Nguyen Le Thien Duc",
-      category: "Business",
-      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-      time: "a min ago",
-    },
-    {
+      id: 3,
       image: SampleImage,
       title: "Noteworthy technology acquisitions 2021",
       author: "Nguyen Le Thien Duc",
@@ -67,22 +37,7 @@ function FeaturedBlog({ params }: pageProps) {
       time: "a min ago",
     },
     {
-      image: SampleImage,
-      title: "Noteworthy technology acquisitions 2021",
-      author: "Nguyen Le Thien Duc",
-      category: "Language",
-      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-      time: "a min ago",
-    },
-    {
-      image: SampleImage,
-      title: "Noteworthy technology acquisitions 2021",
-      author: "Nguyen Le Thien Duc",
-      category: "Business",
-      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-      time: "a min ago",
-    },
-    {
+      id: 4,
       image: SampleImage,
       title: "Noteworthy technology acquisitions 2021",
       author: "Nguyen Le Thien Duc",
@@ -91,22 +46,7 @@ function FeaturedBlog({ params }: pageProps) {
       time: "a min ago",
     },
     {
-      image: SampleImage,
-      title: "Noteworthy technology acquisitions 2021",
-      author: "Nguyen Le Thien Duc",
-      category: "Language",
-      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-      time: "a min ago",
-    },
-    {
-      image: SampleImage,
-      title: "Noteworthy technology acquisitions 2021",
-      author: "Nguyen Le Thien Duc",
-      category: "Business",
-      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-      time: "a min ago",
-    },
-    {
+      id: 5,
       image: SampleImage,
       title: "Noteworthy technology acquisitions 2021",
       author: "Nguyen Le Thien Duc",
@@ -115,24 +55,142 @@ function FeaturedBlog({ params }: pageProps) {
       time: "a min ago",
     },
     {
+      id: 6,
       image: SampleImage,
       title: "Noteworthy technology acquisitions 2021",
       author: "Nguyen Le Thien Duc",
-      category: "Language",
+      category: "Sofware Engineering",
       desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
       time: "a min ago",
     },
     {
+      id: 7,
       image: SampleImage,
       title: "Noteworthy technology acquisitions 2021",
       author: "Nguyen Le Thien Duc",
-      category: "Business",
+      category: "Sofware Engineering",
+      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
+      time: "a min ago",
+    },
+    {
+      id: 8,
+      image: SampleImage,
+      title: "Noteworthy technology acquisitions 2021",
+      author: "Nguyen Le Thien Duc",
+      category: "Sofware Engineering",
+      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
+      time: "a min ago",
+    },
+    {
+      id: 9,
+      image: SampleImage,
+      title: "Noteworthy technology acquisitions 2021",
+      author: "Nguyen Le Thien Duc",
+      category: "Sofware Engineering",
+      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
+      time: "a min ago",
+    },
+    {
+      id: 10,
+      image: SampleImage,
+      title: "Noteworthy technology acquisitions 2021",
+      author: "Nguyen Le Thien Duc",
+      category: "Sofware Engineering",
+      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
+      time: "a min ago",
+    },
+    {
+      id: 11,
+      image: SampleImage,
+      title: "Noteworthy technology acquisitions 2021",
+      author: "Nguyen Le Thien Duc",
+      category: "Sofware Engineering",
+      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
+      time: "a min ago",
+    },
+    {
+      id: 12,
+      image: SampleImage,
+      title: "Noteworthy technology acquisitions 2021",
+      author: "Nguyen Le Thien Duc",
+      category: "Sofware Engineering",
+      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
+      time: "a min ago",
+    },
+    {
+      id: 13,
+      image: SampleImage,
+      title: "Noteworthy technology acquisitions 2021",
+      author: "Nguyen Le Thien Duc",
+      category: "Sofware Engineering",
+      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
+      time: "a min ago",
+    },
+    {
+      id: 14,
+      image: SampleImage,
+      title: "Noteworthy technology acquisitions 2021",
+      author: "Nguyen Le Thien Duc",
+      category: "Sofware Engineering",
+      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
+      time: "a min ago",
+    },
+    {
+      id: 15,
+      image: SampleImage,
+      title: "Noteworthy technology acquisitions 2021",
+      author: "Nguyen Le Thien Duc",
+      category: "Sofware Engineering",
+      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
+      time: "a min ago",
+    },
+    {
+      id: 6,
+      image: SampleImage,
+      title: "Noteworthy technology acquisitions 2021",
+      author: "Nguyen Le Thien Duc",
+      category: "Sofware Engineering",
+      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
+      time: "a min ago",
+    },
+    {
+      id: 17,
+      image: SampleImage,
+      title: "Noteworthy technology acquisitions 2021",
+      author: "Nguyen Le Thien Duc",
+      category: "Sofware Engineering",
+      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
+      time: "a min ago",
+    },
+    {
+      id: 18,
+      image: SampleImage,
+      title: "Noteworthy technology acquisitions 2021",
+      author: "Nguyen Le Thien Duc",
+      category: "Sofware Engineering",
+      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
+      time: "a min ago",
+    },
+    {
+      id: 19,
+      image: SampleImage,
+      title: "Noteworthy technology acquisitions 2021",
+      author: "Nguyen Le Thien Duc",
+      category: "Sofware Engineering",
+      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
+      time: "a min ago",
+    },
+    {
+      id: 20,
+      image: SampleImage,
+      title: "Noteworthy technology acquisitions 2021",
+      author: "Nguyen Le Thien Duc",
+      category: "Sofware Engineering",
       desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
       time: "a min ago",
     },
   ];
-
-  const increaseIndex = 6;
+  const increaseIndex = 8;
   const [blogs, setBlogs] = useState(sampleData.slice(0, increaseIndex + 1));
   const [countListPage, setCountListPage] = useState(
     Math.ceil(sampleData.length / increaseIndex)
@@ -148,17 +206,9 @@ function FeaturedBlog({ params }: pageProps) {
                 Featured Blogs
               </h1>
             </div>
-            <div className="w-full flex md:flex-row sm:flex-col lg:gap-y-[30px] sm:gap-y-4 flex-wrap justify-between">
-              {sampleData.map((data, index) => (
-                <BlogCard
-                  key={index}
-                  title={data.title}
-                  author={data.author}
-                  image={data.image}
-                  category={data.category}
-                  desc={data.desc}
-                  time={data.time}
-                ></BlogCard>
+            <div className="w-full flex md:flex-row sm:flex-col lg:gap-y-[30px] sm:gap-y-4 flex-wrap lg:gap-x-[30px] sm:gap-x-4 ">
+              {blogs.map((data, index) => (
+                <BlogCard key={index} value={data}></BlogCard>
               ))}
               <Pagination
                 paramID={params.listID}
@@ -167,7 +217,7 @@ function FeaturedBlog({ params }: pageProps) {
                 increaseIndex={increaseIndex}
                 sliceSetData={setBlogs}
                 data={sampleData}
-                route={"/featured-blog"}
+                route={"/featured-blog/list/"}
               ></Pagination>
             </div>
           </div>
