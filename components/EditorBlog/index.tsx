@@ -48,7 +48,6 @@ import YouTubePlugin from "@plugins/YouTubePlugin";
 import TwitterPlugin from "@plugins/TwitterPlugin";
 import FigmaPlugin from "@plugins/FigmaPlugin";
 import EquationsPlugin from "@plugins/EquationsPlugin";
-import ExcalidrawPlugin from "@plugins/ExcalidrawPlugin";
 import TabFocusPlugin from "@plugins/TabFocusPlugin";
 import PageBreakPlugin from "@plugins/PageBreakPlugin";
 import ActionsPlugin from "@plugins/ActionsPlugin";
@@ -200,7 +199,6 @@ function EditorLarge({
                 <LexicalClickableLinkPlugin />
                 <HorizontalRulePlugin />
                 <EquationsPlugin />
-                <ExcalidrawPlugin />
                 <TabFocusPlugin />
                 <TabIndentationPlugin />
                 <PageBreakPlugin />
