@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Button from "../Button";
 
 import PlaygroundEditorTheme from "@/lexical_Lib/theme/EditorTheme";
 import PlaygroundNodes from "@nodes/PlaygroundNodes";
@@ -58,8 +59,9 @@ import CodeActionMenuPlugin from "@plugins/CodeActionMenuPlugin";
 import TableActionMenuPlugin from "@plugins/TableActionMenuPlugin";
 import SpeechToTextPlugin from "@plugins/SpeechToTextPlugin";
 import HTMLSerializerPlugin from "@plugins/HtmlSerializerPlugin";
+// import AutocompletePlugin from '@plugins/AutocompletePlugin';
 import TextCounterPlugin from "@plugins/TextCounterPlugin";
-import UnlinkButton from "@component/ModifyButton";
+import ModifyButton from "../ModifyButton";
 
 interface IPros {
   formTitle: string;
@@ -73,7 +75,7 @@ const editorConfig = {
     throw error;
   },
   theme: PlaygroundEditorTheme,
-  namespace: "My editor",
+  namespace: "FU-DEVER",
   nodes: [...PlaygroundNodes],
 };
 const cellEditorConfig = {
@@ -238,7 +240,7 @@ function EditorLarge({
 
       <div className="mt-[12px] flex flex-row justify-between">
         <div>
-          <UnlinkButton
+          <ModifyButton
             textContent={"Publish notification"}
             icon={"public"}
             iconPosition={"left"}
@@ -247,7 +249,7 @@ function EditorLarge({
               handleSubmit();
             }}
             tailwind={"text-white"}
-          ></UnlinkButton>
+          ></ModifyButton>
         </div>
         <div>
           <p className="font-[500] select-none">

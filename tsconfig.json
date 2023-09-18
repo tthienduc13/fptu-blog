@@ -25,7 +25,7 @@
       "@icons/*": ["./assets/icons/*"],
       "@image/*": ["./assets/images/*"],
       "@component/*": ["./components/*"],
-      "@lexical/*": ["./lexical_Lib/lexical/*"],
+      "@lexial/*": ["./lexical_Lib/lexical/*"],
       "@theme/*": ["./lexical_Lib/theme/*"],
       "@nodes/*": ["./lexical_Lib/nodes/*"],
       "@imageInput/*": ["./lexical_Lib/images/*"],

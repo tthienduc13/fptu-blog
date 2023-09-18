@@ -8,11 +8,7 @@ import { useRouter } from "next/navigation";
 import BlogTag from "@/components/BlogTag";
 import CategoryTag from "@/components/CategoryTag";
 import BrowseMedia from "@/components/BrowseMedia";
-// import EditorWrapper from "@/components/Editor/EditorWrapper";
 import EditorBlog from "@component/EditorBlog";
-import { ThemeProvider } from "@emotion/react";
-import theme from "@/theme";
-import { CssBaseline, Grid, Typography } from "@mui/material";
 function EditBlog() {
   const [importedImage, setImportedImage] = useState<File | null>(null);
   const [imageURL, setImageURL] = useState<string>("");
@@ -75,17 +71,6 @@ function EditBlog() {
             setHtmlString={setHtmlStringg}
             pageName="create_notification"
           ></EditorBlog>
-          {/* <ThemeProvider theme={theme}>
-            <CssBaseline></CssBaseline>
-            <Grid container flexDirection="column" sx={{ minHeight: "50vh" }}>
-              <Grid item>
-                <Typography variant="h3">Lexcial Editor text</Typography>
-              </Grid>
-              <Grid item xs={12} sx={{ width: "100%" }}>
-                <EditorWrapper></EditorWrapper>
-              </Grid>
-            </Grid>
-          </ThemeProvider> */}
         </div>
       </main>
     </>

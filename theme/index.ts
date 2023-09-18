@@ -16,10 +16,6 @@ const theme = createTheme({
     background: {
       default: "#f8f8f8",
     },
-    colors: {
-      darkblue: "#364570ff",
-      lightgreen: "#9cbec6ff",
-    },
   },
   typography: {
     fontFamily: font,

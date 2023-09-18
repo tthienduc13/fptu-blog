@@ -64,7 +64,7 @@ import {
 } from "lexical";
 import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
-import { IS_APPLE } from "@lexical/shared/src/environment";
+import { IS_APPLE } from "@lexial/shared/src/environment";
 
 import useModal from "@lexicalLib/hooks/useModal";
 import catTypingGif from "../../images/cat-typing.gif";
@@ -980,6 +980,7 @@ export default function ToolbarPlugin(): JSX.Element {
               <i className="icon gif" />
               <span className="text">GIF</span>
             </DropDownItem>
+
             <DropDownItem
               onClick={() => {
                 showModal("Insert Table", (onClose) => (
