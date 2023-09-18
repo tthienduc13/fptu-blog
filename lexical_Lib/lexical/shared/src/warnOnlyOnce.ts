@@ -5,9 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-
+const isInDebugMode = () => {
+  return eval("__DEV__");
+};
 export default function warnOnlyOnce(message: string) {
-  if (!__DEV__) {
+  if (!isInDebugMode) {
     return;
   }
   let run = false;
