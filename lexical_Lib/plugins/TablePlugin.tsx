@@ -20,7 +20,7 @@ import {
 } from 'lexical';
 import {createContext, useContext, useEffect, useMemo, useState} from 'react';
 import * as React from 'react';
-import invariant from '@lexial/shared/src/invariant';
+import invariant from '@lexical/shared/src/invariant';
 
 import {$createTableNodeWithDimensions, TableNode} from '../nodes/TableNode';
 import Button from '../ui/Button';

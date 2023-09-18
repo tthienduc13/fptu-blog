@@ -64,7 +64,7 @@ import {
 } from "lexical";
 import { useCallback, useEffect, useState } from "react";
 import * as React from "react";
-import { IS_APPLE } from "@lexial/shared/src/environment";
+import { IS_APPLE } from "@lexical/shared/src/environment";
 
 import useModal from "@lexicalLib/hooks/useModal";
 import catTypingGif from "../../images/cat-typing.gif";

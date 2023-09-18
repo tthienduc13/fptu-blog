@@ -1,7 +1,7 @@
 import type {LexicalEditor} from 'lexical';
 
 import {$createCodeNode, $isCodeNode} from '@lexical/code';
-import {exportFile, importFile} from '@lexial/lexical-file/src';
+import {exportFile, importFile} from '@lexical/lexical-file/src';
 import {
   $convertFromMarkdownString,
   $convertToMarkdownString,

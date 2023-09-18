@@ -57,7 +57,7 @@ import {
 } from 'react';
 import * as React from 'react';
 import {createPortal} from 'react-dom';
-import {IS_APPLE} from '@lexial/shared/src/environment';
+import {IS_APPLE} from '@lexical/shared/src/environment';
 
 import {CellContext} from '../plugins/TablePlugin';
 import {

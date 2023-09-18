@@ -45,7 +45,7 @@ import {
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import * as React from 'react';
 import {createPortal} from 'react-dom';
-import useLayoutEffect from '@lexial/shared/src/useLayoutEffect';
+import useLayoutEffect from '@lexical/shared/src/useLayoutEffect';
 
 import {
   Comment,

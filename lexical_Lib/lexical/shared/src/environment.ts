@@ -6,7 +6,7 @@
  *
  */
 
-import {CAN_USE_DOM} from '@lexial/shared/src/canUseDOM';
+import {CAN_USE_DOM} from '@lexical/shared/src/canUseDOM';
 
 declare global {
   interface Document {
