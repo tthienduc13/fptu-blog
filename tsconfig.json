@@ -22,7 +22,7 @@
     "paths": {
       "@/*": ["./*"],
       "@assets/*": ["./assets/*"],
-      "@icons/*": ["./assets/icons/*"],
+      "@icons/*": ["./assets/icon/*"],
       "@image/*": ["./assets/images/*"],
       "@component/*": ["./components/*"],
       "@lexial/*": ["./lexical_Lib/lexical/*"],
