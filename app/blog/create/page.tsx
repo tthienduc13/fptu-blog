@@ -1,13 +1,16 @@
 "use client";
 import React from "react";
 import BackIcon from "@icons/page/blog/backIcon.svg";
+import "@/app/globals.css";
 import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import BlogTag from "@/components/BlogTag";
 import CategoryTag from "@/components/CategoryTag";
 import BrowseMedia from "@/components/BrowseMedia";
+import EditorBlog from "@component/EditorBlog";
 function EditBlog() {
+  
   const [importedImage, setImportedImage] = useState<File | null>(null);
   const [imageURL, setImageURL] = useState<string>("");
   const [htmlString, setHtmlStringg] = useState<string>("");
@@ -61,6 +64,14 @@ function EditBlog() {
         </div>
         <div>
           <BlogTag></BlogTag>
+        </div>
+        <div>
+          <EditorBlog
+            formTitle="Your content"
+            htmlString={htmlString}
+            setHtmlString={setHtmlStringg}
+            pageName="create_blog"
+          ></EditorBlog>
         </div>
       </main>
     </>

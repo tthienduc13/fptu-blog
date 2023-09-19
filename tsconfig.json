@@ -45,8 +45,7 @@
     "components/plugins/CodeHighlightPlugin.js",
     "components/EditorLarge/index.tsx",
     "components/plugins/TreeViewPlugin.js",
-    "components/SettingElement/Skills.tsx",
-    "components/SettingElement/TagField/index.tsx"
+    "components/ElementsSetting/TagField/index.tsx"
   ],
   "exclude": ["node_modules"]
 }

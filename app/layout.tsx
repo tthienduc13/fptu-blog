@@ -25,7 +25,7 @@ export default function RootLayout({
     "/auth/reset-password",
   ];
 
-  const hideSidebar = ["/blog/edit-blog"];
+  const hideSidebar = ["/blog/create"];
   const pathName = usePathname();
   const isSpecified = specificPath.includes(pathName);
   const isHideSidebar = hideSidebar.includes(pathName);
