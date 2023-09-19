@@ -3,7 +3,7 @@ import React from "react";
 import { Form, Formik } from "formik";
 import Image from "next/image";
 import { registerSchema } from "@/app/validation";
-import Logo from "@image/page/authentication/signin/logo.svg";
+import Logo from "@icons/logo/logo.svg";
 import SignupImage from "@image/page/authentication/signup/signupImage.jpg";
 import InputForm from "@/components/InputForm";
 import Link from "next/link";
@@ -19,7 +19,13 @@ function SignUp() {
     <section>
       <div className="h-screen w-full flex justify-center bg-[#F9FAFB] bg-opacity-50 items-center">
         <div className="flex flex-col max-w-[1440px] mt-6  justify-center items-center w-full ">
-          {/* npm install --save react-toastify */}
+          <a href="#">
+            <Image
+              src={Logo}
+              alt="Picture of the author"
+              className="w-[210px] h-auto mb-10"
+            />
+          </a>
           <div className="max-w-[1024px] h-[613px] shadow-lg bg-white w-full flex items-center rounded-lg overflow-hidden ">
             <div className="">
               <Image

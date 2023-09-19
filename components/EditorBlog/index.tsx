@@ -1,7 +1,5 @@
 "use client";
 import React, { useState, Suspense } from "react";
-import Button from "../Button";
-
 import PlaygroundEditorTheme from "@/lexical_Lib/theme/EditorTheme";
 import PlaygroundNodes from "@nodes/PlaygroundNodes";
 
@@ -63,7 +61,7 @@ import SpeechToTextPlugin from "@plugins/SpeechToTextPlugin";
 import HTMLSerializerPlugin from "@plugins/HtmlSerializerPlugin";
 // import AutocompletePlugin from '@plugins/AutocompletePlugin';
 import TextCounterPlugin from "@plugins/TextCounterPlugin";
-import UnlinkButton from "../ModifyButton";
+import ModifyButton from "../ModifyButton";
 import dynamic from "next/dynamic";
 
 interface IPros {
@@ -90,12 +88,7 @@ const cellEditorConfig = {
   theme: PlaygroundEditorTheme,
 };
 
-function EditorLarge({
-  formTitle,
-  htmlString,
-  setHtmlString,
-  pageName,
-}: IPros) {
+function EditorBlog({ formTitle, htmlString, setHtmlString, pageName }: IPros) {
   const [textCounting, setTextContentCounting] = useState<number>(0);
 
   const [floatingAnchorElem, setFloatingAnchorElem] =
@@ -138,7 +131,7 @@ function EditorLarge({
   return (
     <div className="flex flex-col gap-[8px]">
       <div>
-        <h4 className="select-none font-[500]">{formTitle}:</h4>
+        <h3 className="text-base text-[#14375F] font-medium">{formTitle}:</h3>
       </div>
 
       <div className="editor-shell">
@@ -220,8 +213,8 @@ function EditorLarge({
                 <TabIndentationPlugin />
                 <PageBreakPlugin />
                 <CodeHighlightPlugin />
-                {/* <NOSSRActionsPlugin isRichText={true}/> */}
-                {/* <ActionsPlugin isRichText={true}/> */}
+                <NOSSRActionsPlugin isRichText={true} />
+                <ActionsPlugin isRichText={true} />
 
                 {floatingAnchorElem && (
                   <>
@@ -254,8 +247,8 @@ function EditorLarge({
 
       <div className="mt-[12px] flex flex-row justify-between">
         <div>
-          <UnlinkButton
-            textContent={"Publish notification"}
+          <ModifyButton
+            textContent={"Publish Blog"}
             icon={"public"}
             iconPosition={"left"}
             backgroundColor={"bg-blue-700"}
@@ -263,7 +256,7 @@ function EditorLarge({
               handleSubmit();
             }}
             tailwind={"text-white"}
-          ></UnlinkButton>
+          ></ModifyButton>
         </div>
         <div>
           <p className="font-[500] select-none">
@@ -277,4 +270,4 @@ function EditorLarge({
   );
 }
 
-export default EditorLarge;
+export default EditorBlog;

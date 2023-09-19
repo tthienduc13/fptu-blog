@@ -1,9 +1,11 @@
 "use client";
+import Image from "next/image";
 import React from "react";
 import BlogCard from "@/components/BlogCard";
 import SampleImage from "@image/sampleImage.png";
 import { useState } from "react";
 import Pagination from "@component/Pagination";
+import SearchIcon from "@icons/page/blog/searchIcon.svg";
 interface pageProps {
   params: { listID: string };
 }
@@ -205,6 +207,31 @@ function FeaturedBlog({ params }: pageProps) {
               <h1 className="text-[#14375F] font-bold md:text-[30px] md:leading-[45px] text-2xl">
                 Featured Blogs
               </h1>
+            </div>
+            <div className="flex w-fit h-[38px] rounded-[10px] overflow-hidden mb-5">
+              <select className="w-[84px] leading-4 px-[20px] rounded-tl-[10px] rounded-bl-[10px] border-2 outline-none border-slate-200 bg-gray-100 select-none ">
+                <option value="All" className="">
+                  All
+                </option>
+                <option value="All" className="">
+                  All
+                </option>
+                <option value="All" className="">
+                  All
+                </option>
+              </select>
+              <input
+                type="search"
+                className="w-[392px] border-y-2 border-r   border-l-none border-slate-200 select-none outline-none"
+              />
+              <div className="w-[42px] h-[38px] bg-[#0066B2] flex items-cent  justify-center cursor-pointer">
+                <Image
+                  src={SearchIcon}
+                  height={30}
+                  width={30}
+                  alt="searchIcon"
+                />
+              </div>
             </div>
             <div className="w-full flex md:flex-row sm:flex-col lg:gap-y-[30px] sm:gap-y-4 flex-wrap lg:gap-x-[30px] sm:gap-x-4 ">
               {blogs.map((data, index) => (
