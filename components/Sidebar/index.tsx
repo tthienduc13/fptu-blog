@@ -85,7 +85,7 @@ function Sidebar() {
           {isClickAdd && (
             <div className="absolute px-4  max-w-[200px] flex flex-col items-start bg-white rounded-lg drop-shadow-xl  bottom-[-45px] right-[-120px] shadow-lg py-[8px] ">
               <Link
-                href={"/blog/edit-blog"}
+                href={"/blog/create"}
                 className="flex gap-[10px] w-full"
                 onClick={() => dispatch(toggleIsOpenSideBar())}
               >
@@ -144,10 +144,7 @@ function Sidebar() {
           >
             {isClickAdd && (
               <div className="absolute px-4  max-w-[200px] flex flex-col items-start bg-white rounded-lg drop-shadow-xl  bottom-[-45px] right-[-120px] shadow-lg py-[8px] ">
-                <Link
-                  href={"/blog/edit-blog"}
-                  className="flex gap-[10px] w-full"
-                >
+                <Link href={"/blog/create"} className="flex gap-[10px] w-full">
                   <Image
                     src={PenIcon}
                     alt="Write Icon"

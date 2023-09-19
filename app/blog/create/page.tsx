@@ -10,6 +10,7 @@ import CategoryTag from "@/components/CategoryTag";
 import BrowseMedia from "@/components/BrowseMedia";
 import EditorBlog from "@component/EditorBlog";
 function EditBlog() {
+  
   const [importedImage, setImportedImage] = useState<File | null>(null);
   const [imageURL, setImageURL] = useState<string>("");
   const [htmlString, setHtmlStringg] = useState<string>("");
@@ -69,7 +70,7 @@ function EditBlog() {
             formTitle="Your content"
             htmlString={htmlString}
             setHtmlString={setHtmlStringg}
-            pageName="create_notification"
+            pageName="create_blog"
           ></EditorBlog>
         </div>
       </main>

@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+"use client";
+import React, { useState, Suspense } from "react";
 import Button from "../Button";
 
 import PlaygroundEditorTheme from "@/lexical_Lib/theme/EditorTheme";
@@ -49,6 +50,7 @@ import YouTubePlugin from "@plugins/YouTubePlugin";
 import TwitterPlugin from "@plugins/TwitterPlugin";
 import FigmaPlugin from "@plugins/FigmaPlugin";
 import EquationsPlugin from "@plugins/EquationsPlugin";
+import ExcalidrawPlugin from "@plugins/ExcalidrawPlugin";
 import TabFocusPlugin from "@plugins/TabFocusPlugin";
 import PageBreakPlugin from "@plugins/PageBreakPlugin";
 import ActionsPlugin from "@plugins/ActionsPlugin";
@@ -61,7 +63,8 @@ import SpeechToTextPlugin from "@plugins/SpeechToTextPlugin";
 import HTMLSerializerPlugin from "@plugins/HtmlSerializerPlugin";
 // import AutocompletePlugin from '@plugins/AutocompletePlugin';
 import TextCounterPlugin from "@plugins/TextCounterPlugin";
-import ModifyButton from "../ModifyButton";
+import UnlinkButton from "../ModifyButton";
+import dynamic from "next/dynamic";
 
 interface IPros {
   formTitle: string;
@@ -120,6 +123,18 @@ function EditorLarge({
     else return;
   };
 
+  const NoSSRTableSellResizer: any = dynamic(
+    () => import("@lexicalLib/plugins/TableCellResizer"),
+    { ssr: false }
+  );
+  const NoSSRFloatingLinkEditorPlugin: any = dynamic(
+    () => import("@lexicalLib/plugins/FloatingLinkEditorPlugin"),
+    { ssr: false }
+  );
+  const NOSSRActionsPlugin: any = dynamic(
+    () => import("@lexicalLib/plugins/ActionsPlugin"),
+    { ssr: false }
+  );
   return (
     <div className="flex flex-col gap-[8px]">
       <div>
@@ -137,7 +152,6 @@ function EditorLarge({
                 <AutoFocusPlugin />
                 <ClearEditorPlugin />
                 <ComponentPickerPlugin />
-                <EmojiPickerPlugin />
                 <AutoEmbedPlugin />
                 <NewMentionsPlugin />
                 <EmojisPlugin />
@@ -169,7 +183,7 @@ function EditorLarge({
                   hasCellMerge={true}
                   hasCellBackgroundColor={true}
                 />
-                <TableCellResizer />
+                <NoSSRTableSellResizer />
                 <NewTablePlugin cellEditorConfig={cellEditorConfig}>
                   <AutoFocusPlugin />
                   <RichTextPlugin
@@ -179,7 +193,7 @@ function EditorLarge({
                     placeholder={null}
                     ErrorBoundary={LexicalErrorBoundary}
                   />
-                  {/* <MentionsPlugin /> */}
+                  <MentionsPlugin />
                   <HistoryPlugin />
                   <ImagesPlugin captionsEnabled={false} />
                   <LinkPlugin />
@@ -193,7 +207,7 @@ function EditorLarge({
                 <ImagesPlugin />
                 <InlineImagePlugin />
                 <LinkPlugin />
-                <FloatingLinkEditorPlugin />
+                <NoSSRFloatingLinkEditorPlugin />
                 <PollPlugin />
                 <TwitterPlugin />
                 <YouTubePlugin />
@@ -201,13 +215,13 @@ function EditorLarge({
                 <LexicalClickableLinkPlugin />
                 <HorizontalRulePlugin />
                 <EquationsPlugin />
+                <ExcalidrawPlugin />
                 <TabFocusPlugin />
                 <TabIndentationPlugin />
                 <PageBreakPlugin />
-                <DraggableBlockPlugin />
-                <CodeActionMenuPlugin />
                 <CodeHighlightPlugin />
-                <ActionsPlugin isRichText={true} />
+                {/* <NOSSRActionsPlugin isRichText={true}/> */}
+                {/* <ActionsPlugin isRichText={true}/> */}
 
                 {floatingAnchorElem && (
                   <>
@@ -240,7 +254,7 @@ function EditorLarge({
 
       <div className="mt-[12px] flex flex-row justify-between">
         <div>
-          <ModifyButton
+          <UnlinkButton
             textContent={"Publish notification"}
             icon={"public"}
             iconPosition={"left"}
@@ -249,7 +263,7 @@ function EditorLarge({
               handleSubmit();
             }}
             tailwind={"text-white"}
-          ></ModifyButton>
+          ></UnlinkButton>
         </div>
         <div>
           <p className="font-[500] select-none">

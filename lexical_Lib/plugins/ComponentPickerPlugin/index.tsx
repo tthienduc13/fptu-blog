@@ -11,7 +11,7 @@ import {
   LexicalTypeaheadMenuPlugin,
   MenuOption,
   useBasicTypeaheadTriggerMatch,
-} from '@lexical/react/LexicalTypeaheadMenuPlugin';
+} from '@lexicalLib/react/LexicalTypeaheadMenuPlugin';
 import {$createHeadingNode, $createQuoteNode} from '@lexical/rich-text';
 import {$setBlocksType} from '@lexical/selection';
 import {INSERT_TABLE_COMMAND} from '@lexical/table';
@@ -31,6 +31,7 @@ import catTypingGif from '../../images/cat-typing.gif';
 import {EmbedConfigs} from '../AutoEmbedPlugin';
 import {INSERT_COLLAPSIBLE_COMMAND} from '../CollapsiblePlugin';
 import {InsertEquationDialog} from '../EquationsPlugin';
+import {INSERT_EXCALIDRAW_COMMAND} from '../ExcalidrawPlugin';
 import {INSERT_IMAGE_COMMAND, InsertImageDialog} from '../ImagesPlugin';
 import {INSERT_PAGE_BREAK} from '../PageBreakPlugin';
 import {InsertPollDialog} from '../PollPlugin';
@@ -262,7 +263,12 @@ export default function ComponentPickerMenuPlugin(): JSX.Element {
         keywords: ['page break', 'divider'],
         onSelect: () => editor.dispatchCommand(INSERT_PAGE_BREAK, undefined),
       }),
-     
+      new ComponentPickerOption('Excalidraw', {
+        icon: <i className="icon diagram-2" />,
+        keywords: ['excalidraw', 'diagram', 'drawing'],
+        onSelect: () =>
+          editor.dispatchCommand(INSERT_EXCALIDRAW_COMMAND, undefined),
+      }),
       new ComponentPickerOption('Poll', {
         icon: <i className="icon poll" />,
         keywords: ['poll', 'vote'],
