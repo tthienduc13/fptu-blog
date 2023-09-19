@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Form, Formik } from "formik";
 import { loginSchema } from "@/app/validation";
 import InputForm from "@/components/InputForm";
-import Logo from "@image/page/authentication/signin/logo.svg";
+import Logo from "@icons/logo/logo.svg";
 import LoginImg from "@image/page/authentication/signin/loginImage.jpg";
 import { toast } from "react-toastify";
 function SignIn() {
@@ -36,7 +36,7 @@ function SignIn() {
             </div>
             <div className=" px-16 w-[calc(100%-387px)]  ">
               <h2 className="text-3xl  leading-9 font-bold mb-8">
-                Sign in to FU-DEVER
+                Sign in to FU-BLOG
               </h2>
               <Formik
                 initialValues={{ email: "", password: "" }}
