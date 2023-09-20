@@ -9,7 +9,7 @@ import SearchIcon from "@icons/page/blog/searchIcon.svg";
 interface pageProps {
   params: { listID: string };
 }
-function FeaturedBlog({ params }: pageProps) {
+function CategoryBlog({ params }: pageProps) {
   const sampleData = [
     {
       id: 1,
@@ -205,7 +205,7 @@ function FeaturedBlog({ params }: pageProps) {
           <div className="mb-[40px] p-[20px] md:p-[40px] w-full">
             <div className="w-full  mb-5">
               <h1 className="text-[#14375F] font-bold md:text-[30px] md:leading-[45px] text-2xl">
-                Featured Blogs
+                Category Blogs
               </h1>
             </div>
             <div className="flex w-fit h-[38px] rounded-[10px] overflow-hidden mb-5">
@@ -254,4 +254,4 @@ function FeaturedBlog({ params }: pageProps) {
   );
 }
 
-export default FeaturedBlog;
+export default CategoryBlog;
