@@ -32,7 +32,7 @@ function Sidebar() {
       title: "Featured",
     },
     {
-      path: "/category-blog",
+      path: "/category-blog/list/1",
       icon: CategoryIcon,
       alt: "Category",
       width: 20,
@@ -40,7 +40,7 @@ function Sidebar() {
       title: "Category",
     },
     {
-      path: "/",
+      path: "/posted-blog/list/1",
       icon: BlogIcon,
       alt: "Blog",
       width: 20,
