@@ -24,7 +24,7 @@ function Sidebar() {
       title: "Home",
     },
     {
-      path: "/featured-blog/list/1",
+      path: "/blog/featured-blog/list/1",
       icon: FeaturedIcon,
       alt: "Featured",
       width: 20,
@@ -32,7 +32,7 @@ function Sidebar() {
       title: "Featured",
     },
     {
-      path: "/category-blog/list/1",
+      path: "/blog/category-blog/list/1",
       icon: CategoryIcon,
       alt: "Category",
       width: 20,
@@ -40,7 +40,7 @@ function Sidebar() {
       title: "Category",
     },
     {
-      path: "/posted-blog/list/1",
+      path: "/blog/posted-blog/list/1",
       icon: BlogIcon,
       alt: "Blog",
       width: 20,

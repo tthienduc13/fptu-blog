@@ -1,4 +1,6 @@
+"use client";
 import React, { useEffect, useState, useRef } from "react";
+
 import Image from "next/image";
 import Logo from "@icons/logo/logo.svg";
 import SearchIcon from "@icons/header/search.svg";
@@ -9,6 +11,7 @@ import BurgerMenu from "@icons/header/burger.svg";
 import DropDown from "@/components/Dropdown/index";
 import { useDispatch } from "react-redux";
 import Link from "next/link";
+import { logout } from "@/redux/slices/user";
 import { toggleIsOpenSideBar } from "@/redux/slices/app";
 
 function Header(): JSX.Element {
@@ -38,6 +41,8 @@ function Header(): JSX.Element {
     setIsOpenNav(false);
     setIsDropdownOpen(false);
   };
+
+
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);

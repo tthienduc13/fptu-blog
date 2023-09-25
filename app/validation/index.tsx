@@ -10,7 +10,7 @@ export const registerSchema = yup.object().shape({
     .required("This field is required"),
   password: yup
     .string()
-    .min(8)
+    .min(8, "Password must be at least 8 characters")
     .matches(passRule, { message: "Please enter a stronger password" })
     .required("This field is required"),
   confirmPassword: yup
@@ -31,5 +31,8 @@ export const loginSchema = yup.object().shape({
     .string()
     .email("Please enter a valid email")
     .required("This field is required"),
-  password: yup.string().min(8).required("This field is required"),
+  password: yup
+    .string()
+    .min(8, "Password must be at least 8 characters")
+    .required("This field is required"),
 });
