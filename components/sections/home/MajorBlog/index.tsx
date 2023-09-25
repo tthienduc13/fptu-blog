@@ -63,7 +63,7 @@ function MajorBlog() {
             Your Major&#39;s Blogs
           </h1>
           <Link
-            href={"/blog/category-blog"}
+            href={"/blog/category-blog/list/1"}
             className="flex items-center gap-[6px] cursor-pointer hover:gap-[10px] duration-300"
           >
             <Image

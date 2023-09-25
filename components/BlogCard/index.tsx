@@ -47,7 +47,7 @@ function BlogCard({ value }: IProps) {
             icon="arrowRight"
             iconPosition="right"
             backgroundColor="bg-[#0066B2]"
-            href="/"
+            href="/blog/detail/"
             tailwind="hover:opacity-80"
           ></Button>
         </div>

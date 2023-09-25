@@ -41,7 +41,7 @@ function FeaturedBlog() {
           Featured Blogs
         </h1>
         <Link
-          href={"/featured-blog/list/1"}
+          href={"blog/featured-blog/list/1"}
           className="flex items-center gap-[6px] cursor-pointer hover:gap-[10px] duration-300"
         >
           <Image

@@ -1,20 +1,89 @@
 "use client";
-import React from "react";
+import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { login } from "@/redux/slices/user";
+import { loginAccount } from "../../../apis/auth";
 import { Form, Formik } from "formik";
 import { loginSchema } from "@/app/validation";
 import InputForm from "@/components/InputForm";
 import Logo from "@icons/logo/logo.svg";
 import LoginImg from "@image/page/authentication/signin/loginImage.jpg";
 import { toast } from "react-toastify";
+import axios from "axios";
+import { ValidationError } from "yup";
+import jwt_decode from "jwt-decode";
+type UserLogin = {
+  email: string;
+  password: string;
+  remember: boolean;
+};
+
+type EncodeType = {
+  email: string;
+  sub: string;
+  UserRole: string;
+  "remember-me": boolean;
+};
+
 function SignIn() {
-  const onSubmit = async (values: object, actions: any) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    actions.resetForm();
-    toast.success("Sign in successfully !");
-    //export type TypeOptions = 'info' | 'success' | 'warning' | 'error' | 'default';
+  const dispatch = useDispatch();
+  const [remember, setRemember] = useState(false);
+  const onHandleChoiceRemember = (status: boolean) => {
+    setRemember(status);
   };
+  const router = useRouter();
+  const onSubmit = async (values: UserLogin, actions: any) => {
+    try {
+      values.remember = remember;
+      const loginResponse = await loginAccount(values);
+      const token = loginResponse.data;
+
+      var decoded: EncodeType = jwt_decode(token.token);
+
+      const user = {
+        email: decoded!.email,
+        sub: decoded!.sub,
+        UserRole: decoded!.UserRole,
+        remember: decoded!["remember-me"],
+      };
+      console.log(user);
+      dispatch(
+        login({
+          token,
+          user,
+        })
+      );
+
+      toast.success("Login success !");
+      setTimeout(() => {
+        router.push("/");
+      }, 500);
+    } catch (error: unknown) {
+      if (error instanceof ValidationError) {
+        if (error?.name === "ValidationError") {
+          toast.error(error.errors[0]);
+        }
+      }
+      if (axios.isAxiosError(error)) {
+        if (
+          error.response?.status === 401 ||
+          error.response?.status === 404 ||
+          error.response?.status === 400
+        ) {
+          toast.error("Wrong password or email");
+        }
+        if (error.response?.status === 422)
+          var userError = error.response.data.errors.match(/\[(.*?)\]/);
+        toast.error(userError[1] + " has not confirmed email");
+      }
+      actions.resetForm();
+      //export type TypeOptions = 'info' | 'success' | 'warning' | 'error' | 'default';
+    }
+  };
+
   return (
     <section>
       <div className="h-screen w-full flex justify-center bg-[#F9FAFB] bg-opacity-50 items-center">
@@ -39,7 +108,7 @@ function SignIn() {
                 Sign in to FU-BLOG
               </h2>
               <Formik
-                initialValues={{ email: "", password: "" }}
+                initialValues={{ email: "", password: "", remember }}
                 validationSchema={loginSchema}
                 onSubmit={onSubmit}
               >
@@ -72,6 +141,7 @@ function SignIn() {
                     <div className="mb-6 flex w-full justify-between items-center">
                       <div className="flex items-center  gap-3">
                         <input
+                          onClick={() => onHandleChoiceRemember(!remember)}
                           id="remember"
                           type="checkbox"
                           className="h-4 w-4 rounded bg-[#F9FAFB] border-[#D1D5DB] outline-[#0065A9] peer-checked:bg-[#0065A9]  "

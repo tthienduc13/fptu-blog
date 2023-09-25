@@ -46,6 +46,6 @@
     "components/EditorLarge/index.tsx",
     "components/plugins/TreeViewPlugin.js",
     "components/ElementsSetting/TagField/index.tsx"
-  ],
+, ".next/types/app/blog/detail/[blogId]/page.tsx"  ],
   "exclude": ["node_modules"]
 }

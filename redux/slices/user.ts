@@ -1,37 +1,48 @@
-import { createSlice } from "@reduxjs/toolkit";
-export interface User {
-  username: string;
-  password: string;
-  avatarUrl: string;
-  role: string;
-}
+"use client";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { setCookie } from "cookies-next";
 
-const initialState = {
+type User = {
+  email: string;
+  UserRole: string;
+};
+type AppState = {
+  currentUser: User;
+};
+
+const initialState: AppState = {
   currentUser: {
-    id: "",
-    username: "",
-    avatarUrl: "",
-    role: "",
-    createAt: "",
-    updateAp: "",
+    email: "",
+    UserRole: "",
   },
 };
+
 export const counterSlice = createSlice({
-  name: "currentUser",
+  name: "user",
   initialState,
   reducers: {
     login: (state, action) => {
-      state.currentUser = action.payload;
-      localStorage.setItem("currentUser", JSON.stringify(state.currentUser));
-      localStorage.setItem("access_token", action.payload?.access_token);
-      localStorage.setItem("refresh_token", action.payload?.refresh_token);
+      state.currentUser = action.payload.user;
+      setCookie("accessToken", action.payload.token.accessToken, {
+        maxAge: 3600,
+      });
+      setCookie("user_id", action.payload.user.sub, {
+        maxAge: 3600,
+      });
     },
-    logout: () => {
-      localStorage.removeItem("currentUser");
+    logout: (state) => {
+      state.currentUser = initialState.currentUser;
+      setCookie("accessToken", "", { maxAge: 0 });
+      setCookie("user_id", "", { maxAge: 0 });
+    },
+    refreshUserInfoFromStorage: (state, action: PayloadAction<User>) => {
+      state.currentUser = action.payload;
     },
   },
 });
 
-export const { login, logout } = counterSlice.actions;
+// Action creators được tạo ra cho mỗi hàm reducer
+export const { login, logout, refreshUserInfoFromStorage } =
+  counterSlice.actions;
 
 export default counterSlice.reducer;

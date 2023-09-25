@@ -8,12 +8,42 @@ import SignupImage from "@image/page/authentication/signup/signupImage.jpg";
 import InputForm from "@/components/InputForm";
 import Link from "next/link";
 import { toast } from "react-toastify";
-
+import { registerAccount } from "@/apis/auth";
+import { useRouter } from "next/navigation";
+import { ValidationError } from "yup";
+import axios from "axios";
+type UserRegister = {
+  email: string;
+  password: string;
+};
 function SignUp() {
-  const onSubmit = async (values: object, actions: any) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    actions.resetForm();
-    toast.success("Sign up successfully !");
+  const router = useRouter();
+  const onSubmit = async (values: UserRegister, actions: any) => {
+    try {
+      await registerAccount(values);``
+      toast.success("Register success ! Check your email to validated");
+      setTimeout(() => {
+        router.push("/auth/sign-in");
+      }, 500);
+    } catch (error: unknown) {
+      if (error instanceof ValidationError) {
+        if (error?.name === "ValidationError") {
+          toast.error(error.errors[0]);
+        }
+      }
+      if (axios.isAxiosError(error)) {
+        if (
+          error.response?.status === 401 ||
+          error.response?.status === 404 ||
+          error.response?.status === 400
+        ) {
+          toast.error("Cannot register !");
+        }
+        if (error.response?.status === 409)
+          toast.error("User has been register !");
+      }
+      actions.resetForm();
+    }
   };
   return (
     <section>

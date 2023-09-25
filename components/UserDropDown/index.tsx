@@ -1,9 +1,20 @@
+"use-client";
 import React from "react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import ProfileImg from "@icons/header/profileImage.svg";
 import Image from "next/image";
+import Link from "next/link";
+import { logout } from "@/redux/slices/user";
+import { useDispatch } from "react-redux";
 
 function UserDropDown() {
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch(logout());
+    router.push("/unauthenticated");
+  };
+
   return (
     <div className="absolute right-[15px] bottom-[-358px]  max-w-[300px] w-full bg-white border-[1px] border-[#E8EBED] rounded-[12px] shadow-lg p-4">
       <div className="w-full pb-4 border-b-[1px] border-[#E8EBED] flex gap-[10px] items-center">
@@ -45,7 +56,7 @@ function UserDropDown() {
         <Link className="hover:text-[#14375F]" href={""}>
           Settings
         </Link>
-        <Link className="hover:text-[#14375F]" href={""}>
+        <Link onClick={handleLogout} className="hover:text-[#14375F]" href={""}>
           Log Out
         </Link>
       </div>
