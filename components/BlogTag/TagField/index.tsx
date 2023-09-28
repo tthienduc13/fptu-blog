@@ -4,30 +4,31 @@ import { TagifySettings } from "@yaireo/tagify";
 import "@component/ElementsSetting/TagField/Styling.scss";
 
 interface TagFieldProps {
+  allowTagNumber: number;
   suggestions: string[];
   setState: React.Dispatch<React.SetStateAction<string[]>>;
   state: string[];
   placeholder: string;
 }
 
-const baseTagifySettings = {
-  blacklist: [],
-  maxTags: 30,
-  backspace: "edit",
-  placeholder: "",
-  editTags: 1,
-  dropdown: {
-    enabled: 0,
-  },
-  callbacks: {} as any,
-};
-
 function BlogTagField({
+  allowTagNumber,
   suggestions = [],
   setState,
   state,
   placeholder,
 }: TagFieldProps) {
+  const baseTagifySettings = {
+    blacklist: [],
+    maxTags: allowTagNumber,
+    backspace: "edit",
+    placeholder: "",
+    editTags: 1,
+    dropdown: {
+      enabled: 0,
+    },
+    callbacks: {} as any,
+  };
   const [data, setData] = useState<string[]>(state);
 
   const handleChange = (e: CustomEvent) => {
@@ -37,8 +38,9 @@ function BlogTagField({
   const settings: TagifySettings<Tagify.BaseTagData> = {
     ...baseTagifySettings,
     whitelist: suggestions,
-    editTags: 1,
+    editTags: false,
     backspace: "edit",
+    enforceWhitelist: true,
     callbacks: {
       add: handleChange,
       remove: handleChange,

@@ -4,7 +4,7 @@ import { setCookie } from "cookies-next";
 
 type User = {
   email: string;
-  UserRole: string;
+  UserRole: number;
 };
 type AppState = {
   currentUser: User;
@@ -13,7 +13,7 @@ type AppState = {
 const initialState: AppState = {
   currentUser: {
     email: "",
-    UserRole: "",
+    UserRole: 0,
   },
 };
 
