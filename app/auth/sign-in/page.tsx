@@ -39,24 +39,20 @@ function SignIn() {
     try {
       values.remember = remember;
       const loginResponse = await loginAccount(values);
-      const token = loginResponse.data;
-
-      var decoded: EncodeType = jwt_decode(token.token);
-
+      const token: string = loginResponse.data.token;
+      var decoded: EncodeType = jwt_decode(token);
       const user = {
         email: decoded!.email,
         sub: decoded!.sub,
         UserRole: decoded!.UserRole,
         remember: decoded!["remember-me"],
       };
-      console.log(user);
       dispatch(
         login({
           token,
           user,
         })
       );
-
       toast.success("Login success !");
       setTimeout(() => {
         router.push("/");

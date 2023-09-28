@@ -20,7 +20,7 @@ function SignUp() {
   const router = useRouter();
   const onSubmit = async (values: UserRegister, actions: any) => {
     try {
-      await registerAccount(values);``
+      await registerAccount(values);
       toast.success("Register success ! Check your email to validated");
       setTimeout(() => {
         router.push("/auth/sign-in");

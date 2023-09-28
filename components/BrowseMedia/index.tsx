@@ -7,7 +7,7 @@ import axios from "axios";
 import { Skeleton } from "@mui/material";
 import FilePreview from "../FIlePreview";
 import { toast } from "react-toastify";
-interface IPros {
+interface IProps {
   formTitle: string;
   fileStorage: File | null;
   setFileStorage: React.Dispatch<React.SetStateAction<File | null>>;
@@ -21,7 +21,7 @@ function BrowseImage({
   setFileStorage,
   setFileURL,
   page,
-}: IPros) {
+}: IProps) {
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [isUploading, setIsUploading] = useState<boolean>(true);
 
@@ -113,6 +113,7 @@ function BrowseImage({
 
     if (fileStorage) {
       console.log("Oke");
+      console.log(URL.createObjectURL(fileStorage));
 
       handleGetImageURL(fileStorage);
     }
@@ -147,7 +148,6 @@ function BrowseImage({
                         className="absolute top-[50%] left-[50%] translate-x-[-50%]
                       translate-y-[-50%] font-[700]"
                       >
-                        {" "}
                         Uploading file...
                       </p>
                     </div>

@@ -9,12 +9,51 @@ import BlogTag from "@/components/BlogTag";
 import CategoryTag from "@/components/CategoryTag";
 import BrowseMedia from "@/components/BrowseMedia";
 import EditorBlog from "@component/EditorBlog";
+import { getCookie } from "cookies-next";
+import axios from "axios";
+import { createBlog } from "@/apis/blog";
+import { toast } from "react-toastify";
+interface newBlog {
+  user_id: string;
+  blogTitle: string;
+  htmlString: string;
+  status: number;
+  visual: string;
+}
 function EditBlog() {
-  
+  const [blogTitle, setBlogTitle] = useState<string>("");
   const [importedImage, setImportedImage] = useState<File | null>(null);
   const [imageURL, setImageURL] = useState<string>("");
   const [htmlString, setHtmlStringg] = useState<string>("");
   const router = useRouter();
+  console.log(`Blog title: ${blogTitle}`);
+  console.log(`Blog content: ${htmlString}`);
+  console.log(`Blog image: ${imageURL}`);
+  const handlePublishBlog = async (values: newBlog) => {
+    const access_token = getCookie("accessToken");
+    const user_id = getCookie("user_id");
+    try {
+      if (access_token && user_id) {
+        const newBLog = {
+          user_id: user_id,
+          blogTitle: blogTitle,
+          htmlString: htmlString,
+          status: 0,
+          visual: imageURL,
+        };
+        await createBlog(newBLog);
+        toast.success("Blog posted! Please wait for the modrator!");
+        setTimeout(() => {
+          router.push("/blog/posted-blog");
+        }, 500);
+      }
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        console.log(err);
+      }
+    }
+  };
+
   return (
     <>
       <main className=" absolute w-full flex flex-col gap-[20px] right-0 top-[56px] lg:top-[64px] bottom-0 h-fit p-[20px] lg:p-[40px]">
@@ -44,6 +83,7 @@ function EditBlog() {
               Blog&#39;s Title:
             </h3>
             <input
+              onChange={(e) => setBlogTitle(e.target.value)}
               type="text"
               placeholder="Write title here"
               className="border-2 px-3 py-3 outline-[#0066B2] border-gray-300 rounded-[12px] w-full"
