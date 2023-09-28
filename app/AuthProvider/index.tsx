@@ -6,7 +6,7 @@ import { refreshUserInfoFromStorage } from "@/redux/slices/user";
 
 type EncodeType = {
   email: string;
-  UserRole: string;
+  UserRole: number;
 };
 
 function AppProvider({ children }: { children: React.ReactNode }) {

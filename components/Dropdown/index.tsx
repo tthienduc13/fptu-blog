@@ -12,7 +12,7 @@ interface headerProps {
   userName: string | undefined;
 }
 function DropDown({ fullName, userName }: headerProps) {
-  const role: string = useSelector(
+  const role: number = useSelector(
     (state: RootState) => state.user.currentUser.UserRole
   );
   const router = useRouter();
@@ -23,9 +23,9 @@ function DropDown({ fullName, userName }: headerProps) {
   };
   return (
     <>
-      {role === "admin" ? (
+      {role === 0 ? (
         <AdminDropDown functionHandleLogout={handleLogout} />
-      ) : role === "mentor" ? (
+      ) : role === 2 ? (
         <MentorDropDown
           userName={userName}
           fullName={fullName}

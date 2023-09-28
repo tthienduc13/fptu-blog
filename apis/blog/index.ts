@@ -1,7 +1,7 @@
 import axiosClient from "@/utils/axiosClient/index";
 
 export const END_POINT = {
-  CREATE: "/blog/create",
+  CREATE: "/blogs/create",
 };
 
 type createBlog = {
