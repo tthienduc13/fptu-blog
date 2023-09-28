@@ -60,7 +60,6 @@ function Sidebar() {
   const isOpenSidebar = useSelector(
     (state: RootState) => state.app.isOpenSideBar
   );
-  console.log(isOpenSidebar);
   const [isClickAdd, setIsClickAdd] = useState<boolean>(false);
   const [isChosen, setIsChosen] = useState<number>(0);
   const pathname = usePathname();

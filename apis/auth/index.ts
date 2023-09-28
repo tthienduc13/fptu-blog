@@ -1,7 +1,5 @@
 import axiosClient from "@/utils/axiosClient/index";
-import { ValidationError } from "yup";
-import { toast } from "react-toastify";
-import axios from "axios";
+;
 
 export const END_POINT = {
   LOGIN: "/auth/login",
@@ -49,7 +47,6 @@ export const registerAccount = (payload: UserRegister) => {
   return axiosClient.post(END_POINT.REGISTER, {
     email: payload.email,
     password: payload.password,
-    UserRole: "member",
   });
 };
 

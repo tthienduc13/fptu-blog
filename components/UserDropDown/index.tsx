@@ -1,22 +1,21 @@
 "use-client";
 import React from "react";
-import { useRouter } from "next/navigation";
 import ProfileImg from "@icons/header/profileImage.svg";
 import Image from "next/image";
 import Link from "next/link";
-import { logout } from "@/redux/slices/user";
-import { useDispatch } from "react-redux";
 
-function UserDropDown() {
-  const router = useRouter();
-  const dispatch = useDispatch();
-  const handleLogout = () => {
-    dispatch(logout());
-    router.push("/unauthenticated");
-  };
-
+interface DropDownProps {
+  functionHandleLogout: () => void;
+  fullName: string | undefined;
+  userName: string | undefined;
+}
+function UserDropDown({
+  userName,
+  fullName,
+  functionHandleLogout,
+}: DropDownProps) {
   return (
-    <div className="absolute right-[15px] bottom-[-358px]  max-w-[300px] w-full bg-white border-[1px] border-[#E8EBED] rounded-[12px] shadow-lg p-4">
+    <div className="absolute right-[15px] bottom-[-358px]  w-[300px]  bg-white border-[1px] border-[#E8EBED] rounded-[12px] shadow-lg p-4">
       <div className="w-full pb-4 border-b-[1px] border-[#E8EBED] flex gap-[10px] items-center">
         <Image
           src={ProfileImg}
@@ -27,10 +26,10 @@ function UserDropDown() {
         ></Image>
         <div className="flex w-full flex-col gap-[4px]">
           <div className="w-full text-[18px] text-[#14375F] leading-[22px]">
-            Nguyen Le Thien Duc
+            {fullName}
           </div>
-          <div className="w-full text-base font-medium leading-[19px] text-[#707070]">
-            @ducnltde170123
+          <div className="w-full text-sm font-medium leading-[19px] text-[#707070]">
+            @{userName}
           </div>
         </div>
       </div>
@@ -56,9 +55,9 @@ function UserDropDown() {
         <Link className="hover:text-[#14375F]" href={""}>
           Settings
         </Link>
-        <Link onClick={handleLogout} className="hover:text-[#14375F]" href={""}>
+        <div onClick={functionHandleLogout} className="hover:text-[#14375F]">
           Log Out
-        </Link>
+        </div>
       </div>
     </div>
   );

@@ -2,9 +2,12 @@ import React from "react";
 import Link from "next/link";
 import ProfileImg from "@icons/header/profileImage.svg";
 import Image from "next/image";
-function AdminDropDown() {
+interface DropDownProps {
+  functionHandleLogout: () => void;
+}
+function AdminDropDown({ functionHandleLogout }: DropDownProps) {
   return (
-    <div className="absolute right-[15px] bottom-[-358px]  max-w-[300px] w-full bg-white border-[1px] border-[#E8EBED] rounded-[12px] shadow-lg p-4">
+    <div className="absolute right-[15px] bottom-[-358px]  w-[300px]  bg-white border-[1px] border-[#E8EBED] rounded-[12px] shadow-lg p-4">
       <div className="w-full pb-4 border-b-[1px] border-[#E8EBED] flex gap-[10px] items-center">
         <Image
           src={ProfileImg}
@@ -17,7 +20,7 @@ function AdminDropDown() {
           <div className="w-full text-[18px] text-[#14375F] leading-[22px]">
             Nguyen Le Thien Duc
           </div>
-          <div className="w-full text-base font-medium leading-[19px] text-[#707070]">
+          <div className="w-full text-sm font-medium leading-[19px] text-[#707070]">
             @ducnltde170123
           </div>
         </div>
@@ -42,9 +45,9 @@ function AdminDropDown() {
         <Link className="hover:text-[#14375F]" href={""}>
           Settings
         </Link>
-        <Link className="hover:text-[#14375F]" href={""}>
+        <div onClick={functionHandleLogout} className="hover:text-[#14375F]">
           Log Out
-        </Link>
+        </div>
       </div>
     </div>
   );

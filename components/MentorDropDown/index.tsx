@@ -1,11 +1,20 @@
 import React from "react";
 import Link from "next/link";
 import ProfileImg from "@icons/header/profileImage.svg";
+import VerifiedMentor from "@icons/header/verifiedMentor.svg";
 import Image from "next/image";
-
-function UserDropDown() {
+interface DropDownProps {
+  functionHandleLogout: () => void;
+  fullName: string | undefined;
+  userName: string | undefined;
+}
+function UserDropDown({
+  userName,
+  fullName,
+  functionHandleLogout,
+}: DropDownProps) {
   return (
-    <div className="absolute right-[15px] bottom-[-404px]  max-w-[300px] w-full bg-white border-[1px] border-[#E8EBED] rounded-[12px] shadow-lg p-4">
+    <div className="absolute right-[15px] bottom-[-404px]  w-[330px]  bg-white border-[1px] border-[#E8EBED] rounded-[12px] shadow-lg p-4">
       <div className="w-full pb-4 border-b-[1px] border-[#E8EBED] flex gap-[10px] items-center">
         <Image
           src={ProfileImg}
@@ -15,11 +24,19 @@ function UserDropDown() {
           className="object-cover"
         ></Image>
         <div className="flex w-full flex-col gap-[4px]">
-          <div className="w-full text-[18px] text-[#14375F] leading-[22px]">
-            Nguyen Le Thien Duc
+          <div className="flex ">
+            <div className="w-full text-[18px] text-[#14375F] leading-[22px]">
+              {fullName}
+            </div>
+            <Image
+              src={VerifiedMentor}
+              alt="Tick"
+              height={24}
+              width={24}
+            ></Image>
           </div>
-          <div className="w-full text-base font-medium leading-[19px] text-[#707070]">
-            @ducnltde170123
+          <div className="w-full text-sm font-medium leading-[19px] text-[#707070]">
+            @{userName}
           </div>
         </div>
       </div>
@@ -48,9 +65,9 @@ function UserDropDown() {
         <Link className="hover:text-[#14375F]" href={""}>
           Settings
         </Link>
-        <Link className="hover:text-[#14375F]" href={""}>
+        <div onClick={functionHandleLogout} className="hover:text-[#14375F]">
           Log Out
-        </Link>
+        </div>
       </div>
     </div>
   );

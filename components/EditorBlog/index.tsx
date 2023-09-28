@@ -76,7 +76,7 @@ const editorConfig = {
     throw error;
   },
   theme: PlaygroundEditorTheme,
-  namespace: "FU-DEVER",
+  namespace: "FU-BLOG",
   nodes: [...PlaygroundNodes],
 };
 const cellEditorConfig = {
@@ -99,8 +99,6 @@ function EditorBlog({ formTitle, htmlString, setHtmlString, pageName }: IPros) {
       setFloatingAnchorElem(_floatingAnchorElem);
     }
   };
-
-  console.log(htmlString);
 
   const handleSubmitNotification = () => {
     console.log("POST NOTIFICATION TO SEVER!");

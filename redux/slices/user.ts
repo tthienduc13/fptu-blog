@@ -23,7 +23,7 @@ export const counterSlice = createSlice({
   reducers: {
     login: (state, action) => {
       state.currentUser = action.payload.user;
-      setCookie("accessToken", action.payload.token.accessToken, {
+      setCookie("accessToken", action.payload.token, {
         maxAge: 3600,
       });
       setCookie("user_id", action.payload.user.sub, {
