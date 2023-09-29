@@ -53,7 +53,7 @@ function SignIn() {
           user,
         })
       );
-      toast.success("Login success !");
+      toast.success(`Login success as ${user.email}`);
       setTimeout(() => {
         router.push("/");
       }, 500);

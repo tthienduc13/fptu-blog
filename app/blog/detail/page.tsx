@@ -2,14 +2,36 @@
 import React from "react";
 import SampleImage from "@image/sampleImage.png";
 import { useState } from "react";
-import InstagramIcon from "@icons/page/blog/detail/instaIcon.svg";
-import FacebookIcon from "@icons/page/blog/detail/facebookIcon.svg";
-import TwitterIcon from "@icons/page/blog/detail/twitterIcon.svg";
 import BackIcon from "@icons/page/blog/backIcon.svg";
 import { useRouter } from "next/navigation";
 import TagIcon from "@icons/page/blog/tagIcon.svg";
 import Image from "next/image";
+import SocialButton from "@/components/SocialButton";
+import {
+  FacebookShareButton,
+  TwitterShareButton,
+  LinkedinShareButton,
+} from "next-share";
+import { usePathname } from "next/navigation";
 function DetailBLogList() {
+  const pathName = usePathname();
+  console.log(pathName);
+  const socicalButton = [
+    {
+      id: 1,
+      icon: "facebook",
+      backgroundColor: "#3B5998",
+      title: "facebook",
+    },
+    { id: 2, icon: "twitter", backgroundColor: "#55ACEE", title: "twitter" },
+    {
+      id: 3,
+      icon: "linkedin",
+      backgroundColor: "#0077B5",
+      title: "linkedin",
+    },
+  ];
+  console.log(socicalButton);
   const router = useRouter();
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const handleLike = () => {
@@ -131,34 +153,6 @@ function DetailBLogList() {
           </div>
         </div>
         <div className=" flex w-full justify-between items-center">
-          <div className="flex gap-[10px] items-center">
-            <div className="text-[#14375F] text-[20px] leading-[30px] font-semibold">
-              Share with
-            </div>
-            <div className="gap-2 flex items-center">
-              <Image
-                className="cursor-pointer hover:opacity-80"
-                src={FacebookIcon}
-                alt="facebook"
-                height={30}
-                width={30}
-              ></Image>
-              <Image
-                className="cursor-pointer hover:opacity-80"
-                src={InstagramIcon}
-                alt="instagram"
-                height={30}
-                width={30}
-              ></Image>
-              <Image
-                className="cursor-pointer hover:opacity-80"
-                src={TwitterIcon}
-                alt="twitter"
-                height={30}
-                width={30}
-              ></Image>
-            </div>
-          </div>
           <div className="flex gap-[8px]">
             <svg
               className="cursor-pointer"
@@ -178,37 +172,53 @@ function DetailBLogList() {
                 fill={isLiked ? "#FF0000" : "white"}
               />
             </svg>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="30"
-              height="30"
-              viewBox="0 0 30 30"
-              fill="none"
-            >
-              <path
-                d="M21.25 24.025H6.25V8.75H15V6.25H6.25C4.875 6.25 3.75 7.375 3.75 8.75V23.75C3.75 25.125 4.875 26.25 6.25 26.25H21.25C22.625 26.25 23.75 25.125 23.75 23.75V15H21.25V24.025Z"
-                fill="black"
-              />
-              <path
-                d="M23.75 2.5H21.25V6.25H17.5C17.5125 6.2625 17.5 8.75 17.5 8.75H21.25V12.4875C21.2625 12.5 23.75 12.4875 23.75 12.4875V8.75H27.5V6.25H23.75V2.5ZM8.75 11.25H18.75V13.75H8.75V11.25ZM8.75 15V17.5H18.75V15H15H8.75ZM8.75 18.75H18.75V21.25H8.75V18.75Z"
-                fill="black"
-              />
-            </svg>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="30"
-              height="30"
-              viewBox="0 0 30 30"
-              fill="none"
-            >
-              <path
-                d="M4.07344 4.92191C3.97258 5.00933 3.89155 5.11728 3.83578 5.23854C3.78 5.3598 3.75075 5.49157 3.75 5.62504V25.3125C3.75 25.5612 3.84877 25.7996 4.02459 25.9755C4.2004 26.1513 4.43886 26.25 4.6875 26.25C4.93614 26.25 5.1746 26.1513 5.35041 25.9755C5.52623 25.7996 5.625 25.5612 5.625 25.3125V20.1293C8.76445 17.6496 11.4691 18.9868 14.584 20.5289C16.5059 21.4793 18.5754 22.5036 20.7949 22.5036C22.4273 22.5036 24.1395 21.9469 25.9301 20.3942C26.0309 20.3068 26.112 20.1988 26.1677 20.0776C26.2235 19.9563 26.2528 19.8245 26.2535 19.6911V5.62504C26.2531 5.44509 26.2009 5.26907 26.1031 5.11799C26.0054 4.96691 25.8662 4.84715 25.7023 4.77301C25.5383 4.69887 25.3565 4.67349 25.1785 4.6999C25.0005 4.7263 24.8338 4.80337 24.6984 4.92191C21.4172 7.76137 18.6375 6.38558 15.416 4.79066C12.0785 3.13598 8.29453 1.26449 4.07344 4.92191ZM24.375 19.2481C21.2355 21.7278 18.5309 20.3895 15.416 18.8485C12.4863 17.4012 9.22734 15.7864 5.625 17.8641V6.06918C8.76445 3.58949 11.4691 4.9266 14.584 6.46762C17.5137 7.91488 20.7738 9.52973 24.375 7.45199V19.2481Z"
-                fill="black"
-              />
-            </svg>
+          </div>
+          <div className=" w-full justify-end flex gap-4 items-center">
+            <div className=" w-full justify-end flex gap-4 items-center">
+              {socicalButton.map((button, index) => (
+                <div key={button.id}>
+                  {button.icon === "facebook" && (
+                    <FacebookShareButton
+                      url={`https://your-blog-url.com`} 
+                      hashtag="#FU_BLOG_Community" 
+                    >
+                      <SocialButton
+                        icon={button.icon}
+                        title={button.title}
+                        backgroundColor={button.backgroundColor}
+                      />
+                    </FacebookShareButton>
+                  )}
+                  {button.icon === "twitter" && (
+                    <TwitterShareButton
+                      url={`https://your-blog-url.com`} 
+                      hashtags={["FU_BLOG_Community"]} 
+                    >
+                      <SocialButton
+                        icon={button.icon}
+                        title={button.title}
+                        backgroundColor={button.backgroundColor}
+                      />
+                    </TwitterShareButton>
+                  )}
+                  {button.icon === "linkedin" && (
+                    <LinkedinShareButton
+                      url={`https://your-blog-url.com`} 
+                      title="Your Blog Title" 
+                    >
+                      <SocialButton
+                        icon={button.icon}
+                        title={button.title}
+                        backgroundColor={button.backgroundColor}
+                      />
+                    </LinkedinShareButton>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-        <div className="w-full gap-[20px] flex flex-col">
+        <div className="w-full py-[40px] gap-[20px] flex flex-col">
           <div className="text-3xl font-bold text-[#14375F] ">
             Related Blogs
           </div>

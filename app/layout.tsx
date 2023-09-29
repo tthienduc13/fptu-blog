@@ -10,6 +10,7 @@ import { Provider } from "react-redux";
 import { store } from "../redux/store";
 import { Helmet } from "react-helmet";
 import AuthProvider from "@/app/AuthProvider";
+import "@lexicalLib/theme/EditorTheme.css";
 
 // export const metadata: Metadata = {
 //   title: "FPTHub",
