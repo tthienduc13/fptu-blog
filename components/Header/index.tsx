@@ -64,7 +64,6 @@ function Header(): JSX.Element {
     handleGetUserProfile();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log(userData);
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     document.addEventListener("mousedown", handleOutsideClick);

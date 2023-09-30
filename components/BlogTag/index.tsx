@@ -22,7 +22,6 @@ function BlogTag() {
           const response = await getAllTag(access_token);
           const data = response.data;
           const titles = data.map((tag: tag) => tag.title);
-          console.log(titles);
           setSuggestions(titles);
         }
       } catch (error) {

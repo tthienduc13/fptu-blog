@@ -23,7 +23,6 @@ function CategoryTag() {
           const response = await getAllCategory(access_token);
           const data = response.data;
           const titles = data.map((category: category) => category.title);
-          console.log(titles);
           setSuggestions(titles);
         }
       } catch (error) {
@@ -34,8 +33,6 @@ function CategoryTag() {
     };
     hanldeGetAllCategoryData();
   }, []);
-
-  console.log(suggestions);
 
   return (
     <div className="flex flex-col gap-[8px]">

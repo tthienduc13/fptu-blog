@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import BackIcon from "@icons/page/blog/backIcon.svg";
 import "@/app/globals.css";
 import Image from "next/image";
@@ -113,6 +113,7 @@ function EditBlog() {
             pageName="create_blog"
           ></EditorBlog>
         </div>
+        <div dangerouslySetInnerHTML={{ __html: htmlString }}></div>
       </main>
     </>
   );

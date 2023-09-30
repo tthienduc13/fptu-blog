@@ -212,7 +212,7 @@ function EditorBlog({ formTitle, htmlString, setHtmlString, pageName }: IPros) {
                 <PageBreakPlugin />
                 <CodeHighlightPlugin />
                 <NOSSRActionsPlugin isRichText={true} />
-                <ActionsPlugin isRichText={true} />
+                {/* <ActionsPlugin isRichText={true} /> */}
 
                 {floatingAnchorElem && (
                   <>
