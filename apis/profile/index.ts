@@ -1,7 +1,7 @@
 import axiosClient from "@/utils/axiosClient/index";
 
 export const END_POINT = {
-  GET: "/users/userInfo/",
+  GET: "/users/profile/",
 };
 
 export const getMemberInfo = (user_id: string, access_token: string | null) => {

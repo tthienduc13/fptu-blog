@@ -58,7 +58,7 @@ function EditBlog() {
     <>
       <main className=" absolute w-full flex flex-col gap-[20px] right-0 top-[56px] lg:top-[64px] bottom-0 h-fit p-[20px] lg:p-[40px]">
         <div className="w-full flex items-center justify-between">
-          <h1 className="md:text-[30px] md:leading-[45px] text-2xl  font-bold select-none">
+          <h1 className=" relative md:text-[30px] md:leading-[45px] text-2xl  font-bold select-none">
             Create Blog
           </h1>
           <div

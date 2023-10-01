@@ -16,8 +16,10 @@ import { toggleIsOpenSideBar } from "@/redux/slices/app";
 import { getCookie } from "cookies-next";
 import { getMemberInfo } from "@/apis/profile";
 import axios from "axios";
+import { Skeleton } from "@mui/material";
 function Header(): JSX.Element {
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isOpenNav, setIsOpenNav] = useState<boolean>(false);
   const [userData, setUserData] = useState<userInfo>();
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
@@ -58,6 +60,8 @@ function Header(): JSX.Element {
       if (axios.isAxiosError(error)) {
         console.log(error);
       }
+    } finally {
+      setIsLoading(false);
     }
   };
   useEffect(() => {
@@ -108,17 +112,41 @@ function Header(): JSX.Element {
             {isDropdownOpen && (
               <DropDown userName={userName} fullName={fullName} />
             )}
-            <div className="text-[#14375F] h-[19px] leading-[19px] text-base font-medium">
-              {fullName}
-            </div>
+            {isLoading ? (
+              <div className="w-[150px]">
+                <Skeleton
+                  sx={{ bgcolor: "grey.100" }}
+                  variant="rectangular"
+                  height={20}
+                ></Skeleton>
+              </div>
+            ) : (
+              <div className="text-[#14375F] h-[19px] leading-[19px] text-base font-medium">
+                {fullName}
+              </div>
+            )}
             <div className="flex items-center gap-[5px]">
-              <Image
-                width={100}
-                height={100}
-                src={userData?.image == null ? DefaultAvatar : userData?.image}
-                alt="Profile Image"
-                className="w-[30px] rounded-[50%] h-[30px] object-cover"
-              />
+              {isLoading ? (
+                <div className="rounded-[50%] overflow-hidden">
+                  {" "}
+                  <Skeleton
+                    height={30}
+                    width={30}
+                    variant="rounded"
+                    sx={{ bgcolor: "grey.100" }}
+                  ></Skeleton>
+                </div>
+              ) : (
+                <Image
+                  width={100}
+                  height={100}
+                  src={
+                    userData?.image == null ? DefaultAvatar : userData?.image
+                  }
+                  alt="Profile Image"
+                  className="w-[30px] rounded-[50%] h-[30px] object-cover"
+                />
+              )}
               <Image
                 width={100}
                 height={100}

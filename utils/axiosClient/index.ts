@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 // Change the url
 const axiosServices = axios.create({
-  baseURL: "http://localhost:3000/api",
+  baseURL: "https://fpt-blog-be-production.up.railway.app/api",
   timeout: 50000,
 });
 
@@ -33,7 +33,7 @@ axiosServices.interceptors.request.use(
 );
 
 const axiosUpload = axios.create({
-  baseURL: "http://localhost:3000/api",
+  baseURL: "https://fpt-blog-be-production.up.railway.app/api",
   timeout: 50000,
 });
 

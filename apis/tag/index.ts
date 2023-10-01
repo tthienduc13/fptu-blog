@@ -1,7 +1,7 @@
 import axiosClient from "@/utils/axiosClient/index";
 
 export const END_POINT = {
-  GET_ALL: "/blogs/getAllTag",
+  GET_ALL: "/blogs/tags",
 };
 
 export const getAllTag = (access_token: string | null) => {

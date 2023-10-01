@@ -12,7 +12,7 @@ function directToUnauthenticated(
       url.includes("/blog") ||
       url.includes("/blog/create") ||
       url.includes("/user") ||
-      url === "http://localhost:3001/")
+      url === "http://localhost:3000/")
   );
 }
 
@@ -23,11 +23,11 @@ export default function middleware(
   let url = req.url;
 
   if (directToUnauthenticated(verify, url)) {
-    return NextResponse.redirect("http://localhost:3001/unauthenticated");
+    return NextResponse.redirect("http://localhost:3000/unauthenticated");
   }
 
   if (verify && url.includes("/auth")) {
-    return NextResponse.redirect("http://localhost:3001/");
+    return NextResponse.redirect("http://localhost:3000/");
   }
 
   return NextResponse.next();
