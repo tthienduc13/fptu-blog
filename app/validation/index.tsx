@@ -7,6 +7,10 @@ export const registerSchema = yup.object().shape({
   email: yup
     .string()
     .email("Please enter a valid email")
+    .matches(
+      /@(fpt|fe)\.edu\.vn$/,
+      "Email must be from @fpt.edu.vn or @fe.edu.vn"
+    )
     .required("This field is required"),
   password: yup
     .string()
@@ -18,7 +22,6 @@ export const registerSchema = yup.object().shape({
     .oneOf([yup.ref("password"), ""], "Password must match")
     .required("This field is required"),
 });
-
 export const resetSchema = yup.object().shape({
   email: yup
     .string()
