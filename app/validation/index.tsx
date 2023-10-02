@@ -12,14 +12,11 @@ export const registerSchema = yup.object().shape({
       "Email must be from @fpt.edu.vn or @fe.edu.vn"
     )
     .required("This field is required"),
-  password: yup
+  oldPassword: yup.string().required("This field is required"),
+  newPassword: yup
     .string()
     .min(8, "Password must be at least 8 characters")
     .matches(passRule, { message: "Please enter a stronger password" })
-    .required("This field is required"),
-  confirmPassword: yup
-    .string()
-    .oneOf([yup.ref("password"), ""], "Password must match")
     .required("This field is required"),
 });
 export const resetSchema = yup.object().shape({

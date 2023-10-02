@@ -4,7 +4,6 @@ import axiosClient from "@/utils/axiosClient/index";
 export const END_POINT = {
   LOGIN: "/auth/login",
   REGISTER: "/auth/register",
-  ME: "auth/me",
   TOKEN: "/auth/refresh-token",
   RESET: "/auth/change-password",
 };

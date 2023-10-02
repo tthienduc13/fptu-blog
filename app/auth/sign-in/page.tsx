@@ -146,7 +146,7 @@ function SignIn() {
                         </p>
                       </div>
                       <Link
-                        href="/auth/forgot-password"
+                        href="/auth/reset-password"
                         className="text-[#0098FF] text-sm leading-5 font-medium hover:underline"
                       >
                         {" "}

@@ -4,13 +4,46 @@ import { Form, Formik } from "formik";
 import InputForm from "@/components/InputForm";
 import { registerSchema } from "@/app/validation";
 import Image from "next/image";
-import Logo from "@image/page/authentication/signin/logo.svg";
+import Logo from "@icons/logo/logo.svg";
 import ResetImg from "@image/page/authentication/reset/resetImage.jpg";
+import { resetAccount } from "@/apis/auth";
+import { ValidationError } from "yup";
+import { toast } from "react-toastify";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+type UserReset = {
+  email: string;
+  oldPassword: string;
+  newPassword: string;
+};
 function ResetPassword() {
-  const onSubmit = async (values: object, actions: any) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    actions.resetForm();
-    alert("success");
+  const router = useRouter();
+  const onSubmit = async (values: UserReset, actions: any) => {
+    try {
+      const response = await resetAccount(values);
+      if (response.status === 200) {
+        toast.success(response.data.message);
+        setTimeout(() => {
+          router.push("/");
+        }, 500);
+      }
+    } catch (error) {
+      if (error instanceof ValidationError) {
+        if (error?.name === "ValidationError") {
+          toast.error(error.errors[0]);
+        }
+      }
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 400) {
+          toast.error("Old password is not correct!");
+        } else if (error.response?.status === 404) {
+          toast.error("User not found!");
+        }
+        if (error.response?.status === 500)
+          toast.error("An error occurred while updating the password!");
+      }
+      actions.resetForm();
+    }
   };
   return (
     <section>
@@ -38,9 +71,8 @@ function ResetPassword() {
               <Formik
                 initialValues={{
                   email: "",
-                  password: "",
-                  confirmPassword: "",
-                  accepted: false,
+                  oldPassword: "",
+                  newPassword: "",
                 }}
                 validationSchema={registerSchema}
                 onSubmit={onSubmit}
@@ -61,25 +93,25 @@ function ResetPassword() {
                     </div>
                     <div className="mb-6">
                       <div className="text-sm font-medium block leading-5 mb-2">
-                        Your new password:
+                        Your old password:
                       </div>
                       <InputForm
-                        label="password"
+                        label="oldPassword"
                         type="password"
-                        name="password"
-                        id="password"
+                        name="oldPassword"
+                        id="oldPassword"
                         placeholder="Enter your new password"
                       ></InputForm>
                     </div>
                     <div className="mb-6">
                       <div className="text-sm font-medium block leading-5 mb-2">
-                        Confirm your new password:
+                        Your new password:
                       </div>
                       <InputForm
-                        label="confirmPassword"
+                        label="newPassword"
                         type="password"
-                        name="confirmPassword"
-                        id="confirmPassword"
+                        name="newPassword"
+                        id="newPassword"
                         placeholder="Confirm your new password"
                       ></InputForm>
                     </div>
