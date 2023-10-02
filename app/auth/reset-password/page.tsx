@@ -4,7 +4,7 @@ import { Form, Formik } from "formik";
 import InputForm from "@/components/InputForm";
 import { registerSchema } from "@/app/validation";
 import Image from "next/image";
-import Logo from "@image/page/authentication/signin/logo.svg";
+import Logo from "@icons/logo/logo.svg";
 import ResetImg from "@image/page/authentication/reset/resetImage.jpg";
 import { resetAccount } from "@/apis/auth";
 import { ValidationError } from "yup";
