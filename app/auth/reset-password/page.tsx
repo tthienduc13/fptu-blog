@@ -2,7 +2,7 @@
 import React from "react";
 import { Form, Formik } from "formik";
 import InputForm from "@/components/InputForm";
-import { registerSchema } from "@/app/validation";
+import { resetSchema } from "@/app/validation";
 import Image from "next/image";
 import Logo from "@icons/logo/logo.svg";
 import ResetImg from "@image/page/authentication/reset/resetImage.jpg";
@@ -74,7 +74,7 @@ function ResetPassword() {
                   oldPassword: "",
                   newPassword: "",
                 }}
-                validationSchema={registerSchema}
+                validationSchema={resetSchema}
                 onSubmit={onSubmit}
               >
                 {({ isSubmitting }) => (
@@ -125,7 +125,7 @@ function ResetPassword() {
                     <div className=" text-sm leading-5 font-medium text-[#6B7280]">
                       Already have an account?
                       <a
-                        href="https://www.fu-dever.com/auth/sign-in"
+                        href="/auth/sign-in"
                         className="text-[#0098FF] ml-1  hover:underline"
                       >
                         Login here
