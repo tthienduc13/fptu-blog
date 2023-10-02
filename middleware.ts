@@ -8,8 +8,7 @@ function directToUnauthenticated(
 ) {
   return (
     !verify &&
-    (url.includes("/auth/reset-password") ||
-      url.includes("/blog") ||
+    (url.includes("/blog") ||
       url.includes("/blog/create") ||
       url.includes("/user") ||
       url === "http://localhost:3000/")
