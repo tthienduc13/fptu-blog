@@ -1,6 +1,4 @@
 import axiosClient from "@/utils/axiosClient/index";
-;
-
 export const END_POINT = {
   LOGIN: "/auth/login",
   REGISTER: "/auth/register",
