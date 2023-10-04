@@ -11,6 +11,7 @@ function directToUnauthenticated(
     (url.includes("/blog") ||
       url.includes("/blog/create") ||
       url.includes("/user") ||
+      url.includes("/admin") ||
       url === "http://localhost:3000/")
   );
 }
