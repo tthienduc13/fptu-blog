@@ -1,20 +1,25 @@
 import React, { useState, useEffect } from "react";
-import BlogTagField from "@component/BlogTag/TagField";
+import BlogTagField from "@component/CategoryTag/TagField";
 import axios from "axios";
 import { getCookie } from "cookies-next";
 import { getAllCategory } from "@/apis/category";
 import { Skeleton } from "@mui/material";
-type category = {
-  category_id: number;
-  title: string;
-  description: string;
-};
-function CategoryTag() {
+import { blogCategory } from "@/utils/types";
+
+interface categoryProps {
+  setBlogCategoryId: React.Dispatch<React.SetStateAction<string>>;
+  setBlogCategory: React.Dispatch<React.SetStateAction<string>>;
+  blogCategory: string;
+}
+function CategoryTag({
+  setBlogCategory,
+  blogCategory,
+  setBlogCategoryId,
+}: categoryProps) {
   const allowTagNumber: number = 1;
   const placeholder = "Enter Category...";
-  const [blogTags, setBlogTags] = useState<string[]>([]);
   const [suggestions, setSuggestions] = useState<string[]>([]);
-
+  const [categories, setCategories] = useState<blogCategory[]>([]);
   useEffect(() => {
     const hanldeGetAllCategoryData = async () => {
       try {
@@ -22,8 +27,11 @@ function CategoryTag() {
         if (access_token) {
           const response = await getAllCategory(access_token);
           const data = response.data;
-          const titles = data.map((category: category) => category.title);
-          setSuggestions(titles);
+          setCategories(data);
+          const description = data.map(
+            (category: blogCategory) => category.description
+          );
+          setSuggestions(description);
         }
       } catch (error) {
         if (axios.isAxiosError(error)) {
@@ -42,10 +50,12 @@ function CategoryTag() {
       {suggestions.length > 0 ? (
         <div className="border-gray-300 rounded-[12px] w-full border-2 ">
           <BlogTagField
+            categories={categories}
             allowTagNumber={allowTagNumber}
             suggestions={suggestions}
-            state={blogTags}
-            setState={setBlogTags}
+            setStateId={setBlogCategoryId}
+            state={blogCategory}
+            setState={setBlogCategory}
             placeholder={placeholder}
           />
         </div>

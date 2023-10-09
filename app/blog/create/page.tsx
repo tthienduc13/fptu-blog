@@ -13,23 +13,26 @@ import { getCookie } from "cookies-next";
 import axios from "axios";
 import { createBlog } from "@/apis/blog";
 import { toast } from "react-toastify";
-interface newBlog {
-  user_id: string;
-  blogTitle: string;
-  htmlString: string;
-  status: number;
-  visual: string;
-}
+import ModifyButton from "@component/ModifyButton";
+import { Skeleton } from "@mui/material";
+
 function EditBlog() {
   const [blogTitle, setBlogTitle] = useState<string>("");
+  const [blogCategory, setBlogCategory] = useState<string>("");
+  const [blogCategoryId, setBlogCategoryId] = useState<string>("");
+
+  const [blogTags, setBlogTags] = useState<string[]>([]);
+  const [blogTagsId, setBlogTagsId] = useState<string[]>([]);
   const [importedImage, setImportedImage] = useState<File | null>(null);
   const [imageURL, setImageURL] = useState<string>("");
   const [htmlString, setHtmlStringg] = useState<string>("");
   const router = useRouter();
   console.log(`Blog title: ${blogTitle}`);
+  console.log(`Blog category: ${blogCategoryId}`);
+  console.log(`Blog tags: ${blogTagsId} `);
   console.log(`Blog content: ${htmlString}`);
   console.log(`Blog image: ${imageURL}`);
-  const handlePublishBlog = async (values: newBlog) => {
+  const handleCreateBlog = async () => {
     const access_token = getCookie("accessToken");
     const user_id = getCookie("user_id");
     try {
@@ -37,6 +40,7 @@ function EditBlog() {
         const newBLog = {
           user_id: user_id,
           blogTitle: blogTitle,
+          category_id: blogCategoryId,
           htmlString: htmlString,
           status: 0,
           visual: imageURL,
@@ -44,7 +48,7 @@ function EditBlog() {
         await createBlog(newBLog);
         toast.success("Blog posted! Please wait for the modrator!");
         setTimeout(() => {
-          router.push("/blog/posted-blog");
+          router.push("/blog/posted-blog/list/1");
         }, 500);
       }
     } catch (err) {
@@ -90,7 +94,11 @@ function EditBlog() {
             />
           </div>
           <div className="w-[calc(50%-20px)] flex flex-col gap-2">
-            <CategoryTag></CategoryTag>
+            <CategoryTag
+              blogCategory={blogCategory}
+              setBlogCategory={setBlogCategory}
+              setBlogCategoryId={setBlogCategoryId}
+            ></CategoryTag>
           </div>
         </div>
         <div>
@@ -103,7 +111,26 @@ function EditBlog() {
           ></BrowseMedia>
         </div>
         <div>
-          <BlogTag></BlogTag>
+          {blogCategoryId ? (
+            <BlogTag
+              blogCategoryId={blogCategoryId}
+              blogTags={blogTags}
+              setBlogTags={setBlogTags}
+              setBlogTagsId={setBlogTagsId}
+            />
+          ) : (
+            <div className="flex flex-col gap-[8px]">
+              <h3 className="text-base text-[#14375F] font-medium">Add Tag</h3>
+              <div className="border-gray-300 rounded-[12px] w-full border-2 overflow-hidden">
+                <Skeleton
+                  sx={{ bgcolor: "grey.100" }}
+                  variant="rectangular"
+                  animation="wave"
+                  height={51}
+                ></Skeleton>
+              </div>
+            </div>
+          )}
         </div>
         <div>
           <EditorBlog
@@ -112,6 +139,21 @@ function EditBlog() {
             setHtmlString={setHtmlStringg}
             pageName="create_blog"
           ></EditorBlog>
+        </div>
+
+        <div className="mt-[12px] flex flex-row justify-between">
+          <div>
+            <ModifyButton
+              textContent={"Publish Blog"}
+              icon={"public"}
+              iconPosition={"left"}
+              backgroundColor={"bg-blue-700"}
+              method={() => {
+                handleCreateBlog();
+              }}
+              tailwind={"text-white"}
+            ></ModifyButton>
+          </div>
         </div>
         <div dangerouslySetInnerHTML={{ __html: htmlString }}></div>
       </main>

@@ -28,9 +28,9 @@ const items: TabsProps["items"] = [
 
 function Admin() {
   return (
-    <main className="absolute sm:w-full h-full lg:w-[calc(100%-100px)] right-0 top-[64px] bottom-0">
+    <main className="absolute sm:w-full h-full lg:w-[calc(100)] right-0 top-[64px] bottom-0">
       <div className="w-full h-full py-[20px] px-[20px] ">
-        <Tabs  defaultActiveKey="1" items={items} onChange={onChange} />
+        <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
       </div>
     </main>
   );

@@ -1,8 +1,7 @@
 import axiosClient from "@/utils/axiosClient/index";
 export const END_POINT = {
   LOGIN: "/auth/login",
-  REGISTER: "/auth/register",
-  TOKEN: "/auth/refresh-token",
+  REGISTER: "/auth/register",  
   RESET: "/auth/change-password",
 };
 
@@ -18,7 +17,7 @@ type UserChange = {
   oldPassword: string;
 };
 type Token = {
-  AccessToken: string;
+  AccessToken: string;  
 };
 
 type LoginResponse = {

@@ -5,7 +5,6 @@ import Logo from "@icons/logo/logo.svg";
 import DefaultAvatar from "@icons/header/defaultAvatar.svg";
 import SearchIcon from "@icons/header/search.svg";
 import ArrowDown from "@icons/header/arrowDown.svg";
-import ProfileImg from "@icons/header/profileImage.svg";
 import NotiIcon from "@icons/header/notiIcon.svg";
 import BurgerMenu from "@icons/header/burger.svg";
 import DropDown from "@/components/Dropdown/index";
