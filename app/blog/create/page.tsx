@@ -11,7 +11,7 @@ import BrowseMedia from "@/components/BrowseMedia";
 import EditorBlog from "@component/EditorBlog";
 import { getCookie } from "cookies-next";
 import axios from "axios";
-import { createBlog } from "@/apis/blog";
+import { createBlog, createBlogTags } from "@/apis/blog";
 import { toast } from "react-toastify";
 import ModifyButton from "@component/ModifyButton";
 import { Skeleton } from "@mui/material";
@@ -37,7 +37,7 @@ function EditBlog() {
     const user_id = getCookie("user_id");
     try {
       if (access_token && user_id) {
-        const newBLog = {
+        const newBlog = {
           user_id: user_id,
           blogTitle: blogTitle,
           category_id: blogCategoryId,
@@ -45,7 +45,13 @@ function EditBlog() {
           status: 0,
           visual: imageURL,
         };
-        await createBlog(newBLog);
+        const createdBlog = await createBlog(newBlog);
+        const blog_id = createdBlog.blog_id;
+        const newBlogTags = {
+          blog_id: blog_id,
+          tags: blogTagsId,
+        };
+        await createBlogTags(newBlogTags);
         toast.success("Blog posted! Please wait for the modrator!");
         setTimeout(() => {
           router.push("/blog/posted-blog/list/1");

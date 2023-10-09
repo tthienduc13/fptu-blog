@@ -69,8 +69,6 @@ function BlogTagField({
     placeholder: placeholder,
   };
 
-  const handleSubmitTags = () => {};
-
   return (
     <div className="flex flex-col gap-[20px]">
       <div className={`form-group shadow-primary  rounded-[8px] p-[6px]`}>
