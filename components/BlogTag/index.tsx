@@ -2,26 +2,37 @@ import React, { useState, useEffect } from "react";
 import BlogTagField from "./TagField";
 import axios from "axios";
 import { getCookie } from "cookies-next";
-import { getAllTag } from "@/apis/tag";
+import { getTagsByCategory } from "@/apis/tag";
 import { Skeleton } from "@mui/material";
-type tag = {
-  tag_id: number;
-  category_id: number;
-  title: string;
-};
-function BlogTag() {
+import { blogTags } from "@/utils/types";
+interface tagProps {
+  blogCategoryId: string;
+  blogTags: string[];
+  setBlogTags: React.Dispatch<React.SetStateAction<string[]>>;
+  setBlogTagsId: React.Dispatch<React.SetStateAction<string[]>>;
+}
+function BlogTag({
+  blogTags,
+  setBlogTags,
+  setBlogTagsId,
+  blogCategoryId,
+}: tagProps) {
   const allowTagNumber: number = 30;
   const placeholder = "Enter Tag...";
-  const [blogTags, setBlogTags] = useState<string[]>([]);
+  const [tags, setTags] = useState<blogTags[]>([]);
   const [suggestions, setSuggestions] = useState<string[]>([]);
   useEffect(() => {
-    const hanldeGetAllCategoryData = async () => {
+    const handleGetTags = async () => {
       try {
         const access_token = getCookie("accessToken");
         if (access_token) {
-          const response = await getAllTag(access_token);
+          const response = await getTagsByCategory(
+            blogCategoryId,
+            access_token
+          );
           const data = response.data;
-          const titles = data.map((tag: tag) => tag.title);
+          setTags(data);
+          const titles = data.map((tag: blogTags) => tag.title);
           setSuggestions(titles);
         }
       } catch (error) {
@@ -30,7 +41,7 @@ function BlogTag() {
         }
       }
     };
-    hanldeGetAllCategoryData();
+    handleGetTags();
   }, []);
 
   return (
@@ -42,8 +53,10 @@ function BlogTag() {
             allowTagNumber={allowTagNumber}
             suggestions={suggestions}
             state={blogTags}
+            tags={tags}
             setState={setBlogTags}
             placeholder={placeholder}
+            setBlogTagsId={setBlogTagsId}
           />
         </div>
       ) : (
@@ -61,5 +74,3 @@ function BlogTag() {
 }
 
 export default BlogTag;
-
-

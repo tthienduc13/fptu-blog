@@ -1,81 +1,43 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import PostedBlogCard from "@/components/PostedBlogCard";
-import SampleImage from "@image/sampleImage.png";
 import { useState } from "react";
 import Pagination from "@component/Pagination";
+import { getCookie } from "cookies-next";
+import { getPostedBlog } from "@/apis/blog";
+import axios from "axios";
 interface pageProps {
   params: { listID: string };
 }
 
 function YourBlog({ params }: pageProps) {
-  const sampleData = [
-    {
-      id: 1,
-      image: SampleImage,
-      title: "Noteworthy technology acquisitions 2021",
-      author: "Nguyen Le Thien Duc",
-      category: "Sofware Engineering",
-      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-      time: "a min ago",
-      status: "Approved",
-    },
-    {
-      id: 2,
-      image: SampleImage,
-      title: "Noteworthy technology acquisitions 2021",
-      author: "Nguyen Le Thien Duc",
-      category: "Sofware Engineering",
-      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-      time: "a min ago",
-      status: "Pending",
-    },
-    {
-      id: 3,
-      image: SampleImage,
-      title: "Noteworthy technology acquisitions 2021",
-      author: "Nguyen Le Thien Duc",
-      category: "Sofware Engineering",
-      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-      time: "a min ago",
-      status: "Expired",
-    },
-    {
-      id: 4,
-      image: SampleImage,
-      title: "Noteworthy technology acquisitions 2021",
-      author: "Nguyen Le Thien Duc",
-      category: "Sofware Engineering",
-      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-      time: "a min ago",
-      status: "Approved",
-    },
-    {
-      id: 5,
-      image: SampleImage,
-      title: "Noteworthy technology acquisitions 2021",
-      author: "Nguyen Le Thien Duc",
-      category: "Sofware Engineering",
-      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-      time: "a min ago",
-      status: "Expired",
-    },
-    {
-      id: 6,
-      image: SampleImage,
-      title: "Noteworthy technology acquisitions 2021",
-      author: "Nguyen Le Thien Duc",
-      category: "Sofware Engineering",
-      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-      time: "a min ago",
-      status: "Pending",
-    },
-  ];
+  const [blogData, setBLogData] = useState<[]>([]);
+  const hanldeGetPostedBlogs = async () => {
+    try {
+      const access_token = getCookie("accessToken");
+      if (access_token) {
+        const userId = getCookie("user_id");
+        if (userId) {
+          const response = await getPostedBlog(userId, access_token);
+          setBLogData(response.data);
+        }
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.log(error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    hanldeGetPostedBlogs();
+  }, []);
+
   const increaseIndex = 8;
-  const [blogs, setBlogs] = useState(sampleData.slice(0, increaseIndex + 1));
+  const [blogs, setBlogs] = useState(blogData.slice(0, increaseIndex + 1));
   const [countListPage, setCountListPage] = useState(
-    Math.ceil(sampleData.length / increaseIndex)
+    Math.ceil(blogData.length / increaseIndex)
   );
   const pages: { param: string; startIndex: number; endIndex: number }[] = [];
   return (
@@ -89,7 +51,7 @@ function YourBlog({ params }: pageProps) {
               </h1>
             </div>
             <div className="w-full flex md:flex-row sm:flex-col lg:gap-y-[30px] sm:gap-y-4 flex-wrap lg:gap-x-[30px] sm:gap-x-4 ">
-              {blogs.map((data, index) => (
+              {blogData.map((data, index) => (
                 <PostedBlogCard key={index} value={data}></PostedBlogCard>
               ))}
               <Pagination
@@ -98,8 +60,8 @@ function YourBlog({ params }: pageProps) {
                 pages={pages}
                 increaseIndex={increaseIndex}
                 sliceSetData={setBlogs}
-                data={sampleData}
-                route={"/featured-blog/list/"}
+                data={blogData}
+                route={"/posted-blog/list/"}
               ></Pagination>
             </div>
           </div>

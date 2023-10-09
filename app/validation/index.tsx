@@ -43,6 +43,10 @@ export const loginSchema = yup.object().shape({
   email: yup
     .string()
     .email("Please enter a valid email")
+    .matches(
+      /@(fpt|fe)\.edu\.vn$/,
+      "Email must be from @fpt.edu.vn or @fe.edu.vn"
+    )
     .required("This field is required"),
   password: yup
     .string()

@@ -57,7 +57,7 @@ function MajorBlog() {
   ];
   return (
     <>
-      <div className="mb-[40px] p-[20px] md:pb-[40px] w-full">
+      <div className="mb-[40px] p-[20px] md:p-[40px] w-full">
         <div className="w-full flex items-center justify-between mb-5">
           <h1 className="text-[#14375F] font-bold md:text-[30px] md:leading-[45px] text-2xl">
             Your Major&#39;s Blogs

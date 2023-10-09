@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import Tags from "@yaireo/tagify/dist/react.tagify";
 import { TagifySettings } from "@yaireo/tagify";
 import "@component/ElementsSetting/TagField/Styling.scss";
-import { blogTags } from "@/utils/types";
+import { blogCategory } from "@/utils/types";
 
 interface TagFieldProps {
   allowTagNumber: number;
   suggestions: string[];
-  setState: React.Dispatch<React.SetStateAction<string[]>>;
-  state: string[];
+  setState: React.Dispatch<React.SetStateAction<string>>;
+  state: string;
   placeholder: string;
-  tags: blogTags[];
-  setBlogTagsId: React.Dispatch<React.SetStateAction<string[]>>;
+  categories: blogCategory[];
+  setStateId: React.Dispatch<React.SetStateAction<string>>;
 }
 
 function BlogTagField({
@@ -20,8 +20,8 @@ function BlogTagField({
   setState,
   state,
   placeholder,
-  tags,
-  setBlogTagsId,
+  categories,
+  setStateId,
 }: TagFieldProps) {
   const baseTagifySettings = {
     blacklist: [],
@@ -34,21 +34,18 @@ function BlogTagField({
     },
     callbacks: {} as any,
   };
-  const [data, setData] = useState<string[]>(state);
-
   const handleChange = (e: CustomEvent) => {
-    const selectedTags = e.detail.tagify.value.map(
+    const selectedTag = e.detail.tagify.value.map(
       (item: { value: string }) => item.value
+    )[0]; // Take only the first value as a string
+    setState(selectedTag);
+    const selectedCategory = categories.find(
+      (category: blogCategory) => category.description === selectedTag
     );
-    setData(selectedTags);
-    const selectedTagsIds = selectedTags.map((tag: string) => {
-      const foundTag = tags.find((t) => t.title === tag);
-      return foundTag?.tag_id;
-    });
-    setBlogTagsId(selectedTagsIds);
+    const stateId = selectedCategory ? selectedCategory?.category_id : "";
+    setStateId(stateId);
   };
 
-  // console.log(data);
   const settings: TagifySettings<Tagify.BaseTagData> = {
     ...baseTagifySettings,
     whitelist: suggestions,
@@ -68,8 +65,6 @@ function BlogTagField({
     },
     placeholder: placeholder,
   };
-
-  const handleSubmitTags = () => {};
 
   return (
     <div className="flex flex-col gap-[20px]">

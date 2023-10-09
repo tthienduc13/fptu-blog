@@ -1,55 +1,34 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Table, Space, Modal, Button } from "antd";
-import type { ColumnsType } from "antd/es/table";
+import { Table, Space } from "antd";
+import type { ColumnsType, TableProps } from "antd/es/table";
 import { getCookie } from "cookies-next";
 import axios from "axios";
 import { deleteUser, getAllMember } from "@/apis/profile";
 import DeleteIcon from "@icons/page/admin/deleteIcon.svg";
 import Image from "next/image";
 import { toast } from "react-toastify";
-
-interface DataType {
-  key: React.Key;
-  user_id: string;
-  fullname: string;
-  role: string;
-  department: string;
-  email: string;
-  major: string;
-  status: string;
-  description: string;
-}
-
-type Item = {
-  user_id: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-  role_id: number;
-  department: string;
-  major: string;
-  isVerified: boolean;
-  bio: string;
-};
+import { dataTypeAdmin, columnItem } from "@/utils/types";
+import AdminModal from "@/components/AdminModal";
 
 function MemberList() {
-  const [data, setData] = useState<DataType[]>();
-  const [isOpenModal, setIsOpenModal] = useState(false);
-  const [selectedUser, setSelectedUser] = useState<DataType | null>();
-  const openDeleteModal = (record: DataType) => {
+  const [data, setData] = useState<dataTypeAdmin[]>();
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [isOpenDeleteModal, setIsOpenDeleteModal] = useState<boolean>(false);
+  const [selectedUser, setSelectedUser] = useState<dataTypeAdmin | null>();
+  const openDeleteModal = (record: dataTypeAdmin) => {
     setSelectedUser(record);
-    setIsOpenModal(true);
+    setIsOpenDeleteModal(true);
   };
-  console.log(selectedUser);
+
   const handleGetAllProfiles = async () => {
     try {
       const access_token = getCookie("accessToken");
       if (access_token) {
         const response = await getAllMember(access_token);
         const data = response.data;
-        const formattedData = data.map((item: Item) => ({
+        const formattedData = data.map((item: columnItem) => ({
           key: item.user_id,
           user_id: item.user_id,
           fullName:
@@ -61,7 +40,7 @@ function MemberList() {
             item.role_id === 1 ? "Member" : item.role_id === 2 ? "Mentor" : "",
           department: item.department,
           major: item.major,
-          status: item.isVerified ? "Active" : "Pending",
+          isVerified: item.isVerified ? "Active" : "Pending",
           description: item.bio ?? "No bio yet!",
         }));
         setData(formattedData);
@@ -90,10 +69,23 @@ function MemberList() {
         toast.error("Deleting failed!");
       }
     }
-    setIsOpenModal(false);
+    setIsOpenDeleteModal(false);
   };
 
-  const columns: ColumnsType<DataType> = [
+  const filteredData: dataTypeAdmin[] | undefined = data?.filter((item) =>
+    item.fullName.toLowerCase().includes(searchQuery)
+  );
+
+  const onChange: TableProps<dataTypeAdmin>["onChange"] = (
+    pagination,
+    filters,
+    sorter,
+    extra
+  ) => {
+    console.log("params", pagination, filters, sorter, extra);
+  };
+
+  const columns: ColumnsType<dataTypeAdmin> = [
     Table.EXPAND_COLUMN,
     {
       title: "Full Name",
@@ -110,16 +102,6 @@ function MemberList() {
       title: "Role",
       dataIndex: "role",
       key: "role",
-      filters: [
-        {
-          text: "Member",
-          value: "Member",
-        },
-        {
-          text: "Mentor",
-          value: "Mentor",
-        },
-      ],
     },
     {
       title: "Deparment",
@@ -134,8 +116,8 @@ function MemberList() {
     },
     {
       title: "Status",
-      dataIndex: "status",
-      key: "status",
+      dataIndex: "isVerified",
+      key: "isVerified",
       render: (status) => (
         <div style={{ textAlign: "center" }}>
           <span
@@ -184,42 +166,25 @@ function MemberList() {
   ];
   return (
     <>
-      <Modal
-        title="Delete User"
-        open={isOpenModal}
-        footer={(_, { OkBtn, CancelBtn }) => (
-          <>
-            <div className="flex justify-end items-center ">
-              <Button
-                onClick={() => setIsOpenModal(false)}
-                className="flex px-[12px] gap-[4px] border-[1px] border-[#dddd] items-center cursor-pointer hover:opacity-80 rounded-lg py-[8px] bg-white"
-              >
-                <div className="text-gray-700 text-xs">Cancel</div>
-              </Button>
-              <Button
-                onClick={handleDeleteUser}
-                className="flex px-[12px] gap-[4px] items-center cursor-pointer rounded-lg py-[8px] bg-red-600"
-              >
-                <Image src={DeleteIcon} alt="deletIcon"></Image>
-                <div className="text-white text-xs">Delete</div>
-              </Button>
-            </div>
-          </>
-        )}
-      >
-        {selectedUser && (
-          <>
-            <p className="text-lg font-semibold">
-              Are you sure you want to delete this user?
-            </p>
-            <p className="mt-[12px] text-base font-medium">
-              UserID: <span>{selectedUser.user_id}</span>
-            </p>
-            <p className="text-base font-medium">Email: {selectedUser.email}</p>
-          </>
-        )}
-      </Modal>
+      <div className="self-start flex flex-row sm:justify-start justify-center items-center w-full gap-2 mb-[12px]">
+        <label>Search:</label>
+        <input
+          placeholder="User's Name"
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="w-[300px] border-[1px] border-black rounded-md px-2 py-2 outline-none"
+        ></input>
+      </div>
+      <AdminModal
+        isOpen={isOpenDeleteModal}
+        setIsOpen={setIsOpenDeleteModal}
+        method={handleDeleteUser}
+        selectedUser={selectedUser}
+        title="Delete user"
+        content="Are you sure you want to delete this user?"
+        state="Delete"
+      ></AdminModal>
       <Table
+        onChange={onChange}
         bordered={true}
         columns={columns}
         expandable={{
@@ -227,7 +192,7 @@ function MemberList() {
             <p style={{ margin: 0 }}>{record.description}</p>
           ),
         }}
-        dataSource={data}
+        dataSource={searchQuery ? filteredData : data}
       ></Table>
     </>
   );

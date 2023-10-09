@@ -61,7 +61,6 @@ import SpeechToTextPlugin from "@plugins/SpeechToTextPlugin";
 import HTMLSerializerPlugin from "@plugins/HtmlSerializerPlugin";
 // import AutocompletePlugin from '@plugins/AutocompletePlugin';
 import TextCounterPlugin from "@plugins/TextCounterPlugin";
-import ModifyButton from "../ModifyButton";
 import dynamic from "next/dynamic";
 
 interface IPros {
@@ -98,20 +97,6 @@ function EditorBlog({ formTitle, htmlString, setHtmlString, pageName }: IPros) {
     if (_floatingAnchorElem !== null) {
       setFloatingAnchorElem(_floatingAnchorElem);
     }
-  };
-
-  const handleSubmitNotification = () => {
-    console.log("POST NOTIFICATION TO SEVER!");
-  };
-
-  const handleSubmitBlog = () => {
-    console.log("POST BLOG TO SEVER");
-  };
-
-  const handleSubmit = () => {
-    if (pageName === "create_notification") handleSubmitNotification();
-    else if (pageName === "create_blog") handleSubmitBlog();
-    else return;
   };
 
   const NoSSRTableSellResizer: any = dynamic(
@@ -243,19 +228,7 @@ function EditorBlog({ formTitle, htmlString, setHtmlString, pageName }: IPros) {
         </LexicalComposer>
       </div>
 
-      <div className="mt-[12px] flex flex-row justify-between">
-        <div>
-          <ModifyButton
-            textContent={"Publish Blog"}
-            icon={"public"}
-            iconPosition={"left"}
-            backgroundColor={"bg-blue-700"}
-            method={() => {
-              handleSubmit();
-            }}
-            tailwind={"text-white"}
-          ></ModifyButton>
-        </div>
+      <div className="mt-[12px] flex flex-row justify-end">
         <div>
           <p className="font-[500] select-none">
             {textCounting == 0

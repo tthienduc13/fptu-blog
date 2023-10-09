@@ -30,7 +30,7 @@ export default function RootLayout({
     "/unauthenticated",
   ];
 
-  const hideSidebar = ["/blog/create", "/blog/detail"];
+  const hideSidebar = ["/blog/create", "/blog/detail", "/admin"];
   const pathName = usePathname();
   const isSpecified = specificPath.includes(pathName);
   const isHideSidebar = hideSidebar.includes(pathName);
