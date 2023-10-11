@@ -24,14 +24,15 @@ function EditBlog() {
   const [blogTags, setBlogTags] = useState<string[]>([]);
   const [blogTagsId, setBlogTagsId] = useState<string[]>([]);
   const [importedImage, setImportedImage] = useState<File | null>(null);
-  const [imageURL, setImageURL] = useState<string>("");
+  const [imageURL, setImageURL] = useState<string | undefined | null>(null);
   const [htmlString, setHtmlStringg] = useState<string>("");
   const router = useRouter();
-  console.log(`Blog title: ${blogTitle}`);
-  console.log(`Blog category: ${blogCategoryId}`);
-  console.log(`Blog tags: ${blogTagsId} `);
-  console.log(`Blog content: ${htmlString}`);
+  // console.log(`Blog title: ${blogTitle}`);
+  // console.log(`Blog category: ${blogCategoryId}`);
+  // console.log(`Blog tags: ${blogTagsId} `);
+  // console.log(`Blog content: ${htmlString}`);
   console.log(`Blog image: ${imageURL}`);
+
   const handleCreateBlog = async () => {
     const access_token = getCookie("accessToken");
     const user_id = getCookie("user_id");

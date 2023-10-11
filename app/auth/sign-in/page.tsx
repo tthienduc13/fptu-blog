@@ -75,7 +75,6 @@ function SignIn() {
           toast.error("Account is not verifed");
       }
       actions.resetForm();
-      //export type TypeOptions = 'info' | 'success' | 'warning' | 'error' | 'default';
     }
   };
 
@@ -146,7 +145,7 @@ function SignIn() {
                         </p>
                       </div>
                       <Link
-                        href="/auth/reset-password"
+                        href="/auth/forgot-password"
                         className="text-[#0098FF] text-sm leading-5 font-medium hover:underline"
                       >
                         {" "}

@@ -23,7 +23,7 @@ export const registerSchema = yup.object().shape({
     .required("This field is required"),
 });
 
-export const resetSchema = yup.object().shape({
+export const forgotSchema = yup.object().shape({
   email: yup
     .string()
     .email("Please enter a valid email")
@@ -32,11 +32,17 @@ export const resetSchema = yup.object().shape({
       "Email must be from @fpt.edu.vn or @fe.edu.vn"
     )
     .required("This field is required"),
-  oldPassword: yup.string().required("This field is required"),
+});
+
+export const resetSchema = yup.object().shape({
   newPassword: yup
     .string()
-    .min(8, "Password must be at least 8 characters")
+    .min(8)
     .matches(passRule, { message: "Please enter a stronger password" })
+    .required("This field is required"),
+  confirmNewPassword: yup
+    .string()
+    .oneOf([yup.ref("newPassword"), ""], "Password must match")
     .required("This field is required"),
 });
 export const loginSchema = yup.object().shape({

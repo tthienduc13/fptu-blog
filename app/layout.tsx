@@ -26,14 +26,16 @@ export default function RootLayout({
     "/auth/sign-in",
     "/auth/sign-up",
     "/auth/forgot-password",
-    "/auth/reset-password",
     "/unauthenticated",
+    "/auth/reset-password",
   ];
 
   const hideSidebar = ["/blog/create", "/blog/detail", "/admin"];
   const pathName = usePathname();
   const isSpecified = specificPath.includes(pathName);
+  const resetPass = pathName.startsWith("/auth/reset-password");
   const isHideSidebar = hideSidebar.includes(pathName);
+
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <body className={inter.className} suppressHydrationWarning={true}>
@@ -43,8 +45,10 @@ export default function RootLayout({
               <title>FU-BLOG Community</title>
               <meta name="description" content="FU-BLOG" />
             </Helmet>
-            {!isSpecified && <Header></Header>}
-            {!isSpecified && !isHideSidebar && <Sidebar></Sidebar>}
+            {!isSpecified && !resetPass && <Header></Header>}
+            {!isSpecified && !resetPass && !isHideSidebar && (
+              <Sidebar></Sidebar>
+            )}
             {children} <ToastNotificationComp />
           </AuthProvider>
         </Provider>
