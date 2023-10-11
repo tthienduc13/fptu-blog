@@ -1,8 +1,13 @@
 import axiosClient from "@/utils/axiosClient/index";
 export const END_POINT = {
   LOGIN: "/auth/login",
-  REGISTER: "/auth/register",  
+  REGISTER: "/auth/register",
+  FORGOT: "auth/forgot-password",
   RESET: "/auth/change-password",
+};
+
+type UserForgot = {
+  email: string;
 };
 
 type UserLogin = {
@@ -11,13 +16,12 @@ type UserLogin = {
   remember: boolean;
 };
 
-type UserChange = {
-  email: string;
+type UserReset = {
+  user_id: string;
   newPassword: string;
-  oldPassword: string;
 };
 type Token = {
-  AccessToken: string;  
+  AccessToken: string;
 };
 
 type LoginResponse = {
@@ -46,10 +50,15 @@ export const registerAccount = (payload: UserRegister) => {
   });
 };
 
-export const resetAccount = (payload: UserChange) => {
-  return axiosClient.patch(END_POINT.RESET, {
+export const forgotPassword = (payload: UserForgot) => {
+  return axiosClient.post(END_POINT.FORGOT, {
     email: payload.email,
-    oldPassword: payload.oldPassword,
+  });
+};
+
+export const resetAccount = (payload: UserReset) => {
+  return axiosClient.patch(END_POINT.RESET, {
+    user_id: payload.user_id,
     newPassword: payload.newPassword,
   });
 };

@@ -12,7 +12,7 @@ type createBlog = {
   category_id: string;
   htmlString: string;
   status: number;
-  visual: string;
+  visual: string | undefined | null;
 };
 
 type blogTags = {

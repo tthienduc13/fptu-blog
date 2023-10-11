@@ -11,7 +11,7 @@ interface IProps {
   formTitle: string;
   fileStorage: File | null;
   setFileStorage: React.Dispatch<React.SetStateAction<File | null>>;
-  setFileURL: React.Dispatch<React.SetStateAction<string>>;
+  setFileURL: React.Dispatch<React.SetStateAction<string | undefined | null>>;
   page: string;
 }
 
@@ -89,8 +89,8 @@ function BrowseImage({
       file: File
     ): Promise<string | null | undefined> => {
       const CLOUD_NAME = "dyu2kc3bl";
-      const UPLOAD_PRESET = "blog_img";
-      const FOLDER = "BlogImage";
+      const UPLOAD_PRESET = "fublog_community";
+      const FOLDER = "blogImage";
       try {
         const formData = new FormData();
         formData.append("file", file);
@@ -100,10 +100,15 @@ function BrowseImage({
           `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
           formData
         );
-        if (responseData) {
+        if (responseData && responseData.data && responseData.data.secure_url) {
           setIsUploading(false);
+          console.log(responseData.data);
+          setFileURL(responseData.data.secure_url);
+        } else {
+          setIsUploading(false);
+          setFileURL(null);
+          toast.error("Failed to upload file!");
         }
-        setFileURL(responseData.data.secure_url);
       } catch (error) {
         console.error("Error uploading image: ", error);
         alert(error);

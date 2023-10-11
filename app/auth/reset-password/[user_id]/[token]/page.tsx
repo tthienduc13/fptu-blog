@@ -11,16 +11,21 @@ import { ValidationError } from "yup";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 type UserReset = {
-  email: string;
-  oldPassword: string;
   newPassword: string;
+  confirmNewPassword: string;
 };
 function ResetPassword() {
   const router = useRouter();
+  const params = useParams();
   const onSubmit = async (values: UserReset, actions: any) => {
     try {
-      const response = await resetAccount(values);
+      const user_id = params.user_id as string;
+      const response = await resetAccount({
+        user_id: user_id,
+        newPassword: values.newPassword,
+      });
       if (response.status === 200) {
         toast.success(response.data.message);
         setTimeout(() => {
@@ -70,39 +75,14 @@ function ResetPassword() {
               </h2>
               <Formik
                 initialValues={{
-                  email: "",
-                  oldPassword: "",
                   newPassword: "",
+                  confirmNewPassword: "",
                 }}
                 validationSchema={resetSchema}
                 onSubmit={onSubmit}
               >
                 {({ isSubmitting }) => (
                   <Form>
-                    <div className="mb-6">
-                      <div className="text-sm font-medium block leading-5 mb-2">
-                        Your email:
-                      </div>
-                      <InputForm
-                        label="email"
-                        name="email"
-                        type="email"
-                        id="email"
-                        placeholder="name@company.com"
-                      ></InputForm>
-                    </div>
-                    <div className="mb-6">
-                      <div className="text-sm font-medium block leading-5 mb-2">
-                        Your old password:
-                      </div>
-                      <InputForm
-                        label="oldPassword"
-                        type="password"
-                        name="oldPassword"
-                        id="oldPassword"
-                        placeholder="Enter your new password"
-                      ></InputForm>
-                    </div>
                     <div className="mb-6">
                       <div className="text-sm font-medium block leading-5 mb-2">
                         Your new password:
@@ -112,6 +92,18 @@ function ResetPassword() {
                         type="password"
                         name="newPassword"
                         id="newPassword"
+                        placeholder="Enter your new password"
+                      ></InputForm>
+                    </div>
+                    <div className="mb-6">
+                      <div className="text-sm font-medium block leading-5 mb-2">
+                        Confirm your new password:
+                      </div>
+                      <InputForm
+                        label="confirmNewPassword"
+                        type="password"
+                        name="confirmNewPassword"
+                        id="confirmNewPassword"
                         placeholder="Confirm your new password"
                       ></InputForm>
                     </div>
