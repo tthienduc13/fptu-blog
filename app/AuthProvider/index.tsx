@@ -7,6 +7,8 @@ import { refreshUserInfoFromStorage } from "@/redux/slices/user";
 type EncodeType = {
   email: string;
   UserRole: number;
+  sub: string;
+  firstName: string;
 };
 
 function AppProvider({ children }: { children: React.ReactNode }) {
@@ -18,6 +20,8 @@ function AppProvider({ children }: { children: React.ReactNode }) {
       const user = {
         email: decoded!.email,
         UserRole: decoded!.UserRole,
+        sub: decoded!.sub,
+        firstName: decoded!.firstName,
       };
       return user;
     }
