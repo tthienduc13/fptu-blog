@@ -1,8 +1,10 @@
 export type userInfo = {
+  user_id: string;
   first_name: string;
   last_name: string;
   email: string;
   image: string;
+  bio: string; 
 };
 
 export type dataTypeAdmin = {
@@ -31,11 +33,6 @@ export type columnItem = {
   bio: string;
 };
 
-export type blog = {
-  blog_id: string;
-  user_id: string;
-};
-
 export type blogCategory = {
   category_id: string;
   title: string;
@@ -46,4 +43,17 @@ export type blogTags = {
   tag_id: string;
   category_id: string;
   title: string;
+};
+
+export type BlogData = {
+  blog_id: string;
+  user_id: string;
+  blog_title: string;
+  category_id: string;
+  content: string;
+  status: number;
+  view: number;
+  visual: string | null;
+  created_at: string;
+  published_at: string;
 };

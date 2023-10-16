@@ -1,18 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 interface statusProps {
-  status: string;
+  status: number | undefined;
 }
 function BlogStatus({ status }: statusProps) {
   let textColor = "";
   let backgroundColor = "";
-
-  if (status === "Approved") {
+  if (status === 1) {
     textColor = "#03543F";
     backgroundColor = "#DEF7EC";
-  } else if (status === "Pending") {
+  } else if (status === 0) {
     textColor = "#723B13";
     backgroundColor = "#FDF6B2";
-  } else if (status === "Expired") {
+  } else if (status === 2) {
     textColor = "#9B1C1C";
     backgroundColor = "#FDE8E8";
   }
@@ -26,7 +25,17 @@ function BlogStatus({ status }: statusProps) {
     padding: "10px",
   };
 
-  return <div style={divStyle}>{status}</div>;
+  return (
+    <div style={divStyle}>
+      {status === 0
+        ? "Pending"
+        : status === 1
+        ? "Approved"
+        : status === 2
+        ? "Expired"
+        : ""}
+    </div>
+  );
 }
 
 export default BlogStatus;

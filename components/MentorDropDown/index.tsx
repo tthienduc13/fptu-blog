@@ -44,15 +44,21 @@ function UserDropDown({
         <Link className="hover:text-[#14375F]" href={""}>
           View Profile
         </Link>
-        <Link className="hover:text-[#14375F]" href={""}>
+        <Link
+          className="hover:text-[#14375F]"
+          href={"/blog/pending-blog/list/1"}
+        >
           View Pending Blogs
         </Link>
       </div>
       <div className="py-4 border-b-[1px] gap-[10px] flex flex-col  border-[#E8EBED] text-[#707070]">
-        <Link className="hover:text-[#14375F]" href={""}>
+        <Link className="hover:text-[#14375F]" href={"/blog/create"}>
           Write Blog
         </Link>
-        <Link className="hover:text-[#14375F]" href={""}>
+        <Link
+          className="hover:text-[#14375F]"
+          href={"/blog/posted-blog/list/1"}
+        >
           My Blogs
         </Link>
       </div>

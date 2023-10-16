@@ -73,8 +73,6 @@ function MentorsList() {
     handleGetAllProfiles();
   }, []);
 
-  console.log(data);
-
   const handleDeleteUser = async () => {
     try {
       const access_token = getCookie("accessToken");
