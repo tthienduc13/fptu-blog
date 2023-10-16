@@ -27,12 +27,6 @@ function EditBlog() {
   const [imageURL, setImageURL] = useState<string | undefined | null>(null);
   const [htmlString, setHtmlStringg] = useState<string>("");
   const router = useRouter();
-  // console.log(`Blog title: ${blogTitle}`);
-  // console.log(`Blog category: ${blogCategoryId}`);
-  // console.log(`Blog tags: ${blogTagsId} `);
-  // console.log(`Blog content: ${htmlString}`);
-  console.log(`Blog image: ${imageURL}`);
-
   const handleCreateBlog = async () => {
     const access_token = getCookie("accessToken");
     const user_id = getCookie("user_id");
@@ -69,7 +63,7 @@ function EditBlog() {
     <>
       <main className=" absolute w-full flex flex-col gap-[20px] right-0 top-[56px] lg:top-[64px] bottom-0 h-fit p-[20px] lg:p-[40px]">
         <div className="w-full flex items-center justify-between">
-          <h1 className=" relative md:text-[30px] md:leading-[45px] text-2xl  font-bold select-none">
+          <h1 className=" relative md:text-[30px] md:leading-[45px] text-3xl  font-bold select-none">
             Create Blog
           </h1>
           <div
@@ -162,7 +156,6 @@ function EditBlog() {
             ></ModifyButton>
           </div>
         </div>
-        <div dangerouslySetInnerHTML={{ __html: htmlString }}></div>
       </main>
     </>
   );

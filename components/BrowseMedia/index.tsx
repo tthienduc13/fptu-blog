@@ -102,7 +102,6 @@ function BrowseImage({
         );
         if (responseData && responseData.data && responseData.data.secure_url) {
           setIsUploading(false);
-          console.log(responseData.data);
           setFileURL(responseData.data.secure_url);
         } else {
           setIsUploading(false);

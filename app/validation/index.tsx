@@ -59,3 +59,10 @@ export const loginSchema = yup.object().shape({
     .min(8, "Password must be at least 8 characters")
     .required("This field is required"),
 });
+
+export const updateInfoSchema = yup.object().shape({
+  first_name: yup.string().required("This field is required"),
+  last_name: yup.string().required("This field is required"),
+  department: yup.string().required("This field is required"),
+  major: yup.string().required("This field is required"),
+});

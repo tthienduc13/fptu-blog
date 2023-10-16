@@ -33,7 +33,6 @@ function TagField({
 }: TagFieldProps) {
   const [data, setData] = useState<string[]>(state);
 
-
   const handleChange = (e: CustomEvent) => {
     setData(e.detail.tagify.value.map((item: { value: string }) => item.value));
   };

@@ -15,7 +15,6 @@ import {
 import { usePathname } from "next/navigation";
 function DetailBLogList() {
   const pathName = usePathname();
-  console.log(pathName);
   const socicalButton = [
     {
       id: 1,
@@ -31,7 +30,6 @@ function DetailBLogList() {
       title: "linkedin",
     },
   ];
-  console.log(socicalButton);
   const router = useRouter();
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const handleLike = () => {

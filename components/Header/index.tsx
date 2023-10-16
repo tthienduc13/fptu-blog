@@ -65,7 +65,6 @@ function Header(): JSX.Element {
   };
   useEffect(() => {
     handleGetUserProfile();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -82,7 +81,7 @@ function Header(): JSX.Element {
       : userName;
 
   return (
-    <div className="top-0 left-0 right-0 w-full fixed z-[1] bg-[#ffffff] backdrop-blur-sm border-b-2 border-b-[#E8EBED]">
+    <div className="top-0 left-0 right-0 w-full fixed z-[1] bg-[#ffffff] backdrop-blur-sm border-b-[1px] border-b-[#E8EBED]">
       <div className="w-full mx-auto h-[56px] lg:h-[64px] px-[20px] md:px-[40px] flex justify-between items-center">
         <Image
           src={BurgerMenu}
@@ -127,7 +126,6 @@ function Header(): JSX.Element {
             <div className="flex items-center gap-[5px]">
               {isLoading ? (
                 <div className="rounded-[50%] overflow-hidden">
-                  {" "}
                   <Skeleton
                     height={30}
                     width={30}

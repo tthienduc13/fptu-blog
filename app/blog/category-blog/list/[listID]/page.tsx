@@ -204,7 +204,7 @@ function CategoryBlog({ params }: pageProps) {
         <div className="w-full h-full ">
           <div className="mb-[40px] p-[20px] md:p-[40px] w-full">
             <div className="w-full  mb-5">
-              <h1 className="text-[#14375F] font-bold md:text-[30px] md:leading-[45px] text-2xl">
+              <h1 className="text-[#14375F] font-bold md:text-[30px] md:leading-[45px] text-3xl">
                 Category Blogs
               </h1>
             </div>

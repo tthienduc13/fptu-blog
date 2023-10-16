@@ -76,7 +76,7 @@ function Sidebar() {
 
   return (
     <>
-      <aside className="fixed top-[56px] md:top-[64px] bg-white border-t-2 hidden lg:flex flex-col gap-4 px-[13px] py-[20px] lg:py-[40px] items-center left-0 z-40  h-screen border-r-2 select-none border-[#E8EBED] ">
+      <aside className="fixed top-[56px] md:top-[64px] bg-white border-t-[1px] hidden lg:flex flex-col gap-4 px-[13px] py-[20px] lg:py-[40px] items-center left-0 z-40  h-screen border-r-[1px] select-none border-[#E8EBED] ">
         <div
           onClick={setClickAdd}
           className="h-[44px] relative w-[44px] rounded-full flex items-center justify-center cursor-pointer bg-[#E0312E]"
