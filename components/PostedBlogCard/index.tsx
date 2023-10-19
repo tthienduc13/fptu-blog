@@ -73,7 +73,7 @@ function PostedBlogCard({ value }: IProps) {
         <div className="self-stretch text-justify text-[14px] font-normal text-gray-500">
           {truncatedText + "....."}
         </div>
-        <div className="w-full flex justify-between items-center">
+        <div className="w-full flex justify-between items-center ">
           <div className="w-full flex gap-2 items-center">
             <Button
               textContent="Preview"
@@ -84,9 +84,9 @@ function PostedBlogCard({ value }: IProps) {
               tailwind="hover:opacity-80"
             ></Button>
             <div className="text-gray-500 text-[12px] cursor-default font-medium">
-              {value.published_at !== null
-                ? timeAgo(value.published_at)
-                : timeAgo(value.created_at)}
+              {value.published_at === null
+                ? timeAgo(value.created_at)
+                : timeAgo(value.published_at)}
             </div>
           </div>
           <BlogStatus status={value.status}></BlogStatus>

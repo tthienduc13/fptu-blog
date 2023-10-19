@@ -1,34 +1,31 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PendingBlogCard from "@/components/PendingBlogCard";
-import { useState } from "react";
 import Pagination from "@component/Pagination";
 import { getCookie } from "cookies-next";
-import { getPendingBlog, rejectBlog } from "@/apis/blog";
+import { getPendingBlog, rejectBlog, approveBlog } from "@/apis/blog";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-import { approveBlog } from "@/apis/blog";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { BlogData } from "@/utils/types";
-interface pageProps {
+import { BlogDetail } from "@/utils/types";
+interface PageProps {
   params: { listID: string };
 }
 
-function PendingBlog({ params }: pageProps) {
-  const [blogData, setBlogData] = useState<BlogData[]>([]);
-
+function PendingBlog({ params }: PageProps) {
+  const [blogData, setBlogData] = useState<BlogDetail[]>([]);
+  const currentUserRole = useSelector(
+    (state: RootState) => state.user.currentUser.UserRole
+  );
   useEffect(() => {
     const handleGetPendingBlogs = async () => {
       try {
         const access_token = getCookie("accessToken");
         if (access_token) {
-          const userId = getCookie("user_id");
-          if (userId) {
-            const response = await getPendingBlog(access_token);
-            setBlogData(response.data);
-          }
+          const response = await getPendingBlog(access_token);
+          setBlogData(response.data);
         }
       } catch (error) {
         if (axios.isAxiosError(error)) {
@@ -37,24 +34,24 @@ function PendingBlog({ params }: pageProps) {
       }
     };
     handleGetPendingBlogs();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const removeCheckedBlog = (blog_id: string) => {
-    setBlogData((prevData: BlogData[]) =>
-      prevData.filter((blog: BlogData) => blog.blog_id !== blog_id)
+    setBlogData((prevData: BlogDetail[]) =>
+      prevData.filter((blog: BlogDetail) => blog.blog_id !== blog_id)
     );
   };
-  const currentUserRole = useSelector(
-    (state: RootState) => state.user.currentUser.UserRole
-  );
   const hanldeApproveBlog = async (blogId: string) => {
     try {
       const accessToken = getCookie("accessToken");
       if (accessToken) {
         if (currentUserRole === 2) {
-          const approveResponse = await approveBlog(blogId, accessToken);
+          await approveBlog(blogId, accessToken);
           toast.success("Blog approved!");
           removeCheckedBlog(blogId);
+        } else {
+          toast.error("You don't have permission to apporve the blog!");
         }
       }
     } catch (error: unknown) {
@@ -71,9 +68,11 @@ function PendingBlog({ params }: pageProps) {
       const accessToken = getCookie("accessToken");
       if (accessToken) {
         if (currentUserRole === 2) {
-          const approveResponse = await rejectBlog(blogId, accessToken);
+          await rejectBlog(blogId, accessToken);
           toast.success("Blog rejected!");
           removeCheckedBlog(blogId);
+        } else {
+          toast.error("You don't have permission to reject the blog!");
         }
       }
     } catch (error: unknown) {
@@ -102,11 +101,11 @@ function PendingBlog({ params }: pageProps) {
               </h1>
             </div>
             <div className="w-full flex md:flex-row sm:flex-col lg:gap-y-[30px] sm:gap-y-4 flex-wrap lg:gap-x-[30px] sm:gap-x-4 ">
-              {blogData.map((data, index) => (
+              {blogData.map((data) => (
                 <PendingBlogCard
                   functionApprove={hanldeApproveBlog}
                   functionReject={handleRejectBlog}
-                  key={index}
+                  key={data.blog_id}
                   value={data}
                 ></PendingBlogCard>
               ))}

@@ -7,11 +7,11 @@ import UserDropDown from "../UserDropDown";
 import AdminDropDown from "../AdminDropDown";
 import MentorDropDown from "../MentorDropDown";
 import { logout } from "@/redux/slices/user";
-interface headerProps {
+interface HeaderProps {
   fullName: string | undefined;
   userName: string | undefined;
 }
-function DropDown({ fullName, userName }: headerProps) {
+function DropDown({ fullName, userName }: HeaderProps) {
   const role: number = useSelector(
     (state: RootState) => state.user.currentUser.UserRole
   );
@@ -21,6 +21,7 @@ function DropDown({ fullName, userName }: headerProps) {
     dispatch(logout());
     router.push("/unauthenticated");
   };
+
   return (
     <>
       {role === 0 ? (

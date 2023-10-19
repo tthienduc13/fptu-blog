@@ -1,15 +1,15 @@
 "use client";
 import React from "react";
+import axios from "axios";
 import { Form, Formik } from "formik";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+import { ValidationError } from "yup";
 import Image from "next/image";
 import Logo from "@icons/logo/logo.svg";
 import InputForm from "@/components/InputForm";
-import { toast } from "react-toastify";
 import { forgotSchema } from "@/app/validation";
-import axios from "axios";
 import { forgotPassword } from "@/apis/auth";
-import { useRouter } from "next/navigation";
-import { ValidationError } from "yup";
 type UserForgot = {
   email: string;
 };

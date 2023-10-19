@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { Button, message, Steps, theme } from "antd";
+import { Button, Steps, theme } from "antd";
 import { toast } from "react-toastify";
 import GeneralInformation from "@/components/sections/updateInfo/GeneralInformation";
 import AvatarChanging from "@/components/AvatarChanging";

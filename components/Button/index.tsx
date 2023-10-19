@@ -12,7 +12,7 @@ import importIcon from "@icons/components/Button/save.svg";
 import searchIcon from "@icons/components/Button/search-outline.svg";
 import paperAirline from "@icons/components/Button/paper-airplane.svg";
 
-interface buttonPros {
+interface buttonProps {
   textContent: string;
   icon:
     | "edit"
@@ -38,7 +38,7 @@ function Button({
   backgroundColor,
   href,
   tailwind,
-}: buttonPros) {
+}: buttonProps) {
   return (
     <button
       className={`rounded-[8px] w-fit flex items-center justify-between px-[12px] py-[8px] text-[12px] ${backgroundColor} ${tailwind}`}

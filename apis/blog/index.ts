@@ -4,8 +4,9 @@ export const END_POINT = {
   CREATE: "/blogs/create",
   CREATE_BLOG_TAGS: "/blogs/create/blog-tags",
   GET_POSTED: "/blogs/posted/",
-  GET_PENDING: "/blogs/pending/",
+  GET_PENDING: "/blogs/pending",
   GET_BY_ID: "/blogs/",
+  GET_BLOG_TAGS: "/blogs/blog-tags/",
   APPROVE: "/blogs/approve/",
   REJECT: "/blogs/reject/",
 };
@@ -35,8 +36,12 @@ export const createBlog = async (payload: createBlog) => {
       visual: payload.visual,
     });
     return response.data;
-  } catch (error) {
-    throw error;
+  } catch (error: any) {
+    return {
+      success: false,
+      message: "Failed to create a blog",
+      error: error.message,
+    };
   }
 };
 
@@ -61,6 +66,12 @@ export const getPendingBlog = (access_token: string | null) => {
 
 export const getBlogByID = (blog_id: string, access_token: string | null) => {
   return axiosClient.get(`${END_POINT.GET_BY_ID}${blog_id}`, {
+    headers: { Authorization: `Bearer ${access_token}` },
+  });
+};
+
+export const getBlogTags = (blog_id: string, access_token: string | null) => {
+  return axiosClient.get(`${END_POINT.GET_BLOG_TAGS}${blog_id}`, {
     headers: { Authorization: `Bearer ${access_token}` },
   });
 };
