@@ -18,10 +18,10 @@ function AppProvider({ children }: { children: React.ReactNode }) {
     if (access_token) {
       const decoded: EncodeType = jwtDecode(access_token);
       const user = {
-        email: decoded!.email,
-        UserRole: decoded!.UserRole,
-        sub: decoded!.sub,
-        firstName: decoded!.firstName,
+        email: decoded.email,
+        UserRole: decoded.UserRole,
+        sub: decoded.sub,
+        firstName: decoded.firstName,
       };
       return user;
     }

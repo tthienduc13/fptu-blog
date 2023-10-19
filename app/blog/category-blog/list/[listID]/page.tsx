@@ -1,15 +1,14 @@
 "use client";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import BlogCard from "@/components/BlogCard";
 import SampleImage from "@image/sampleImage.png";
-import { useState } from "react";
 import Pagination from "@component/Pagination";
 import SearchIcon from "@icons/page/blog/searchIcon.svg";
-interface pageProps {
+interface PageProps {
   params: { listID: string };
 }
-function CategoryBlog({ params }: pageProps) {
+function CategoryBlog({ params }: PageProps) {
   const sampleData = [
     {
       id: 1,
@@ -234,8 +233,8 @@ function CategoryBlog({ params }: pageProps) {
               </div>
             </div>
             <div className="w-full flex md:flex-row sm:flex-col lg:gap-y-[30px] sm:gap-y-4 flex-wrap lg:gap-x-[30px] sm:gap-x-4 ">
-              {blogs.map((data, index) => (
-                <BlogCard key={index} value={data}></BlogCard>
+              {blogs.map((data) => (
+                <BlogCard key={data.id} value={data}></BlogCard>
               ))}
               <Pagination
                 paramID={params.listID}

@@ -1,9 +1,7 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PostedBlogCard from "@/components/PostedBlogCard";
-
-import { useState } from "react";
 import Pagination from "@component/Pagination";
 import { getCookie } from "cookies-next";
 import { getPostedBlog } from "@/apis/blog";
@@ -11,11 +9,11 @@ import type { MenuProps } from "antd";
 import { Button, Dropdown } from "antd";
 import axios from "axios";
 import { BlogData } from "@/utils/types";
-interface pageProps {
+interface PageProps {
   params: { listID: string };
 }
 
-function YourBlog({ params }: pageProps) {
+function YourBlog({ params }: PageProps) {
   const [blogData, setBLogData] = useState<BlogData[]>([]);
   const [filter, setFilter] = useState<string>("3");
 
@@ -86,8 +84,11 @@ function YourBlog({ params }: pageProps) {
             </div>
             <div className="w-full flex md:flex-row sm:flex-col lg:gap-y-[30px] sm:gap-y-4 flex-wrap lg:gap-x-[30px] sm:gap-x-4 ">
               {blogData !== null ? (
-                blogData.map((data, index) => (
-                  <PostedBlogCard key={index} value={data}></PostedBlogCard>
+                blogData.map((data) => (
+                  <PostedBlogCard
+                    key={data.blog_id}
+                    value={data}
+                  ></PostedBlogCard>
                 ))
               ) : (
                 <h1 className="text-[#14375F] font-bold md:text-[30px] md:leading-[45px] text-2xl">

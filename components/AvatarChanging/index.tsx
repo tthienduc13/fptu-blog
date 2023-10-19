@@ -20,7 +20,7 @@ function AvatarChanging(): JSX.Element {
   const handleOnChangeSeleteImage = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const file = event.target.files && event.target.files[0];
+    const file = event.target?.files?.[0];
     if (file && isValidFileType(file)) {
       setImageState(file);
     } else {
@@ -128,7 +128,7 @@ function AvatarChanging(): JSX.Element {
                 iconPosition={"left"}
                 backgroundColor={"bg-[#0065A9]"}
                 method={() => {
-                  handleUpdataProfileImage(imageSource!);
+                  handleUpdataProfileImage(imageSource);
                 }}
                 tailwind={"text-white"}
               ></ModifyButton>

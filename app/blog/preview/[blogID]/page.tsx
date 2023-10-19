@@ -9,25 +9,20 @@ import AvatarIcon from "@icons/page/blog/avatarIcon.svg";
 import TagIcon from "@icons/page/blog/tagIcon.svg";
 import BlogStatus from "@/components/BlogStatus";
 import { getCookie } from "cookies-next";
-import { BlogData } from "@/utils/types";
+import { BlogDetail } from "@/utils/types";
 import { getBlogByID } from "@/apis/blog";
 import { formatDateDetail } from "@/utils/dayFormat";
-const blogTags = [
-  "Sofware Engineer",
-  "Artificial Intelligence",
-  "Information Security",
-];
 function DetailBLogList() {
-  const [blogData, setBlogData] = useState<BlogData>();
+  const [blogData, setBlogData] = useState<BlogDetail>();
   const router = useRouter();
   const param = useParams();
   const hanldeGetPost = async () => {
     try {
       const access_token = getCookie("accessToken");
       const blog_id = param.blogID as string;
-      if (access_token) {
-        const response = await getBlogByID(blog_id, access_token);
-        setBlogData(response.data[0]);
+      if (access_token && blog_id) {
+        const blogResponse = await getBlogByID(blog_id, access_token);
+        setBlogData(blogResponse.data);
       }
     } catch (error) {}
   };
@@ -62,25 +57,25 @@ function DetailBLogList() {
           <h1 className="w-full font-bold  text-3xl">{blogData?.blog_title}</h1>
           {/* Author */}
           <div className="w-full flex-col flex gap-1">
-            <div className="w-full flex items-center gap-2">
+            <div className="w-full flex items-center  gap-[10px]">
               <Image
                 src={AvatarIcon}
                 alt="avatar by default"
                 height={20}
                 width={20}
               ></Image>
-              <div className="text-gray-500 text-base font-normal">
-                Nguyen Le Thien Duc
+              <div className="text-gray-500 cursor-default text-base font-normal">
+                {blogData?.user_name}
               </div>
             </div>
-            <div className="w-full flex items-center gap-2">
+            <div className="w-full  flex items-center  gap-[10px]">
               <Image
                 src={ClockIcon}
                 alt="avatar by default"
                 height={20}
                 width={20}
               ></Image>
-              <div className="text-gray-500 text-base font-normal">
+              <div className="text-gray-500 cursor-default text-base font-normal">
                 {blogData?.created_at && formatDateDetail(blogData?.created_at)}
               </div>
             </div>
@@ -89,12 +84,14 @@ function DetailBLogList() {
           <div className="w-full flex-col flex gap-2">
             <div className="flex w-full items-center gap-2">
               <Image src={TagIcon} alt="Tag" height={24} width={24}></Image>
-              <div className="bg-blue-100 cursor-default rounded-[6px] text-blue-800 text-sm px-[10px] py-1 font-medium"></div>
+              <div className="bg-blue-100 cursor-default rounded-[6px] text-blue-800 text-sm px-[10px] py-1 font-medium">
+                {blogData?.category_description}
+              </div>
             </div>
             <div className="flex w-full items-center gap-2">
               <Image src={TagIcon} alt="Tag" height={24} width={24}></Image>
               <div className="w-full flex items-center gap-[10px]">
-                {blogTags.map((tag, index) => (
+                {blogData?.tag_titles.map((tag, index) => (
                   <div
                     key={index}
                     className="bg-green-100 cursor-default rounded-[6px] text-green-800 text-sm px-[10px] py-1 font-medium"
@@ -108,11 +105,11 @@ function DetailBLogList() {
           {/* Content */}
           <div className="w-full flex items-center object-cover flex-col gap-4">
             <Image
+              className="object-contain max-w-[1200px] max-h-[500px]"
               src={blogData?.visual ? blogData.visual : SampleImage}
-              alt="Image"
-              width={100}
-              height={100}
-              className="w-[90%] max-h-[500px]  rounded-[10px] h-full"
+              width={1200}
+              height={600}
+              alt="image of blog"
             ></Image>
             <div
               className="w-full text-justify"

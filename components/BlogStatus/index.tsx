@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-interface statusProps {
+import React from "react";
+interface StatusProps {
   status: number | undefined;
 }
-function BlogStatus({ status }: statusProps) {
+function BlogStatus({ status }: StatusProps) {
   let textColor = "";
   let backgroundColor = "";
   if (status === 1) {

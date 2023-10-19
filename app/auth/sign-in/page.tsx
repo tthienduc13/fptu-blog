@@ -1,7 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { login } from "@/redux/slices/user";
@@ -36,18 +36,18 @@ function SignIn() {
     setRemember(status);
   };
   const router = useRouter();
-  const onSubmit = async (values: UserLogin, actions: any) => {
+  const onSubmit = async (values: UserLogin, actions: any): Promise<void> => {
     try {
       values.remember = remember;
       const loginResponse = await loginAccount(values);
       const token: string = loginResponse.data.token;
-      var decoded: EncodeType = jwt_decode(token);
+      const decoded: EncodeType = jwt_decode(token);
       const user = {
-        email: decoded!.email,
-        sub: decoded!.sub,
-        UserRole: decoded!.UserRole,
-        firstName: decoded!.firstName,
-        remember: decoded!["remember-me"],
+        email: decoded.email,
+        sub: decoded.sub,
+        UserRole: decoded.UserRole,
+        firstName: decoded.firstName,
+        remember: decoded["remember-me"],
       };
       dispatch(
         login({
