@@ -243,7 +243,7 @@ function FeaturedBlog({ params }: PageProps) {
                 increaseIndex={increaseIndex}
                 sliceSetData={setBlogs}
                 data={sampleData}
-                route={"/featured-blog/list/"}
+                route={"/blog/featured-blog/list"}
               ></Pagination>
             </div>
           </div>

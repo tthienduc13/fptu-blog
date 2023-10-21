@@ -25,6 +25,7 @@ function EditBlog() {
   const [importedImage, setImportedImage] = useState<File | null>(null);
   const [imageURL, setImageURL] = useState<string | undefined | null>(null);
   const [htmlString, setHtmlStringg] = useState<string>("");
+  console.log(htmlString);
   const router = useRouter();
   const handleCreateBlog = async () => {
     const access_token = getCookie("accessToken");

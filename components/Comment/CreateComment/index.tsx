@@ -1,5 +1,5 @@
-import React from "react";
-import { Input } from "antd";
+import React, { useEffect, useState } from "react";
+import { Input, Mentions } from "antd";
 import ProfileImg from "@icons/header/profileImage.svg";
 import Image from "next/image";
 import ModifyButton from "@component/ModifyButton";
@@ -8,13 +8,14 @@ import { useParams } from "next/navigation";
 import { addComment } from "@/apis/comment";
 import { toast } from "react-toastify";
 import axios from "axios";
+
 interface CreateCommentProps {
   inputValue: string;
   setInputValue: React.Dispatch<React.SetStateAction<string>>;
 }
 const { TextArea } = Input;
 
-function CreateComment({ inputValue, setInputValue }: CreateCommentProps) {
+function CreateComment({ inputValue = "", setInputValue }: CreateCommentProps) {
   const param = useParams();
   const hanldeSubmitComment = async () => {
     const accessToken = getCookie("accessToken");
@@ -46,6 +47,7 @@ function CreateComment({ inputValue, setInputValue }: CreateCommentProps) {
       hanldeSubmitComment();
     }
   };
+
   return (
     <>
       <div className="w-4/5 flex flex-row items-center gap-3">
