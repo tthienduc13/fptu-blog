@@ -24,13 +24,13 @@ export default function middleware(
   let verify = req.cookies.get("accessToken");
   let url = req.url;
 
-  if (directToUnauthenticated(verify, url)) {
-    return NextResponse.redirect("http://localhost:3000/unauthenticated");
-  }
+  // if (directToUnauthenticated(verify, url)) {
+  //   return NextResponse.redirect("http://localhost:3000/unauthenticated");
+  // }
 
-  if (verify && url.includes("/auth")) {
-    return NextResponse.redirect("http://localhost:3000/");
-  }
+  // if (verify && url.includes("/auth")) {
+  //   return NextResponse.redirect("http://localhost:3000/");
+  // }
 
   return NextResponse.next();
 }
