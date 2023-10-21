@@ -89,3 +89,8 @@ export type CommentReply = {
   user_name: string;
   user_image: string;
 };
+
+export type MentionType = {
+  id: string;
+  display: string;
+};

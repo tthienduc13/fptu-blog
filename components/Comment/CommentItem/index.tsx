@@ -94,7 +94,7 @@ function CommentItem({ comment }: CommentItemProps) {
             </div>
           </div>
           <div className="w-full mt-[2px]">
-            <div className="px-3 border-2 border-l">
+            <div className="px-3 border-l-2`">
               <CommentReplyItem comment={filteredComments} />
             </div>
             {replyDialog && (

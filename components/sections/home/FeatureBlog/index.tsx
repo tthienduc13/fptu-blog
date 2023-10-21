@@ -2,8 +2,8 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import MoreIcon from "@icons/home/moreIcon.png";
-import BlogCard from "@/components/BlogCard";
 import SampleImage from "@image/sampleImage.png";
+import HorizonCard from "@/components/HorizonCard";
 function FeaturedBlog() {
   const sampleData = [
     {
@@ -35,7 +35,7 @@ function FeaturedBlog() {
     },
   ];
   return (
-    <div className="mb-[40px] p-[20px] md:p-[40px] w-full">
+    <div className=" p-[20px] md:p-[40px] w-full">
       <div className="w-full flex items-center justify-between mb-5">
         <h1 className="text-[#14375F] font-bold md:text-[30px] md:leading-[45px] text-2xl">
           Featured Blogs
@@ -56,9 +56,9 @@ function FeaturedBlog() {
           </div>
         </Link>
       </div>
-      <div className="w-full flex md:flex-row sm:flex-col md:gap-0 sm:gap-[16px] flex-wrap justify-between">
+      <div className="w-full flex flex-col gap-4 flex-wrap justify-between">
         {sampleData.map((data, index) => (
-          <BlogCard key={index} value={data}></BlogCard>
+          <HorizonCard key={index} value={data}></HorizonCard>
         ))}
       </div>
     </div>

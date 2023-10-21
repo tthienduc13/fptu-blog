@@ -2,6 +2,7 @@ import axiosClient from "@/utils/axiosClient/index";
 import { RequestCookie } from "next/dist/compiled/@edge-runtime/cookies";
 export const END_POINT = {
   GET: "/users/profile/",
+  MENTION: "/users/mention-data",
   MANAGE: "/users/profile/",
   DELETE: "/users/profile/",
   UPDATE_AVATAR: "/users/profile/update-avatar/",
@@ -48,5 +49,11 @@ export const updateInfo = (payload: updateData, user_id: string) => {
     last_name: payload.last_name,
     department: payload.department,
     major: payload.major,
+  });
+};
+
+export const getMentionData = (access_token: string | null) => {
+  return axiosClient.get(`${END_POINT.MENTION}`, {
+    headers: { Authorization: `Bearer ${access_token}` },
   });
 };

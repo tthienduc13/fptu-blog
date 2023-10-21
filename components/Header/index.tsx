@@ -16,6 +16,8 @@ import { getCookie } from "cookies-next";
 import { getMemberInfo } from "@/apis/profile";
 import axios from "axios";
 import { Skeleton } from "@mui/material";
+import { Badge, Space } from "antd";
+
 function Header(): JSX.Element {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -155,13 +157,16 @@ function Header(): JSX.Element {
               />
             </div>
           </div>
-          <Image
-            src={NotiIcon}
-            alt="Notification Icon"
-            width={100}
-            height={100}
-            className="w-[30px] h-[30px] object-cover"
-          />
+          <Space size="small">
+            <Badge size="small" count={5}>
+              <Image
+                src={NotiIcon}
+                alt="Notification Icon"
+                style={{ width: "28px", height: "28px" }}
+                className=" object-cover"
+              />
+            </Badge>
+          </Space>
         </div>
       </div>
     </div>
