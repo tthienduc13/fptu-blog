@@ -8,30 +8,37 @@ import { useParams } from "next/navigation";
 import { addComment } from "@/apis/comment";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { Socket } from "socket.io-client";
 
 interface CreateCommentProps {
   inputValue: string;
   setInputValue: React.Dispatch<React.SetStateAction<string>>;
+  socket: Socket | undefined;
 }
 const { TextArea } = Input;
 
-function CreateComment({ inputValue = "", setInputValue }: CreateCommentProps) {
+function CreateComment({
+  inputValue = "",
+  setInputValue,
+  socket,
+}: CreateCommentProps) {
   const param = useParams();
   const hanldeSubmitComment = async () => {
     const accessToken = getCookie("accessToken");
     const user_id = getCookie("user_id");
     try {
-      if (accessToken && user_id) {
+      if (accessToken && user_id && socket) {
         if (inputValue === "") {
           toast.error("Please do not leave a blank");
         } else {
           const newComment = {
-            user_id: user_id,
             blog_id: param.blogID as string,
+            user_id: user_id,
             content: inputValue,
           };
-          const response = await addComment(newComment);
-          toast.success(response.data);
+          // const response = await addComment(newComment); // Assuming addComment API is implemented correctly
+          socket.emit("new-comment", newComment); // Emit the response data instead of newComment
+          toast.success("Comment posted");
           setInputValue("");
         }
       }
