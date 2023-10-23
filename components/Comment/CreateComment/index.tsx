@@ -13,7 +13,7 @@ import { Socket } from "socket.io-client";
 interface CreateCommentProps {
   inputValue: string;
   setInputValue: React.Dispatch<React.SetStateAction<string>>;
-  socket: Socket | undefined;
+  socket: Socket;
 }
 const { TextArea } = Input;
 
@@ -36,8 +36,8 @@ function CreateComment({
             user_id: user_id,
             content: inputValue,
           };
-          // const response = await addComment(newComment); // Assuming addComment API is implemented correctly
-          socket.emit("new-comment", newComment); // Emit the response data instead of newComment
+          // const response = await addComment(newComment);
+          socket.emit("new-comment", newComment);
           toast.success("Comment posted");
           setInputValue("");
         }

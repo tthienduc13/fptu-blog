@@ -15,23 +15,37 @@ import { timeAgo } from "@/utils/dayFormat";
 import { getCookie } from "cookies-next";
 import { getBlogByID } from "@/apis/blog";
 import { BlogDetail } from "@/utils/types";
+import { Socket } from "socket.io-client";
+import { checkLikedPost, getLike, likePost, unlikePost } from "@/apis/like";
 
 interface ContentDetailProps {
   setBlogData: React.Dispatch<React.SetStateAction<BlogDetail | undefined>>;
   blogData: BlogDetail | undefined;
+  socket: Socket;
 }
-function Content({ setBlogData, blogData }: ContentDetailProps) {
+function Content({ setBlogData, blogData, socket }: ContentDetailProps) {
   const param = useParams();
   const router = useRouter();
-  const [isLiked, setIsLiked] = useState<boolean>(false);
-  const handleLike = () => {
-    setIsLiked(!isLiked);
-  };
+  const [likeCount, setLikeCount] = useState<number>(0);
+  const [isLiked, setIsLiked] = useState<boolean>();
+  const blog_id = param.blogID as string;
+  const access_token = getCookie("accessToken");
+  const user_id = getCookie("user_id");
+
+  useEffect(() => {
+    if (access_token && blog_id && user_id) {
+      const checkLiked = async () => {
+        const liked = await checkLikedPost(access_token, user_id, blog_id);
+        if (liked.data) {
+          setIsLiked(true);
+        }
+      };
+      checkLiked();
+    }
+  }, []);
 
   const hanldeGetPost = async () => {
     try {
-      const access_token = getCookie("accessToken");
-      const blog_id = param.blogID as string;
       if (access_token && blog_id) {
         const blogResponse = await getBlogByID(blog_id, access_token);
         setBlogData(blogResponse.data);
@@ -42,6 +56,75 @@ function Content({ setBlogData, blogData }: ContentDetailProps) {
     hanldeGetPost();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleLike = async () => {
+    try {
+      if (access_token && user_id && blog_id) {
+        const like = {
+          user_id: user_id,
+          blog_id: blog_id,
+        };
+
+        // await likePost(like);
+        socket.emit("like", like);
+        setIsLiked(true);
+      }
+    } catch (error) {
+      console.error("Error liking the blog post:", error);
+    }
+  };
+
+  const handleUnlike = async () => {
+    try {
+      if (access_token && user_id && blog_id) {
+        const unLike = {
+          user_id: user_id,
+          blog_id: blog_id,
+        };
+        // await unlikePost(unLike);
+        socket.emit("unlike", unLike);
+        setIsLiked(false);
+      }
+    } catch (error) {
+      console.error("Error unliking the blog post:", error);
+    }
+  };
+
+  const handleGetLikeCount = async () => {
+    try {
+      if (access_token) {
+        const response = await getLike(access_token, blog_id);
+        setLikeCount(response.data);
+      }
+    } catch (error) {
+      console.error("Error fetching like count:", error);
+    }
+  };
+
+  const handleUpdateLikeCount = () => {
+    handleGetLikeCount();
+  };
+
+  useEffect(() => {
+    handleGetLikeCount();
+    socket.on("liked", handleUpdateLikeCount);
+
+    return () => {
+      socket.off("liked", handleUpdateLikeCount);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    handleGetLikeCount();
+    socket.on("unliked", handleUpdateLikeCount);
+
+    return () => {
+      socket.off("unliked", handleUpdateLikeCount);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
       <div className="w-full mb-[40px] flex flex-col gap-2">
@@ -112,7 +195,7 @@ function Content({ setBlogData, blogData }: ContentDetailProps) {
         ></div>
       </div>
       <div className=" flex w-full justify-between items-center">
-        <div className="flex gap-[8px]">
+        <div className="flex gap-[4px] items-center">
           <svg
             className="cursor-pointer"
             xmlns="http://www.w3.org/2000/svg"
@@ -120,7 +203,7 @@ function Content({ setBlogData, blogData }: ContentDetailProps) {
             height="30"
             viewBox="0 0 30 30"
             fill="none"
-            onClick={handleLike}
+            onClick={isLiked ? handleUnlike : handleLike}
           >
             <path
               d="M27.041 8.30861C26.6483 7.39935 26.0821 6.57538 25.374 5.88283C24.6654 5.18822 23.83 4.63622 22.9131 4.25686C21.9623 3.86191 20.9426 3.65976 19.9131 3.66213C18.4688 3.66213 17.0596 4.05764 15.835 4.80471C15.542 4.98342 15.2637 5.17971 15 5.39358C14.7363 5.17971 14.458 4.98342 14.165 4.80471C12.9404 4.05764 11.5312 3.66213 10.0869 3.66213C9.04687 3.66213 8.03906 3.86135 7.08691 4.25686C6.16699 4.63772 5.33789 5.18557 4.62598 5.88283C3.91698 6.5746 3.35062 7.39876 2.95898 8.30861C2.55176 9.2549 2.34375 10.2598 2.34375 11.294C2.34375 12.2696 2.54297 13.2862 2.93848 14.3203C3.26953 15.1846 3.74414 16.0811 4.35059 16.9863C5.31152 18.419 6.63281 19.9131 8.27344 21.4278C10.9922 23.9385 13.6846 25.6729 13.7988 25.7432L14.4932 26.1885C14.8008 26.3848 15.1963 26.3848 15.5039 26.1885L16.1982 25.7432C16.3125 25.6699 19.002 23.9385 21.7236 21.4278C23.3643 19.9131 24.6855 18.419 25.6465 16.9863C26.2529 16.0811 26.7305 15.1846 27.0586 14.3203C27.4541 13.2862 27.6533 12.2696 27.6533 11.294C27.6563 10.2598 27.4482 9.2549 27.041 8.30861ZM15 23.8711C15 23.8711 4.57031 17.1885 4.57031 11.294C4.57031 8.30861 7.04004 5.88869 10.0869 5.88869C12.2285 5.88869 14.0859 7.084 15 8.8301C15.9141 7.084 17.7715 5.88869 19.9131 5.88869C22.96 5.88869 25.4297 8.30861 25.4297 11.294C25.4297 17.1885 15 23.8711 15 23.8711Z"
@@ -131,6 +214,11 @@ function Content({ setBlogData, blogData }: ContentDetailProps) {
               fill={isLiked ? "#FF0000" : "white"}
             />
           </svg>
+          {likeCount > 0 && (
+            <div className="text-base font-bold flex">
+              {likeCount === 1 ? "1" : `${likeCount}`}
+            </div>
+          )}
         </div>
         <div className=" w-full justify-end flex gap-4 items-center">
           <div className=" w-full justify-end flex gap-4 items-center">

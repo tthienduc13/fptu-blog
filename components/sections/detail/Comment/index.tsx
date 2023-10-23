@@ -5,12 +5,12 @@ import { useParams } from "next/navigation";
 import { getAllComments } from "@/apis/comment";
 import { getCookie } from "cookies-next";
 import { Comment } from "@/utils/types";
-import { io } from "socket.io-client";
+import { Socket } from "socket.io-client";
+interface CommentProps {
+  socket: Socket;
+}
 
-const socket = io("http://localhost:5000");
-
-function Comment() {
-  console.log(socket);
+function Comment({ socket }: CommentProps) {
   const [inputValue, setInputValue] = useState<string>("");
   const [blogComments, setBlogComments] = useState<Comment[]>([]);
   const param = useParams();
@@ -23,9 +23,7 @@ function Comment() {
         const response = await getAllComments(blog_id, access_token);
         setBlogComments(response.data);
       }
-    } catch (error) {
-      // Handle error
-    }
+    } catch (error) {}
   };
 
   const handleCommentUpdated = () => {
@@ -56,7 +54,10 @@ function Comment() {
             Be the first person to share your thoughts!
           </div>
         ) : (
-          <CommentList blogComments={blogComments}></CommentList>
+          <CommentList
+            socket={socket}
+            blogComments={blogComments}
+          ></CommentList>
         )}
       </div>
     </>
