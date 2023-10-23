@@ -7,12 +7,14 @@ import { getCookie } from "cookies-next";
 import { addReplyComment } from "@/apis/comment";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { Socket } from "socket.io-client";
 const { TextArea } = Input;
 interface CreateReply {
   inputValue: string;
   setInputValue: React.Dispatch<React.SetStateAction<string>>;
   parentId: string;
   setReplyDialog: React.Dispatch<React.SetStateAction<boolean>>;
+  socket: Socket;
 }
 
 function CreateReplyComment({
@@ -20,6 +22,7 @@ function CreateReplyComment({
   setInputValue,
   parentId,
   setReplyDialog,
+  socket,
 }: CreateReply) {
   const handleAddReply = async () => {
     const user_id = getCookie("user_id");
@@ -32,8 +35,9 @@ function CreateReplyComment({
             comment_id: parentId,
             content: inputValue,
           };
-          const response = await addReplyComment(replyComment);
-          toast.success(response.data);
+          // const response = await addReplyComment(replyComment);
+          socket.emit("reply", replyComment);
+          toast.success("Comment posted");
           setReplyDialog(false);
           setInputValue("");
         } else {

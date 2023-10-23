@@ -6,13 +6,19 @@ import { timeAgo } from "@/utils/dayFormat";
 import CommentReplyItem from "../CommentReplyItem";
 import { getCookie } from "cookies-next";
 import { getAllReply } from "@/apis/comment";
+import { Socket } from "socket.io-client";
+import { checkedLikedComment, getCommentLike } from "@/apis/like";
 
 interface CommentItemProps {
   comment: Comment;
+  socket: Socket;
 }
 
-function CommentItem({ comment }: CommentItemProps) {
-  const [isLiked, setIsLiked] = useState<boolean>(false);
+function CommentItem({ comment, socket }: CommentItemProps) {
+  const access_token = getCookie("accessToken");
+  const user_id = getCookie("user_id");
+
+  const [isLiked, setIsLiked] = useState<boolean>();
   const [replyDialog, setReplyDialog] = useState<boolean>(false);
   const [numberOfLike, setNumberOfLike] = useState<number>(0);
 
@@ -22,27 +28,106 @@ function CommentItem({ comment }: CommentItemProps) {
   );
 
   useEffect(() => {
-    const handleGetReply = async () => {
-      const access_token = getCookie("accessToken");
-      try {
-        if (access_token) {
-          const response = await getAllReply(comment.comment_id, access_token);
-          setCommentReplyItems(response.data);
+    if (access_token && comment.comment_id && user_id) {
+      const checkLiked = async () => {
+        const liked = await checkedLikedComment(
+          access_token,
+          user_id,
+          comment.comment_id
+        );
+        if (liked.data) {
+          setIsLiked(true);
         }
-      } catch (error) {}
-    };
+      };
+      checkLiked();
+    }
+  }, []);
+
+  const handleGetReply = async () => {
+    try {
+      if (access_token) {
+        const response = await getAllReply(comment.comment_id, access_token);
+        setCommentReplyItems(response.data);
+      }
+    } catch (error) {}
+  };
+
+  const handleUpdateReply = () => {
     handleGetReply();
-  }, [inputReply]);
+  };
+
+  useEffect(() => {
+    handleGetReply();
+    socket.on("replied", handleUpdateReply);
+    return () => {
+      socket.off("replied", handleUpdateReply);
+    };
+  }, []);
 
   const handleLikeComment = () => {
-    if (isLiked === true) {
-      setIsLiked(!isLiked);
-      setNumberOfLike(numberOfLike - 1);
-    } else {
-      setIsLiked(!isLiked);
-      setNumberOfLike(numberOfLike + 1);
+    try {
+      if (access_token && user_id) {
+        const newCommentLike = {
+          user_id: user_id,
+          comment_id: comment.comment_id,
+        };
+        socket.emit("like-comment", newCommentLike);
+        setIsLiked(true);
+      }
+    } catch (error) {
+      console.error("Error liking the blog comment:", error);
     }
   };
+
+  const handleUnlikeComment = () => {
+    try {
+      if (access_token && user_id) {
+        const unLikeComment = {
+          user_id: user_id,
+          comment_id: comment.comment_id,
+        };
+        socket.emit("unlike-comment", unLikeComment);
+        setIsLiked(false);
+      }
+    } catch (error) {
+      console.error("Error liking the blog comment:", error);
+    }
+  };
+
+  const handleGetCommentLike = async () => {
+    try {
+      if (access_token && comment.comment_id) {
+        const response = await getCommentLike(access_token, comment.comment_id);
+        setNumberOfLike(response.data);
+      }
+    } catch (error) {
+      console.error("Error fetching like the blog comment:", error);
+    }
+  };
+
+  const handleUpdateCommentLike = () => {
+    handleGetCommentLike();
+  };
+
+  useEffect(() => {
+    handleGetCommentLike();
+    socket.on("comment-liked", handleUpdateCommentLike);
+
+    return () => {
+      socket.off("comment-liked", handleUpdateCommentLike);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    handleGetCommentLike();
+    socket.on("comment-unliked", handleUpdateCommentLike);
+
+    return () => {
+      socket.off("comment-unliked", handleUpdateCommentLike);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleReplyComment = () => {
     setReplyDialog(!replyDialog);
@@ -70,16 +155,16 @@ function CommentItem({ comment }: CommentItemProps) {
             <div className="text-base font-medium">{comment.content}</div>
           </div>
           <div className="flex-row flex gap-5 items-center px-3 py-1">
-            <div className="flex flex-row gap-2 items-center">
+            <div className="flex flex-row gap-1 items-center">
               <div
-                onClick={handleLikeComment}
+                onClick={isLiked ? handleUnlikeComment : handleLikeComment}
                 className={`text-xs font-medium cursor-pointer hover:underline ${
                   isLiked ? "text-[#FF0000]" : "text-black"
                 }`}
               >
                 Like
               </div>
-              <div className="text-xs font-medium cursor-default">
+              <div className="text-xs font-bold cursor-default">
                 {numberOfLike === 0 ? "" : numberOfLike}
               </div>
             </div>
@@ -99,6 +184,7 @@ function CommentItem({ comment }: CommentItemProps) {
             </div>
             {replyDialog && (
               <CreateReplyComment
+                socket={socket}
                 setReplyDialog={setReplyDialog}
                 inputValue={inputReply}
                 setInputValue={setInputReply}
