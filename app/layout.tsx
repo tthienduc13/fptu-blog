@@ -10,7 +10,7 @@ import { store } from "../redux/store";
 import { Helmet } from "react-helmet";
 import AuthProvider from "@/app/AuthProvider";
 import "@lexicalLib/theme/EditorTheme.css";
-import SideBar from "@/components/SideBar";
+import SideBar from "@component/SideBar";
 
 export default function RootLayout({
   children,
