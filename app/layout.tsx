@@ -4,7 +4,7 @@ import { Inter } from "next/font/google";
 import { usePathname } from "next/navigation";
 import ToastNotificationComp from "@/components/ToastNotificationComp";
 import Header from "@/components/Header";
-import SideBar from "@/components/SideBar";
+import Sidebar from "@/components/Sidebar";
 const inter = Inter({ subsets: ["latin"] });
 import { Provider } from "react-redux";
 import { store } from "../redux/store";
@@ -43,7 +43,7 @@ export default function RootLayout({
             </Helmet>
             {!isSpecified && !resetPass && <Header></Header>}
             {!isSpecified && !resetPass && !isHideSidebar && (
-              <SideBar></SideBar>
+              <Sidebar></Sidebar>
             )}
             {children} <ToastNotificationComp />
           </AuthProvider>

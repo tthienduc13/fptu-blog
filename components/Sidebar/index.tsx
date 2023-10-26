@@ -14,7 +14,7 @@ import { Menu } from "antd";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
-function SideBar() {
+function Sidebar(): JSX.Element {
   const getItem = (
     label: React.ReactNode,
     key: React.Key,
@@ -75,4 +75,4 @@ function SideBar() {
   );
 }
 
-export default SideBar;
+export default Sidebar;
