@@ -37,7 +37,11 @@ function MemberList() {
               : "Not Created",
           email: item.email,
           role:
-            item.role_id === 1 ? "Member" : item.role_id === 2 ? "Mentor" : "",
+            item.role_id === 0
+              ? "Member"
+              : item.role_id === 1
+              ? "Mentor"
+              : "Admin",
           department: item.department,
           major: item.major,
           isVerified: item.isVerified ? "Active" : "Pending",

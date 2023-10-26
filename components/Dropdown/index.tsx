@@ -25,19 +25,19 @@ function DropDown({ fullName, userName }: HeaderProps) {
   return (
     <>
       {role === 0 ? (
-        <AdminDropDown functionHandleLogout={handleLogout} />
-      ) : role === 2 ? (
+        <UserDropDown
+          userName={userName}
+          fullName={fullName}
+          functionHandleLogout={handleLogout}
+        />
+      ) : role === 1 ? (
         <MentorDropDown
           userName={userName}
           fullName={fullName}
           functionHandleLogout={handleLogout}
         />
       ) : (
-        <UserDropDown
-          userName={userName}
-          fullName={fullName}
-          functionHandleLogout={handleLogout}
-        />
+        <AdminDropDown functionHandleLogout={handleLogout} />
       )}
     </>
   );

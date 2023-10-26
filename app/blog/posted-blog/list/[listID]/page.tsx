@@ -9,6 +9,8 @@ import type { MenuProps } from "antd";
 import { Button, Dropdown } from "antd";
 import axios from "axios";
 import { BlogData } from "@/utils/types";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 interface PageProps {
   params: { listID: string };
 }
@@ -16,7 +18,7 @@ interface PageProps {
 function YourBlog({ params }: PageProps) {
   const [blogData, setBLogData] = useState<BlogData[]>([]);
   const [filter, setFilter] = useState<string>("3");
-
+  const isCollapsed = useSelector((state: RootState) => state.app.isCollapsed);
   const items: MenuProps["items"] = [
     {
       key: "1",
@@ -71,7 +73,11 @@ function YourBlog({ params }: PageProps) {
   const pages: { param: string; startIndex: number; endIndex: number }[] = [];
   return (
     <>
-      <main className=" absolute sm:w-full h-full lg:w-[calc(100%-100px)] flex flex-col justify-center right-0 top-[64px] bottom-0 ">
+      <main
+        className={` absolute sm:w-full h-full ${
+          isCollapsed ? "lg:w-[calc(100%-90px)]" : "lg:w-[calc(100%-200px)]"
+        } flex flex-col justify-center right-0 top-[64px] bottom-0`}
+      >
         <div className="w-full h-full ">
           <div className="mb-[40px] p-[20px] md:p-[40px] w-full">
             <div className="w-full flex items-center justify-between  mb-5">

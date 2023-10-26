@@ -7,6 +7,8 @@ export const END_POINT = {
   DELETE: "/users/profile/",
   UPDATE_AVATAR: "/users/profile/update-avatar/",
   UPDATE_PROFILE: "/users/profile/update-info/",
+  GET_INFO: "/users/profile-info/",
+  UPDATE_BIO: "/users/profile/update-bio/",
 };
 
 type updateData = {
@@ -55,5 +57,19 @@ export const updateInfo = (payload: updateData, user_id: string) => {
 export const getMentionData = (access_token: string | null) => {
   return axiosClient.get(`${END_POINT.MENTION}`, {
     headers: { Authorization: `Bearer ${access_token}` },
+  });
+};
+export const getUserData = (
+  user_id: string | RequestCookie,
+  access_token: string | null | RequestCookie
+) => {
+  return axiosClient.get(`${END_POINT.GET_INFO}${user_id}`, {
+    headers: { Authorization: `Bearer ${access_token}` },
+  });
+};
+
+export const updateAbout = (bio: string, user_id: string) => {
+  return axiosClient.patch(`${END_POINT.UPDATE_BIO}${user_id}`, {
+    bio: bio,
   });
 };

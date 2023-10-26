@@ -5,6 +5,7 @@ import type { TabsProps } from "antd";
 import AllMember from "@component/sections/admin/AllMember";
 import AllStudents from "@component/sections/admin/AllStudents";
 import AllMentors from "@component/sections/admin/AllMentors";
+import withAuthRole from "@/utils/hoc";
 const onChange = (key: string) => {
   console.log(key);
 };
@@ -36,7 +37,4 @@ function Admin() {
   );
 }
 
-export default Admin;
-
-
-
+export default withAuthRole([2])(Admin);

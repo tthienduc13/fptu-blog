@@ -26,17 +26,10 @@ export default function RootLayout({
     "/update-info",
   ];
 
-  const hideSidebar = [
-    "/blog/create",
-    "/blog/detail",
-    "/admin",
-    "/blog/preview",
-  ];
+  const hideSidebar = ["/admin"];
   const pathName = usePathname();
   const isSpecified = specificPath.includes(pathName);
   const resetPass = pathName.startsWith("/auth/reset-password");
-  const preview = pathName.startsWith("/blog/preview");
-  const detail = pathName.startsWith("/blog/detail");
   const isHideSidebar = hideSidebar.includes(pathName);
 
   return (
@@ -49,11 +42,9 @@ export default function RootLayout({
               <meta name="description" content="FU-BLOG" />
             </Helmet>
             {!isSpecified && !resetPass && <Header></Header>}
-            {!isSpecified &&
-              !resetPass &&
-              !preview &&
-              !detail &&
-              !isHideSidebar && <Sidebar></Sidebar>}
+            {!isSpecified && !resetPass && !isHideSidebar && (
+              <Sidebar></Sidebar>
+            )}
             {children} <ToastNotificationComp />
           </AuthProvider>
         </Provider>

@@ -3,7 +3,8 @@ export const END_POINT = {
   LOGIN: "/auth/login",
   REGISTER: "/auth/register",
   FORGOT: "auth/forgot-password",
-  RESET: "/auth/change-password",
+  RESET: "/auth/reset-password",
+  CHANGE: "/auth/change-password",
 };
 
 type UserForgot = {
@@ -36,6 +37,12 @@ type UserRegister = {
   password: string;
 };
 
+type UserChange = {
+  user_id: string;
+  oldPassword: string;
+  newPassword: string;
+};
+
 export const loginAccount = (payload: UserLogin) => {
   return axiosClient.post<LoginResponse>(END_POINT.LOGIN, {
     email: payload.email,
@@ -59,6 +66,14 @@ export const forgotPassword = (payload: UserForgot) => {
 export const resetAccount = (payload: UserReset) => {
   return axiosClient.patch(END_POINT.RESET, {
     user_id: payload.user_id,
+    newPassword: payload.newPassword,
+  });
+};
+
+export const changePassword = (payload: UserChange) => {
+  return axiosClient.patch(END_POINT.CHANGE, {
+    user_id: payload.user_id,
+    oldPassword: payload.oldPassword,
     newPassword: payload.newPassword,
   });
 };

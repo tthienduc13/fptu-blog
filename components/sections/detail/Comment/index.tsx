@@ -38,6 +38,7 @@ function Comment({ socket }: CommentProps) {
     return () => {
       socket.off("comment-updated", handleCommentUpdated);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

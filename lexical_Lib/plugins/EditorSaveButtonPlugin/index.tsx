@@ -4,12 +4,12 @@ import UnlinkButton from "@component/ModifyButton";
 import React from "react";
 import { toast } from "react-toastify";
 
-type TPros = {
+type TProps = {
   setHtmlString: React.Dispatch<React.SetStateAction<string>>;
   useFor: string;
 };
 
-function EditorSaveButtonPlugin({ setHtmlString, useFor }: TPros) {
+function EditorSaveButtonPlugin({ setHtmlString, useFor }: TProps) {
   const [editor] = useLexicalComposerContext();
 
   const handleSaveLetter = async () => {

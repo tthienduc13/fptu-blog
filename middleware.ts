@@ -2,8 +2,6 @@ import { RequestCookie } from "next/dist/compiled/@edge-runtime/cookies";
 import { NextRequest } from "next/dist/server/web/spec-extension/request";
 import { NextResponse } from "next/dist/server/web/spec-extension/response";
 
-
-
 function directToUnauthenticated(
   verify: RequestCookie | undefined,
   url: string | string[]
@@ -14,6 +12,7 @@ function directToUnauthenticated(
       url.includes("/blog/create") ||
       url.includes("/user") ||
       url.includes("/admin") ||
+      url.includes("/profile") ||
       url === "http://localhost:3000/")
   );
 }

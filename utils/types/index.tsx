@@ -94,3 +94,15 @@ export type MentionType = {
   id: string;
   display: string;
 };
+
+export type UserSetting = {
+  user_id: string;
+  first_name: string;
+  last_name: string;
+  bio: string;
+  department: string;
+  position: string;
+  role: string;
+  image: string;
+  created_at: string;
+};

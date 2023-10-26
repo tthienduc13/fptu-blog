@@ -12,8 +12,11 @@ import { getCookie } from "cookies-next";
 import { BlogDetail } from "@/utils/types";
 import { getBlogByID } from "@/apis/blog";
 import { formatDateDetail } from "@/utils/dayFormat";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 function DetailBLogList() {
   const [blogData, setBlogData] = useState<BlogDetail>();
+  const isCollapsed = useSelector((state: RootState) => state.app.isCollapsed);
   const router = useRouter();
   const param = useParams();
   const hanldeGetPost = async () => {
@@ -32,11 +35,13 @@ function DetailBLogList() {
   }, []);
   return (
     <>
-      <main className="absolute w-full flex flex-col gap-[20px] right-0 top-[56px] lg:top-[64px] bottom-0 h-fit p-[20px] lg:p-[40px]">
+      <main
+        className={`absolute ${
+          isCollapsed ? "lg:w-[calc(100%-90px)]" : "lg:w-[calc(100%-200px)]"
+        } flex flex-col gap-[20px] right-0 top-[56px] lg:top-[64px] bottom-0 h-fit p-[20px] lg:p-[40px]`}
+      >
         <div className="w-full  flex items-center justify-between">
-          <h1 className=" relative md:text-[30px] text-[#14375F] md:leading-[45px] text-3xl  font-bold select-none">
-            Preview
-          </h1>
+          <h1 className=" w-4/5 text-3xl font-bold select-none">Preview</h1>
           <div
             onClick={() => router.back()}
             className=" w-1/5 flex justify-end items-center gap-[6px] cursor-pointer hover:gap-[10px] duration-300"
@@ -44,12 +49,16 @@ function DetailBLogList() {
             <Image
               src={BackIcon}
               className="md:h-[20px] md:w-[20px] w-[16px] h-[16px]"
-              height={20}
-              width={20}
+              height={18}
+              width={18}
+              style={{
+                width: "auto",
+                height: "auto",
+              }}
               alt="Back"
             ></Image>
-            <div className="text-[#707070] text-base md:text-xl md:leading-[24px] font-medium ">
-              Go Back
+            <div className="text-gray-500 text-base md:text-lg font-medium ">
+              Go back
             </div>
           </div>
         </div>

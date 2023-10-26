@@ -113,7 +113,7 @@ function StudentsList() {
           const response = await getAllMember(access_token);
           const data = response.data;
           const formattedData = data
-            .filter((item: Item) => item.role_id === 1)
+            .filter((item: Item) => item.role_id === 0)
             .map((item: Item) => ({
               key: item.user_id,
               fullName:
@@ -122,11 +122,11 @@ function StudentsList() {
                   : "Not Created",
               email: item.email,
               role:
-                item.role_id === 1
+                item.role_id === 0
                   ? "Member"
-                  : item.role_id === 2
+                  : item.role_id === 1
                   ? "Mentor"
-                  : "",
+                  : "Admin",
               department: item.department,
               major: item.major,
               status: item.isVerified ? "Active" : "Pending",

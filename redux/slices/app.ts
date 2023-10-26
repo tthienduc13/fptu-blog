@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  isOpenSideBar: false,
+  isCollapsed: false,
   isLoadingAdmin: true,
   
 };
@@ -10,8 +10,8 @@ export const appSlice = createSlice({
   name: "app",
   initialState,
   reducers: {
-    toggleIsOpenSideBar: (state) => {
-      state.isOpenSideBar = !state.isOpenSideBar;
+    toogleIsCollapsed: (state) => {
+      state.isCollapsed = !state.isCollapsed;
     },
     changeIsLoadingAdmin: (state) => {
       state.isLoadingAdmin = !state.isLoadingAdmin;
@@ -20,6 +20,6 @@ export const appSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { toggleIsOpenSideBar, changeIsLoadingAdmin } = appSlice.actions;
+export const { toogleIsCollapsed, changeIsLoadingAdmin } = appSlice.actions;
 
 export default appSlice.reducer;
