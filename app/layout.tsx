@@ -30,8 +30,6 @@ export default function RootLayout({
   const pathName = usePathname();
   const isSpecified = specificPath.includes(pathName);
   const resetPass = pathName.startsWith("/auth/reset-password");
-  const preview = pathName.startsWith("/blog/preview");
-  const detail = pathName.startsWith("/blog/detail");
   const isHideSidebar = hideSidebar.includes(pathName);
 
   return (

@@ -29,7 +29,7 @@ const getItem = (
   } as MenuItem;
 };
 
-const SideBar: React.FC = () => {
+function SideBar() {
   const isCollapsed = useSelector((state: RootState) => state.app.isCollapsed);
   const userId = useSelector((state: RootState) => state.user.currentUser.sub);
   const [current, setCurrent] = useState("/");
@@ -73,6 +73,6 @@ const SideBar: React.FC = () => {
       />
     </div>
   );
-};
+}
 
 export default SideBar;
