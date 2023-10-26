@@ -10,11 +10,15 @@ import { RootState } from "@/redux/store";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { BlogDetail } from "@/utils/types";
+import withAuthRole from "@/utils/hoc";
+
 interface PageProps {
   params: { listID: string };
 }
 
-function PendingBlog({ params }: PageProps) {
+interface PendingBlogProps {}
+
+function PendingBlog({ params }: PageProps & PendingBlogProps) {
   const [blogData, setBlogData] = useState<BlogDetail[]>([]);
   const currentUserRole = useSelector(
     (state: RootState) => state.user.currentUser.UserRole
@@ -125,5 +129,5 @@ function PendingBlog({ params }: PageProps) {
     </>
   );
 }
-
-export default PendingBlog;
+// export default PendingBlog;
+export default withAuthRole([1])(PendingBlog as React.FC<PendingBlogProps>);

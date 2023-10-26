@@ -41,6 +41,7 @@ function CommentItem({ comment, socket }: CommentItemProps) {
       };
       checkLiked();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleGetReply = async () => {

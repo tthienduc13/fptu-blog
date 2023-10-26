@@ -4,13 +4,13 @@ import { Inter } from "next/font/google";
 import { usePathname } from "next/navigation";
 import ToastNotificationComp from "@/components/ToastNotificationComp";
 import Header from "@/components/Header";
-import Sidebar from "@/components/Sidebar";
 const inter = Inter({ subsets: ["latin"] });
 import { Provider } from "react-redux";
 import { store } from "../redux/store";
 import { Helmet } from "react-helmet";
 import AuthProvider from "@/app/AuthProvider";
 import "@lexicalLib/theme/EditorTheme.css";
+import SideBar from "@/components/SideBar";
 
 export default function RootLayout({
   children,
@@ -26,12 +26,7 @@ export default function RootLayout({
     "/update-info",
   ];
 
-  const hideSidebar = [
-    "/blog/create",
-    "/blog/detail",
-    "/admin",
-    "/blog/preview",
-  ];
+  const hideSidebar = ["/admin"];
   const pathName = usePathname();
   const isSpecified = specificPath.includes(pathName);
   const resetPass = pathName.startsWith("/auth/reset-password");
@@ -49,11 +44,9 @@ export default function RootLayout({
               <meta name="description" content="FU-BLOG" />
             </Helmet>
             {!isSpecified && !resetPass && <Header></Header>}
-            {!isSpecified &&
-              !resetPass &&
-              !preview &&
-              !detail &&
-              !isHideSidebar && <Sidebar></Sidebar>}
+            {!isSpecified && !resetPass && !isHideSidebar && (
+              <SideBar></SideBar>
+            )}
             {children} <ToastNotificationComp />
           </AuthProvider>
         </Provider>

@@ -14,8 +14,11 @@ import { createBlog, createBlogTags } from "@/apis/blog";
 import { toast } from "react-toastify";
 import ModifyButton from "@component/ModifyButton";
 import { Skeleton } from "@mui/material";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 function EditBlog() {
+  const isCollapsed = useSelector((state: RootState) => state.app.isCollapsed);
   const [blogTitle, setBlogTitle] = useState<string>("");
   const [blogCategory, setBlogCategory] = useState<string>("");
   const [blogCategoryId, setBlogCategoryId] = useState<string>("");
@@ -61,7 +64,11 @@ function EditBlog() {
 
   return (
     <>
-      <main className=" absolute w-full flex flex-col gap-[20px] right-0 top-[56px] lg:top-[64px] bottom-0 h-fit p-[20px] lg:p-[40px]">
+      <main
+        className={`${
+          isCollapsed ? "lg:w-[calc(100%-90px)]" : "lg:w-[calc(100%-200px)]"
+        } absolute w-full duration-300 flex flex-col gap-[20px] right-0 top-[56px] lg:top-[64px] bottom-0 h-fit p-[20px] lg:p-[40px]`}
+      >
         <div className="w-full flex items-center justify-between">
           <h1 className=" relative md:text-[30px] md:leading-[45px] text-3xl  font-bold select-none">
             Create Blog

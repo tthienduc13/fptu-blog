@@ -40,7 +40,7 @@ function MentorsList() {
         const response = await getAllMember(access_token);
         const data = response.data;
         const formattedData = data
-          .filter((item: columnItem) => item.role_id === 2)
+          .filter((item: columnItem) => item.role_id === 1)
           .map((item: columnItem) => ({
             key: item.user_id,
             user_id: item.user_id,
@@ -50,11 +50,11 @@ function MentorsList() {
                 : "Not Created",
             email: item.email,
             role:
-              item.role_id === 1
+              item.role_id === 0
                 ? "Member"
-                : item.role_id === 2
+                : item.role_id === 1
                 ? "Mentor"
-                : "",
+                : "Admin",
             department: item.department,
             major: item.major,
             isVerified: item.isVerified ? "Active" : "Pending",
