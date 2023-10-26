@@ -13,23 +13,23 @@ import type { MenuProps } from "antd";
 import { Menu } from "antd";
 
 type MenuItem = Required<MenuProps>["items"][number];
-const getItem = (
-  label: React.ReactNode,
-  key: React.Key,
-  icon?: React.ReactNode,
-  children?: MenuItem[],
-  type?: "group"
-): MenuItem => {
-  return {
-    key,
-    icon,
-    children,
-    label,
-    type,
-  } as MenuItem;
-};
 
 function SideBar() {
+  const getItem = (
+    label: React.ReactNode,
+    key: React.Key,
+    icon?: React.ReactNode,
+    children?: MenuItem[],
+    type?: "group"
+  ): MenuItem => {
+    return {
+      key,
+      icon,
+      children,
+      label,
+      type,
+    } as MenuItem;
+  };
   const isCollapsed = useSelector((state: RootState) => state.app.isCollapsed);
   const userId = useSelector((state: RootState) => state.user.currentUser.sub);
   const [current, setCurrent] = useState("/");

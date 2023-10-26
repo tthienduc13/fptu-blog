@@ -4,13 +4,13 @@ import { Inter } from "next/font/google";
 import { usePathname } from "next/navigation";
 import ToastNotificationComp from "@/components/ToastNotificationComp";
 import Header from "@/components/Header";
+import SideBar from "@/components/SideBar";
 const inter = Inter({ subsets: ["latin"] });
 import { Provider } from "react-redux";
 import { store } from "../redux/store";
 import { Helmet } from "react-helmet";
 import AuthProvider from "@/app/AuthProvider";
 import "@lexicalLib/theme/EditorTheme.css";
-import SideBar from "@/components/SideBar";
 
 export default function RootLayout({
   children,
