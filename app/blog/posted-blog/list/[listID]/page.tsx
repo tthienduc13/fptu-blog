@@ -2,23 +2,27 @@
 
 import React, { useEffect, useState } from "react";
 import PostedBlogCard from "@/components/PostedBlogCard";
-import Pagination from "@component/Pagination";
 import { getCookie } from "cookies-next";
 import { getPostedBlog } from "@/apis/blog";
 import type { MenuProps } from "antd";
 import { Button, Dropdown } from "antd";
 import axios from "axios";
-import { BlogData } from "@/utils/types";
+import { BlogDetail } from "@/utils/types";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
+import PagePagination from "@/components/PagePagination";
+import { LinearProgress } from "@mui/material";
 interface PageProps {
   params: { listID: string };
 }
 
 function YourBlog({ params }: PageProps) {
-  const [blogData, setBLogData] = useState<BlogData[]>([]);
-  const [filter, setFilter] = useState<string>("3");
+  const pageNumber = params.listID;
   const isCollapsed = useSelector((state: RootState) => state.app.isCollapsed);
+  const [totalPages, setTotalPages] = useState<number>(0);
+  const [isFetchingData, setIsFetchingData] = useState<boolean>(false);
+  const [blogData, setBLogData] = useState<BlogDetail[]>([]);
+  const [filter, setFilter] = useState<string>("3");
   const items: MenuProps["items"] = [
     {
       key: "1",
@@ -38,20 +42,23 @@ function YourBlog({ params }: PageProps) {
     },
   ];
 
-  const hanldeGetPostedBlogs = async () => {
+  const hanldeGetPostedBlogs = async (page: number) => {
     try {
       const access_token = getCookie("accessToken");
       if (access_token) {
         const userId = getCookie("user_id");
         if (userId) {
-          const response = await getPostedBlog(userId, access_token);
+          const response = await getPostedBlog(userId, access_token, page);
           const allBlogs = 3;
           if (filter !== allBlogs.toString()) {
-            const filteredBlogs = response.data.filter(
-              (blog: BlogData) => blog.status === parseInt(filter)
+            const filteredBlogs = response.data.data.filter(
+              (blog: BlogDetail) => blog.status === parseInt(filter)
             );
             setBLogData(filteredBlogs);
-          } else setBLogData(response.data);
+          } else {
+            setBLogData(response.data.data);
+            setTotalPages(response.data.total_pages);
+          }
         }
       }
     } catch (error) {
@@ -61,58 +68,55 @@ function YourBlog({ params }: PageProps) {
     }
   };
   useEffect(() => {
-    hanldeGetPostedBlogs();
+    hanldeGetPostedBlogs(Number(pageNumber));
+    setIsFetchingData(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter]);
 
-  const increaseIndex = 8;
-  const [blogs, setBlogs] = useState(blogData.slice(0, increaseIndex + 1));
-  const [countListPage, setCountListPage] = useState(
-    Math.ceil(blogData.length / increaseIndex)
-  );
-  const pages: { param: string; startIndex: number; endIndex: number }[] = [];
   return (
     <>
       <main
-        className={` absolute sm:w-full h-full ${
+        className={`${
           isCollapsed ? "lg:w-[calc(100%-90px)]" : "lg:w-[calc(100%-200px)]"
-        } flex flex-col justify-center right-0 top-[64px] bottom-0`}
+        } absolute w-full duration-300 flex flex-col gap-[20px] right-0 top-[56px] lg:top-[64px] bottom-0 h-fit p-[20px] lg:p-[40px]`}
       >
-        <div className="w-full h-full ">
-          <div className="mb-[40px] p-[20px] md:p-[40px] w-full">
-            <div className="w-full flex items-center justify-between  mb-5">
-              <h1 className="text-[#14375F] font-bold md:text-[30px] md:leading-[45px] text-2xl">
-                Your Blogs
-              </h1>
-              <Dropdown menu={{ items }} placement="bottomRight" arrow>
-                <Button>Filter</Button>
-              </Dropdown>
-            </div>
-            <div className="w-full flex md:flex-row sm:flex-col lg:gap-y-[30px] sm:gap-y-4 flex-wrap lg:gap-x-[30px] sm:gap-x-4 ">
-              {blogData !== null ? (
-                blogData.map((data) => (
-                  <PostedBlogCard
-                    key={data.blog_id}
-                    value={data}
-                  ></PostedBlogCard>
-                ))
-              ) : (
+        {isFetchingData ? (
+          <LinearProgress></LinearProgress>
+        ) : (
+          <div className="w-full h-full ">
+            <div className="mb-[40px] flex flex-col gap-5 w-full">
+              <div className="w-full flex items-center justify-between  mb-5">
                 <h1 className="text-[#14375F] font-bold md:text-[30px] md:leading-[45px] text-2xl">
-                  No data display
+                  Your Blogs
                 </h1>
-              )}
-              <Pagination
-                paramID={params.listID}
-                countNumberOfPage={countListPage}
-                pages={pages}
-                increaseIndex={increaseIndex}
-                sliceSetData={setBlogs}
-                data={blogData}
-                route={"/posted-blog/list/"}
-              ></Pagination>
+                <Dropdown menu={{ items }} placement="bottomRight" arrow>
+                  <Button>Filter</Button>
+                </Dropdown>
+              </div>
+              <div className="w-full flex md:flex-row sm:flex-col lg:gap-y-[30px] sm:gap-y-4 flex-wrap lg:gap-x-[30px] sm:gap-x-4 ">
+                {blogData !== null ? (
+                  blogData.map((data) => (
+                    <PostedBlogCard
+                      key={data.blog_id}
+                      value={data}
+                    ></PostedBlogCard>
+                  ))
+                ) : (
+                  <h1 className="text-[#14375F] font-bold md:text-[30px] md:leading-[45px] text-2xl">
+                    No data display
+                  </h1>
+                )}
+              </div>
+              <div className="w-full flex justify-end mt-5">
+                <PagePagination
+                  totalPages={totalPages}
+                  currentPage={pageNumber}
+                  route={"/blog/posted-blog/list/"}
+                ></PagePagination>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </main>
     </>
   );

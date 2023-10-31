@@ -23,11 +23,7 @@ interface ContentDetailProps {
   blogData: BlogDetail | undefined;
   socket: Socket;
 }
-function Content({
-  setBlogData,
-  blogData,
-  socket,
-}: ContentDetailProps) {
+function Content({ setBlogData, blogData, socket }: ContentDetailProps) {
   const param = useParams();
   const router = useRouter();
   const [likeCount, setLikeCount] = useState<number>(0);
@@ -188,19 +184,19 @@ function Content({
             <path
               d="M5 27.5V3.75C5 3.41848 5.1317 3.10054 5.36612 2.86612C5.60054 2.6317 5.91848 2.5 6.25 2.5H23.75C24.0815 2.5 24.3995 2.6317 24.6339 2.86612C24.8683 3.10054 25 3.41848 25 3.75V27.5L15 22.3294L5 27.5Z"
               stroke="black"
-              stroke-width="2"
-              stroke-linejoin="round"
+              strokeWidth="2"
+              strokeLinejoin="round"
             />
             <path
               d="M10 11.25H20"
               stroke="black"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </svg>
         </div>
-        <div className="w-full gap-[10px] flex items-center">
+        <div className="w-full  gap-[10px] flex items-center">
           <Image src={TagIcon} alt="tag icon" height={24} width={24}></Image>
           {blogData?.tag_titles.map((tag, index) => (
             <div
@@ -216,6 +212,7 @@ function Content({
         {/* Thumbnail */}
         <div className="w-full flex items-center justify-center mb-5">
           <Image
+            priority={true}
             className="object-contain max-w-[1200px] max-h-[500px]"
             src={blogData?.visual ? blogData.visual : SampleImage}
             width={1200}
@@ -229,7 +226,7 @@ function Content({
           dangerouslySetInnerHTML={{ __html: blogData?.content as string }}
         ></div>
       </div>
-      <div className=" flex w-full justify-between items-center">
+      <div className=" flex w-full mt-5 justify-between items-center">
         <div className="flex flex-row items-center gap-4">
           <div className="flex gap-[4px] items-center">
             <svg

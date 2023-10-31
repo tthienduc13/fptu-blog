@@ -32,13 +32,11 @@ function Comment({ socket }: CommentProps) {
 
   useEffect(() => {
     handleGetAllComments();
-
-    socket.on("comment-updated", handleCommentUpdated);
-
+    socket.on("comment-updated", handleCommentUpdated); 
     return () => {
       socket.off("comment-updated", handleCommentUpdated);
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

@@ -3,7 +3,6 @@ import Image from "next/image";
 import React, { useState } from "react";
 import BlogCard from "@/components/BlogCard";
 import SampleImage from "@image/sampleImage.png";
-import Pagination from "@component/Pagination";
 import SearchIcon from "@icons/page/blog/searchIcon.svg";
 interface PageProps {
   params: { listID: string };
@@ -236,15 +235,6 @@ function FeaturedBlog({ params }: PageProps) {
               {blogs.map((data) => (
                 <BlogCard key={data.id} value={data}></BlogCard>
               ))}
-              <Pagination
-                paramID={params.listID}
-                countNumberOfPage={countListPage}
-                pages={pages}
-                increaseIndex={increaseIndex}
-                sliceSetData={setBlogs}
-                data={sampleData}
-                route={"/blog/featured-blog/list"}
-              ></Pagination>
             </div>
           </div>
         </div>

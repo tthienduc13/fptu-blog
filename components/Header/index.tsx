@@ -118,7 +118,11 @@ function Header(): JSX.Element {
             className="relative items-center hidden lg:flex hover:bg-[#F5F5F5] shadow-md gap-[10px] px-[12px] py-[4px] lg:px-[20px] lg:py-[8px] border-[1px] border-[#E8EBED] rounded-[40px]"
           >
             {isDropdownOpen && (
-              <DropDown userName={userName} fullName={fullName} />
+              <DropDown
+                image={userData?.image!}
+                userName={userName}
+                fullName={fullName}
+              />
             )}
             {isLoading ? (
               <div className="w-[150px]">

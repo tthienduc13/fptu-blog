@@ -33,7 +33,7 @@ function BlogDetail() {
               setBlogData={setBlogData}
               blogData={blogData}
             ></Content>
-            <RelatedBlog></RelatedBlog>
+            {/* <RelatedBlog></RelatedBlog> */}
             <Comment socket={socket}></Comment>
           </div>
         )}
