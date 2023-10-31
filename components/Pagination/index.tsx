@@ -1,63 +1,67 @@
-import React, { SetStateAction, useEffect } from "react";
-import Link from "next/link";
+import React, { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 interface IProps {
   paramID: string;
   countNumberOfPage: number;
   pages: { param: string; startIndex: number; endIndex: number }[];
-  increaseIndex: number;
-  sliceSetData: React.Dispatch<SetStateAction<any>>;
   data: any;
   route: string;
+  onPageChange: (page: number) => void; // New prop
 }
 
 function Pagination({
   paramID,
   route,
   countNumberOfPage,
-  pages,
-  increaseIndex,
-  sliceSetData,
-  data,
+  onPageChange,
 }: IProps) {
+  const router = useRouter();
+
   const renderPagination = () => {
     const buttons = [];
-    let startIndex = 0;
-    let endIndex = 0;
     for (let i = 1; i <= countNumberOfPage; i++) {
       buttons.push(
-        <Link href={`${route}/${i}`} key={i}>
-          <button
-            className={`px-[12px] py-[4px] border-r-[1px] ${
-              paramID === i.toString() ? "bg-blue-200 text-blue-600" : ""
-            }`}
-          >
-            {i}
-          </button>
-        </Link>
+        <button
+          key={i}
+          onClick={() => onPageChange(i)} // Pass the page number to onPageChange
+          className={`px-[12px] py-[4px] border-r-[1px] ${
+            paramID === i.toString() ? "bg-blue-200 text-blue-600" : ""
+          }`}
+        >
+          {i}
+        </button>
       );
-      pages.push({
-        param: i.toString(),
-        startIndex: startIndex,
-        endIndex: startIndex + increaseIndex,
-      });
-      endIndex = startIndex + increaseIndex;
-      startIndex = endIndex + 1;
-      endIndex = startIndex + increaseIndex;
     }
     return buttons;
   };
 
+  const handlePageChange = (page: number) => {
+    onPageChange(page);
+    router.push(`${route}/${page}`);
+  };
+
   useEffect(() => {
     const handleNextPage = () => {
-      const page = pages[parseInt(paramID) - 1];
-      if (page) {
-        sliceSetData(data.slice(page.startIndex, page.endIndex + 1));
-      }
+      onPageChange(parseInt(paramID));
     };
     handleNextPage();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handlePreviousPage = () => {
+    const previousPage = parseInt(paramID) - 1;
+    if (previousPage >= 1) {
+      handlePageChange(previousPage);
+    }
+  };
+
+  const handleNextPage = () => {
+    const nextPage = parseInt(paramID) + 1;
+    if (nextPage <= countNumberOfPage) {
+      handlePageChange(nextPage);
+    }
+  };
 
   return (
     <div
@@ -71,12 +75,9 @@ function Pagination({
           className={`px-[12px] py-[4px] border-r-[1px] ${
             paramID === "1" ? "text-slate-300 pointer-events-none" : ""
           }`}
+          onClick={handlePreviousPage} // Call handlePreviousPage function
         >
-          <Link
-            href={`${route}/${paramID === "1" ? "1" : parseInt(paramID) - 1}`}
-          >
-            Previous
-          </Link>
+          Previous
         </button>
 
         {renderPagination()}
@@ -87,8 +88,9 @@ function Pagination({
               ? "pointer-events-none text-slate-300"
               : ""
           }`}
+          onClick={handleNextPage} // Call handleNextPage function
         >
-          <Link href={`${route}/${parseInt(paramID) + 1}`}>Next</Link>
+          Next
         </button>
       </div>
     </div>

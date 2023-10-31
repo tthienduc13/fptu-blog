@@ -10,8 +10,9 @@ import { logout } from "@/redux/slices/user";
 interface HeaderProps {
   fullName: string | undefined;
   userName: string | undefined;
+  image: string;
 }
-function DropDown({ fullName, userName }: HeaderProps) {
+function DropDown({ fullName, userName, image }: HeaderProps) {
   const role: number = useSelector(
     (state: RootState) => state.user.currentUser.UserRole
   );
@@ -26,12 +27,14 @@ function DropDown({ fullName, userName }: HeaderProps) {
     <>
       {role === 0 ? (
         <UserDropDown
+          image={image}
           userName={userName}
           fullName={fullName}
           functionHandleLogout={handleLogout}
         />
       ) : role === 1 ? (
         <MentorDropDown
+          image={image}
           userName={userName}
           fullName={fullName}
           functionHandleLogout={handleLogout}

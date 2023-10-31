@@ -24,7 +24,7 @@ export default function middleware(
   let url = req.url;
 
   if (directToUnauthenticated(verify, url)) {
-    return NextResponse.redirect("http://localhost:3000/unauthenticated");
+    return NextResponse.redirect("http://localhost:3000/auth/sign-in");
   }
 
   if (verify && url.includes("/auth")) {

@@ -52,15 +52,21 @@ export const createBlogTags = (payload: blogTags) => {
   });
 };
 
-export const getPostedBlog = (user_id: string, access_token: string | null) => {
+export const getPostedBlog = (
+  user_id: string,
+  access_token: string | null,
+  page: number
+) => {
   return axiosClient.get(`${END_POINT.GET_POSTED}${user_id}`, {
     headers: { Authorization: `Bearer ${access_token}` },
+    params: { page },
   });
 };
 
-export const getPendingBlog = (access_token: string | null) => {
+export const getPendingBlog = (access_token: string | null, page: number) => {
   return axiosClient.get(`${END_POINT.GET_PENDING}`, {
     headers: { Authorization: `Bearer ${access_token}` },
+    params: { page }, // Add the page parameter to the params object
   });
 };
 

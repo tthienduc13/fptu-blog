@@ -3,52 +3,21 @@ import Image from "next/image";
 import Button from "@/components/Button";
 import SampleImage from "@image/sampleImage.png";
 import BlogStatus from "../BlogStatus";
-import { BlogData } from "@/utils/types";
+import { BlogDetail } from "@/utils/types";
 import { timeAgo } from "@/utils/dayFormat";
-import { getCategoryById } from "@/apis/category";
-import { getCookie } from "cookies-next";
-import { getMemberInfo } from "@/apis/profile";
 
 interface IProps {
-  value: BlogData;
+  value: BlogDetail;
 }
 function PostedBlogCard({ value }: IProps) {
-  const [blogCategory, setBlogCategory] = useState<string>("");
-  const [postedUser, setPostedUser] = useState<string>("");
   const maxContentLength = 250;
   const parser = new DOMParser();
   const doc = parser.parseFromString(value.content, "text/html");
-  const blogText = doc.body.textContent || "";
+  const blogText = doc.body.textContent ?? "";
   const truncatedText =
     blogText.length > maxContentLength
       ? blogText.substring(0, maxContentLength)
       : blogText;
-  useEffect(() => {
-    const access_token = getCookie("accessToken");
-    const hanldeGetBlogCategory = async () => {
-      try {
-        if (access_token) {
-          const response = await getCategoryById(
-            value.category_id,
-            access_token
-          );
-          setBlogCategory(response.data[0].description);
-        }
-      } catch (error) {}
-    };
-    const hanldeGetPostedUser = async () => {
-      try {
-        if (access_token) {
-          const response = await getMemberInfo(value.user_id, access_token);
-          const fullName =
-            response.data.last_name + " " + response.data.first_name;
-          setPostedUser(fullName);
-        }
-      } catch (error) {}
-    };
-    hanldeGetBlogCategory();
-    hanldeGetPostedUser();
-  });
   return (
     <div className="md:max-w-[calc((100%-60px)/3)] sm:w-full rounded-lg overflow-hidden w-full drop-shadow-lg shadow-lg">
       <Image
@@ -64,10 +33,10 @@ function PostedBlogCard({ value }: IProps) {
         </div>
         <div className="w-full flex items-center justify-between">
           <p className="text-[12px] cursor-pointer leading-[15px] text-[#0066B2] font-medium">
-            {postedUser}
+            {value.user_name}
           </p>
           <p className="text-[12px] cursor-pointer leading-[15px] text-[#0066B2] font-medium">
-            {blogCategory}
+            {value.category_description}
           </p>
         </div>
         <div className="self-stretch text-justify text-[14px] font-normal text-gray-500">

@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import CreateReplyComment from "../CreateReplyComment";
@@ -8,7 +9,10 @@ import { getCookie } from "cookies-next";
 import { getAllReply } from "@/apis/comment";
 import { Socket } from "socket.io-client";
 import { checkedLikedComment, getCommentLike } from "@/apis/like";
-
+import { MoreOutlined } from "@ant-design/icons";
+import type { MenuProps } from "antd";
+import { Dropdown } from "antd";
+import { toast } from "react-toastify";
 interface CommentItemProps {
   comment: Comment;
   socket: Socket;
@@ -27,6 +31,23 @@ function CommentItem({ comment, socket }: CommentItemProps) {
     []
   );
 
+  const [isHovered, setIsHovered] = useState<boolean>(false);
+
+  const handleDeleteComment = () => {
+    try {
+      if (access_token && user_id) {
+        const deleteComment = {
+          user_id: comment.user_id,
+          comment_id: comment.comment_id,
+        };
+        socket.emit("delete-comment", deleteComment);
+        toast.error("Comment deleted");
+      }
+    } catch (error) {
+      console.error("Error deleting the blog comment:", error);
+    }
+  };
+
   useEffect(() => {
     if (access_token && comment.comment_id && user_id) {
       const checkLiked = async () => {
@@ -41,7 +62,7 @@ function CommentItem({ comment, socket }: CommentItemProps) {
       };
       checkLiked();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleGetReply = async () => {
@@ -49,6 +70,8 @@ function CommentItem({ comment, socket }: CommentItemProps) {
       if (access_token) {
         const response = await getAllReply(comment.comment_id, access_token);
         setCommentReplyItems(response.data);
+        console.log(comment.comment_id);
+        console.log(response.data);
       }
     } catch (error) {}
   };
@@ -63,6 +86,16 @@ function CommentItem({ comment, socket }: CommentItemProps) {
     return () => {
       socket.off("replied", handleUpdateReply);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    handleGetReply();
+    socket.on("comment-updated", handleUpdateReply);
+    return () => {
+      socket.off("comment-updated", handleUpdateReply);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleLikeComment = () => {
@@ -137,6 +170,21 @@ function CommentItem({ comment, socket }: CommentItemProps) {
     (reply) => reply.comment_id === comment.comment_id
   );
 
+  const items: MenuProps["items"] = [
+    {
+      label: "Hide comment",
+      key: "0",
+    },
+    {
+      label: "Delete comment",
+      key: "1",
+      danger: true,
+      onClick: () => {
+        handleDeleteComment();
+      },
+    },
+  ];
+
   return (
     <div className="w-full flex flex-col gap-2">
       <div className="w-full flex items-start gap-2">
@@ -148,12 +196,33 @@ function CommentItem({ comment, socket }: CommentItemProps) {
           style={{ width: "40px", height: "40px" }}
           className="object-cover rounded-[50%]"
         ></Image>
-        <div className="w-full flex flex-col">
-          <div className="flex-col w-fit bg-[#F5F5F5] px-3 py-2 rounded-xl">
-            <div className="flex flex-row gap-4 items-center">
-              <div className="text-base font-semibold">{comment.user_name}</div>
+        <div
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          className="w-full flex flex-col"
+        >
+          <div className="flex flex-row gap-2 items-center">
+            <div className="flex-col w-fit bg-[#F5F5F5] px-3 py-2 rounded-xl">
+              <div className="flex flex-row gap-4 items-center">
+                <div className="text-base font-semibold">
+                  {comment.user_name}
+                </div>
+              </div>
+              <div className="text-base font-medium">{comment.content}</div>
             </div>
-            <div className="text-base font-medium">{comment.content}</div>
+            {isHovered && comment.user_id === user_id && (
+              <Dropdown
+                className="cursor-pointer"
+                menu={{ items }}
+                trigger={["click"]}
+              >
+                <div>
+                  <div className="rotate-90 p-1 bg-[#F5F5F5] rounded-[50%] flex justify-center items-center">
+                    <MoreOutlined style={{ fontSize: "16px" }} />
+                  </div>
+                </div>
+              </Dropdown>
+            )}
           </div>
           <div className="flex-row flex gap-5 items-center px-3 py-1">
             <div className="flex flex-row gap-1 items-center">

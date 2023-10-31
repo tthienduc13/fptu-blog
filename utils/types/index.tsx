@@ -75,6 +75,7 @@ export type BlogDetail = {
 export type Comment = {
   blog_id: string;
   comment_id: string;
+  user_id: string;
   content: string;
   created_at: string;
   user_name: string;
@@ -101,6 +102,7 @@ export type UserSetting = {
   last_name: string;
   bio: string;
   department: string;
+  major: string;
   position: string;
   role: string;
   image: string;

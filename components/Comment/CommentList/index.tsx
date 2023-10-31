@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 import CommentItem from "@component/Comment/CommentItem";
 import { Comment } from "@/utils/types";
 import { Socket } from "socket.io-client";
@@ -14,7 +13,7 @@ function CommentList({ blogComments, socket }: CommentProps) {
         <CommentItem
           socket={socket}
           comment={comment}
-          key={index}
+          key={comment.comment_id}
         ></CommentItem>
       ))}
     </div>

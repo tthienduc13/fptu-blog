@@ -10,6 +10,7 @@ import { LinearProgress } from "@mui/material";
 import { useParams } from "next/navigation";
 import EditAvatar from "@/components/sections/profileSetting/EditAvatar";
 import ChangePassword from "@/components/sections/profileSetting/ChangePassword";
+import GeneralInformation from "@/components/sections/profileSetting/GeneralInfomation";
 function ProfileSetting() {
   const params = useParams();
   const user_id = params.userID as string;
@@ -30,8 +31,12 @@ function ProfileSetting() {
 
   useEffect(() => {
     handleGetUserData();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  console.log(userData);
+
   return (
     <>
       <main
@@ -64,11 +69,15 @@ function ProfileSetting() {
                 </div>
                 <div className="w-[calc(60%-8px)] flex flex-col gap-4">
                   <div className=" border-[1px] rounded-xl">
-                    {" "}
                     <EditBio
                       user_id={userData?.user_id!}
                       about={userData?.bio!}
                     ></EditBio>
+                  </div>
+                  <div className=" border-[1px] rounded-xl">
+                    <GeneralInformation
+                      userData={userData!}
+                    ></GeneralInformation>
                   </div>
                 </div>
               </div>
