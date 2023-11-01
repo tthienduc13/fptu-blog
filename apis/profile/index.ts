@@ -2,9 +2,7 @@ import axiosClient from "@/utils/axiosClient/index";
 import { RequestCookie } from "next/dist/compiled/@edge-runtime/cookies";
 export const END_POINT = {
   GET: "/users/profile/",
-  MENTION: "/users/mention-data",
   MANAGE: "/users/profile/",
-  DELETE: "/users/profile/",
   UPDATE_AVATAR: "/users/profile/update-avatar/",
   UPDATE_PROFILE: "/users/profile/update-info/",
   GET_INFO: "/users/profile-info/",
@@ -33,12 +31,6 @@ export const getMemberInfo = (
   });
 };
 
-export const deleteUser = (user_id: string, access_token: string | null) => {
-  return axiosClient.delete(`${END_POINT.GET}${user_id}`, {
-    headers: { Authorization: `Bearer ${access_token}` },
-  });
-};
-
 export const updateAvatar = (image: string, user_id: string) => {
   return axiosClient.post(`${END_POINT.UPDATE_AVATAR}${user_id}`, {
     image: image,
@@ -54,11 +46,6 @@ export const updateInfo = (payload: updateData, user_id: string) => {
   });
 };
 
-export const getMentionData = (access_token: string | null) => {
-  return axiosClient.get(`${END_POINT.MENTION}`, {
-    headers: { Authorization: `Bearer ${access_token}` },
-  });
-};
 export const getUserData = (
   user_id: string | RequestCookie,
   access_token: string | null | RequestCookie
