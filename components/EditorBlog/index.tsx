@@ -63,7 +63,7 @@ import HTMLSerializerPlugin from "@plugins/HtmlSerializerPlugin";
 import TextCounterPlugin from "@plugins/TextCounterPlugin";
 import dynamic from "next/dynamic";
 
-interface IPros {
+interface IProps {
   formTitle: string;
   htmlString: string;
   setHtmlString: React.Dispatch<React.SetStateAction<string>>;
@@ -87,7 +87,12 @@ const cellEditorConfig = {
   theme: PlaygroundEditorTheme,
 };
 
-function EditorBlog({ formTitle, htmlString, setHtmlString, pageName }: IPros) {
+function EditorBlog({
+  formTitle,
+  htmlString,
+  setHtmlString,
+  pageName,
+}: IProps) {
   const [textCounting, setTextContentCounting] = useState<number>(0);
 
   const [floatingAnchorElem, setFloatingAnchorElem] =
