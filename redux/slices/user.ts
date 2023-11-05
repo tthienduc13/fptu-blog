@@ -6,7 +6,8 @@ type User = {
   email: string;
   UserRole: number;
   sub: string;
-  firstName: string;
+  isUpdated: boolean;
+  moderateStatus: boolean;
 };
 type AppState = {
   currentUser: User;
@@ -17,7 +18,8 @@ const initialState: AppState = {
     email: "",
     UserRole: 0,
     sub: "",
-    firstName: "",
+    isUpdated: false,
+    moderateStatus: false,
   },
 };
 

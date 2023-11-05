@@ -8,12 +8,14 @@ import Image from "next/image";
 
 import EditIconAnimate from "@icons/components/Button/edit.gif";
 import EditIconPause from "@icons/components/Button/edit_pause.png";
-import { UserSetting } from "@/utils/types";
+import { Department, Major, OptionList, UserSetting } from "@/utils/types";
 import axios from "axios";
 import { getCookie } from "cookies-next";
 import { getAllCategory } from "@/apis/category";
 import { formatDateToMMDDYYYY, formatDateToYYYYMMDD } from "@/utils/dayFormat";
 import { getAllTag } from "@/apis/tag";
+import { getAllDepartments } from "@/apis/department";
+import { getAllMajors } from "@/apis/major";
 type TGeneralFieldValues = {
   firstName: string;
   lastName: string;
@@ -33,11 +35,11 @@ type TProps = {
 };
 
 function GeneralInformation({ userData }: TProps) {
-  const [postionOptions, setPositionOptions] = useState<TOptionsList[]>([]);
-  const [departmentOptions, setDeparmentOptions] = useState<TOptionsList[]>([]);
+  const [departmentOptions, setDeparmentOptions] = useState<OptionList[]>([]);
+  const [majorOptions, setAllMajorOptions] = useState<OptionList[]>([]);
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const formikRef = useRef<FormikHelpers<TGeneralFieldValues> | null>(null);
-
+  console.log(userData);
   const onSubmit = async (
     values: TGeneralFieldValues,
     actions: FormikHelpers<TGeneralFieldValues>
@@ -73,42 +75,20 @@ function GeneralInformation({ userData }: TProps) {
     setIsEdit(!isEdit);
   };
 
-  const handleGetAllPosition = async () => {
-    try {
-      const access_token = getCookie("accessToken");
-      if (access_token) {
-        const res = await getAllTag(access_token);
-        const data = res.data;
-        const filtedData = data
-          .map((item: TOptionsList) => {
-            return {
-              id: item.id,
-              value: item.value,
-            };
-          })
-          .filter((item: TOptionsList) => item.value !== "default");
-        setPositionOptions(filtedData);
-      }
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.log(error);
-      }
-    }
-  };
   const handleGetAllDeparment = async () => {
     try {
       const access_token = getCookie("accessToken");
       if (access_token) {
-        const res = await getAllCategory(access_token);
+        const res = await getAllDepartments(access_token);
         const data = res.data;
         const filtedData = data
-          .map((item: TOptionsList) => {
+          .map((item: Department) => {
             return {
-              id: item.id,
-              value: item.value,
+              id: item.department_id,
+              value: item.description,
             };
           })
-          .filter((item: TOptionsList) => item.value !== "default");
+          .filter((item: OptionList) => item.value !== "default");
         setDeparmentOptions(filtedData);
       }
     } catch (error) {
@@ -118,10 +98,32 @@ function GeneralInformation({ userData }: TProps) {
     }
   };
 
+  const handleGetAllMajors = async () => {
+    try {
+      const access_token = getCookie("accessToken");
+      if (access_token) {
+        const res = await getAllMajors(access_token);
+        const data = res.data;
+        const filtedData = data
+          .map((item: Major) => {
+            return {
+              id: item.major_id,
+              value: item.description,
+            };
+          })
+          .filter((item: OptionList) => item.value !== "default");
+        setAllMajorOptions(filtedData);
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.log(error);
+      }
+    }
+  };
+
   useEffect(() => {
-    handleGetAllPosition();
     handleGetAllDeparment();
-    // handleGetAllMajor();
+    handleGetAllMajors();
   }, []);
 
   const parseDataToId = (list: TOptionsList[], data: string): string => {
@@ -207,24 +209,21 @@ function GeneralInformation({ userData }: TProps) {
                     isEdit={isEdit}
                     title={"position"}
                   />
-                  {/* <FormikSelect
-                    label={"departmentID"}
-                    id={"departmentID"}
-                    name={"departmentID"}
+                  <FormikSelect
+                    label={"department"}
+                    id={"department"}
+                    name={"department"}
                     isEdit={isEdit}
                     title={"department"}
                     options={departmentOptions!}
-                  /> */}
-                  <FormikInput
+                  />
+                  <FormikSelect
                     label={"major"}
                     id={"major"}
                     name={"major"}
-                    placeholder={
-                      userData.major ? userData.major : "Enter your major..."
-                    }
-                    type={"text"}
                     isEdit={isEdit}
                     title={"major"}
+                    options={majorOptions!}
                   />
                   <FormikInput
                     label={"joinDate"}
@@ -232,11 +231,10 @@ function GeneralInformation({ userData }: TProps) {
                     name={"joinDate"}
                     placeholder={"Enter your join date..."}
                     type={"date"}
-                    isEdit={isEdit}
+                    isEdit={false}
                     title={"join date"}
                   />
                 </div>
-
                 {isEdit ? (
                   <div>
                     <button

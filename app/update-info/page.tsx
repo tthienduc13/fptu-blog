@@ -7,6 +7,8 @@ import AvatarChanging from "@/components/AvatarChanging";
 import WelcomeSection from "@/components/sections/updateInfo/Welcome";
 import Finish from "@/components/sections/updateInfo/Finish";
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { logout } from "@/redux/slices/user";
 
 const App: React.FC = () => {
   const { token } = theme.useToken();
@@ -47,40 +49,39 @@ const App: React.FC = () => {
   };
 
   const router = useRouter();
-
+  const dispatch = useDispatch();
   const hanldeFinish = () => {
-    toast.success("Update info successfully");
+    toast.success("Update info successfully, Please login again");
     setTimeout(() => {
-      router.push("/");
+      dispatch(logout());
+      router.push("/auth/sign-in");
     }, 500);
   };
 
   return (
-    <>
-      <main className="w-screen h-screen flex justify-center items-center ">
-        <div className="w-[70%]">
-          <Steps current={current} items={items} />
-          <div style={contentStyle}>{steps[current].content}</div>
-          <div style={{ marginTop: 24 }}>
-            {current < steps.length - 1 && (
-              <Button type="default" onClick={() => next()}>
-                Next
-              </Button>
-            )}
-            {current === steps.length - 1 && (
-              <Button type="default" onClick={hanldeFinish}>
-                Done
-              </Button>
-            )}
-            {current > 0 && (
-              <Button style={{ margin: "0 8px" }} onClick={() => prev()}>
-                Previous
-              </Button>
-            )}
-          </div>
+    <main className="w-screen h-screen flex justify-center items-center ">
+      <div className="w-[70%]">
+        <Steps current={current} items={items} />
+        <div style={contentStyle}>{steps[current].content}</div>
+        <div style={{ marginTop: 24 }}>
+          {current < steps.length - 1 && (
+            <Button type="default" onClick={() => next()}>
+              Next
+            </Button>
+          )}
+          {current === steps.length - 1 && (
+            <Button type="default" onClick={hanldeFinish}>
+              Done
+            </Button>
+          )}
+          {current > 0 && (
+            <Button style={{ margin: "0 8px" }} onClick={() => prev()}>
+              Previous
+            </Button>
+          )}
         </div>
-      </main>
-    </>
+      </div>
+    </main>
   );
 };
 

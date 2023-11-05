@@ -101,10 +101,25 @@ export type UserSetting = {
   first_name: string;
   last_name: string;
   bio: string;
-  department: string;
-  major: string;
+  department_id: string;
+  major_id: string;
   position: string;
   role: string;
   image: string;
   created_at: string;
+};
+
+export type Department = {
+  department_id: string;
+  description: string;
+};
+
+export type Major = {
+  major_id: string;
+  description: string;
+};
+
+export type OptionList = {
+  id: string;
+  value: string;
 };

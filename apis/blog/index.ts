@@ -66,7 +66,7 @@ export const getPostedBlog = (
 export const getPendingBlog = (access_token: string | null, page: number) => {
   return axiosClient.get(`${END_POINT.GET_PENDING}`, {
     headers: { Authorization: `Bearer ${access_token}` },
-    params: { page }, // Add the page parameter to the params object
+    params: { page }, 
   });
 };
 

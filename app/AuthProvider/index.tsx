@@ -8,7 +8,8 @@ type EncodeType = {
   email: string;
   UserRole: number;
   sub: string;
-  firstName: string;
+  isUpdated: boolean;
+  moderateStatus: boolean;
 };
 
 function AppProvider({ children }: { children: React.ReactNode }) {
@@ -21,7 +22,8 @@ function AppProvider({ children }: { children: React.ReactNode }) {
         email: decoded.email,
         UserRole: decoded.UserRole,
         sub: decoded.sub,
-        firstName: decoded.firstName,
+        isUpdated: decoded.isUpdated,
+        moderateStatus: decoded.moderateStatus,
       };
       return user;
     }
