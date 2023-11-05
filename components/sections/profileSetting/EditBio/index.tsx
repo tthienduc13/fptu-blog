@@ -23,6 +23,7 @@ function EditBio({ about, user_id }: TProps): JSX.Element {
       } catch (error) {}
     };
     handleUpdateBio();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [htmlString]);
   return (
     <div className="flex flex-col gap-[20px] p-[24px] shadow-primary rounded-[10px]">

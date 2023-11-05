@@ -1,30 +1,92 @@
+"use client";
 import { Formik, Form } from "formik";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import InputForm from "@/components/InputForm";
 import { updateInfoSchema } from "@/app/validation";
 import { getCookie } from "cookies-next";
 import { updateInfo } from "@/apis/profile";
+import FormikSelect from "@/components/ElementsSetting/FormikSelect";
+import { getAllDepartments } from "@/apis/department";
+import { Department, Major, OptionList } from "@/utils/types";
+import axios from "axios";
+import { getAllMajors } from "@/apis/major";
 type updateProfile = {
   first_name: string;
   last_name: string;
   department: string;
   major: string;
 };
+
 function GeneralInformation() {
+  const [departmentOptions, setDeparmentOptions] = useState<OptionList[]>([]);
+  const [majorOptions, setAllMajorOptions] = useState<OptionList[]>([]);
   const onSubmit = async (values: updateProfile, actions: any) => {
+    console.log(values);
     const accessToken = getCookie("accessToken");
     const user_id = getCookie("user_id") as string;
     try {
       if (accessToken) {
-        console.log(values);
-        const response = await updateInfo(values, user_id);
-        console.log(response);
+        await updateInfo(values, user_id);
         toast.success("Save information successfully");
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
     // toast.success("Save information successfully");
   };
+
+  const handleGetAllDeparment = async () => {
+    try {
+      const access_token = getCookie("accessToken");
+      if (access_token) {
+        const res = await getAllDepartments(access_token);
+        const data = res.data;
+        const filtedData = data
+          .map((item: Department) => {
+            return {
+              id: item.department_id,
+              value: item.description,
+            };
+          })
+          .filter((item: OptionList) => item.value !== "default");
+        setDeparmentOptions(filtedData);
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.log(error);
+      }
+    }
+  };
+
+  const handleGetAllMajors = async () => {
+    try {
+      const access_token = getCookie("accessToken");
+      if (access_token) {
+        const res = await getAllMajors(access_token);
+        const data = res.data;
+        const filtedData = data
+          .map((item: Major) => {
+            return {
+              id: item.major_id,
+              value: item.description,
+            };
+          })
+          .filter((item: OptionList) => item.value !== "default");
+        setAllMajorOptions(filtedData);
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.log(error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    handleGetAllDeparment();
+    handleGetAllMajors();
+  }, []);
+
   return (
     <>
       <main className="w-full h-full flex flex-col items-center justify-center ">
@@ -68,28 +130,24 @@ function GeneralInformation() {
                     ></InputForm>
                   </div>
                   <div className=" flex mb-4 w-[calc(50%-20px)] flex-col">
-                    <div className="text-sm font-medium block leading-5 mb-2">
-                      Department:
-                    </div>
-                    <InputForm
-                      label="department"
-                      name="department"
-                      type="text"
-                      id="department"
-                      placeholder="Software Engineer"
-                    ></InputForm>
+                    <FormikSelect
+                      label={"department"}
+                      id={"department"}
+                      name={"department"}
+                      isEdit={true}
+                      title={"department"}
+                      options={departmentOptions!}
+                    />
                   </div>
                   <div className=" flex mb-4 w-[calc(50%-20px)] flex-col">
-                    <div className="text-sm font-medium block leading-5 mb-2">
-                      Major:
-                    </div>
-                    <InputForm
-                      label="major"
-                      name="major"
-                      type="text"
-                      id="major"
-                      placeholder="Software Engineer"
-                    ></InputForm>
+                    <FormikSelect
+                      label={"major"}
+                      id={"major"}
+                      name={"major"}
+                      isEdit={true}
+                      title={"major"}
+                      options={majorOptions!}
+                    />
                   </div>
                   <div className="w-full flex justify-end">
                     <button

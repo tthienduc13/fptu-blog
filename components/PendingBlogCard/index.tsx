@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Image from "next/image";
 import Button from "@/components/Button";
 import SampleImage from "@image/sampleImage.png";
-import { BlogData, BlogDetail } from "@/utils/types";
+import { BlogDetail } from "@/utils/types";
 import { timeAgo } from "@/utils/dayFormat";
-import { getCategoryById } from "@/apis/category";
-import { getCookie } from "cookies-next";
-import { getMemberInfo } from "@/apis/profile";
 
 interface IProps {
   value: BlogDetail;

@@ -1,10 +1,6 @@
+import { OptionList } from "@/utils/types";
 import { useField } from "formik";
 import React from "react";
-
-type TOptionsList = {
-  id: string;
-  value: string;
-};
 
 type TPros = {
   label: string;
@@ -12,7 +8,7 @@ type TPros = {
   name: string;
   isEdit: boolean;
   title: string;
-  options: TOptionsList[];
+  options: OptionList[];
 };
 
 function FormikSelect({
@@ -51,7 +47,7 @@ function FormikSelect({
 
   return (
     <div className="w-full relative  flex flex-col justify-between">
-      <span className="font-[300] text-[14px] mb-[6px]">
+      <span className="text-sm font-medium mb-[6px]">
         {capitalizeFirstLetter(title)}
       </span>
       <select

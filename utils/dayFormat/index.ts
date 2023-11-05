@@ -56,7 +56,6 @@ export const formatDateDetail = (inputDate: string): string => {
   const formattedSeconds: string =
     seconds < 10 ? `0${seconds}` : seconds.toString();
 
-  // Create the formatted date string
   const formattedDate: string = `${month} ${formattedDay}th ${year}, ${formattedHours}:${formattedMinutes}:${formattedSeconds} ${amOrPm}`;
 
   return formattedDate;

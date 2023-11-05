@@ -25,7 +25,8 @@ type EncodeType = {
   email: string;
   sub: string;
   UserRole: string;
-  firstName: string;
+  isUpdated: boolean;
+  moderateStatus: boolean;
   "remember-me": boolean;
 };
 
@@ -46,7 +47,8 @@ function SignIn() {
         email: decoded.email,
         sub: decoded.sub,
         UserRole: decoded.UserRole,
-        firstName: decoded.firstName,
+        isUpdated: decoded.isUpdated,
+        moderateStatus: decoded.moderateStatus,
         remember: decoded["remember-me"],
       };
       dispatch(
@@ -55,16 +57,11 @@ function SignIn() {
           user,
         })
       );
+
       toast.success(`Login success as ${user.email}`);
-      if (user.firstName === null) {
-        setTimeout(() => {
-          router.push("/update-info");
-        }, 500);
-      } else {
-        setTimeout(() => {
-          router.push("/");
-        }, 500);
-      }
+      setTimeout(() => {
+        router.push("/");
+      }, 500);
     } catch (error: unknown) {
       if (error instanceof ValidationError) {
         if (error?.name === "ValidationError") {

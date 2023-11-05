@@ -21,21 +21,22 @@ interface PendingBlogProps {}
 function PendingBlog({ params }: PageProps & PendingBlogProps) {
   const pageNumber = params.listID;
   const isCollapsed = useSelector((state: RootState) => state.app.isCollapsed);
-  const [totalPage, setTotalPages] = useState<number>(0);
+  const [totalPage, setTotalPage] = useState<number>(0);
   const [isFetchingData, setIsFetchingData] = useState<boolean>(true);
   const [blogData, setBlogData] = useState<BlogDetail[]>([]);
   const currentUserRole = useSelector(
     (state: RootState) => state.user.currentUser.UserRole
   );
-
-  const handleGetPendingBlogs = async (page: number) => {
+  const currentUserStatus = useSelector(
+    (state: RootState) => state.user.currentUser.moderateStatus
+  );
+   const handleGetPendingBlogs = async (page: number) => {
     try {
       const access_token = getCookie("accessToken");
       if (access_token) {
         const response = await getPendingBlog(access_token, page);
         setBlogData(response.data.data);
-        setTotalPages(response.data.total_pages);
-        console.log(totalPage);
+        setTotalPage(response.data.total_pages);
         setIsFetchingData(false);
       }
     } catch (error) {
@@ -60,7 +61,7 @@ function PendingBlog({ params }: PageProps & PendingBlogProps) {
     try {
       const access_token = getCookie("accessToken");
       if (access_token) {
-        if (currentUserRole === 1) {
+        if (currentUserRole === 1 && currentUserStatus) {
           await approveBlog(blogId, access_token);
           toast.success("Blog approved!");
           removeCheckedBlog(blogId);

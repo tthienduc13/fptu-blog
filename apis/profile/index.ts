@@ -41,8 +41,9 @@ export const updateInfo = (payload: updateData, user_id: string) => {
   return axiosClient.post(`${END_POINT.UPDATE_PROFILE}${user_id}`, {
     first_name: payload.first_name,
     last_name: payload.last_name,
-    department: payload.department,
-    major: payload.major,
+    department_id: payload.department,
+    major_id: payload.major,
+    isUpdated: true,
   });
 };
 
