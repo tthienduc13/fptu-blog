@@ -46,15 +46,15 @@ function Content({ setBlogData, blogData, socket }: ContentDetailProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const hanldeGetPost = async () => {
-    try {
-      if (access_token && blog_id) {
-        const blogResponse = await getBlogByID(blog_id, access_token);
-        setBlogData(blogResponse.data);
-      }
-    } catch (error) {}
-  };
   useEffect(() => {
+    const hanldeGetPost = async () => {
+      try {
+        if (access_token && blog_id) {
+          const blogResponse = await getBlogByID(blog_id, access_token);
+          setBlogData(blogResponse.data);
+        }
+      } catch (error) {}
+    };
     hanldeGetPost();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

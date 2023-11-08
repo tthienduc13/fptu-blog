@@ -9,6 +9,7 @@ export const END_POINT = {
   GET_BLOG_TAGS: "/blogs/blog-tags/",
   APPROVE: "/blogs/approve/",
   REJECT: "/blogs/reject/",
+  SEARCH: "/blogs/search",
 };
 
 type createBlog = {
@@ -23,6 +24,11 @@ type createBlog = {
 type blogTags = {
   blog_id: string;
   tags: string[];
+};
+
+type blogSearch = {
+  search: string;
+  category_id: string;
 };
 
 export const createBlog = async (payload: createBlog) => {
@@ -66,7 +72,7 @@ export const getPostedBlog = (
 export const getPendingBlog = (access_token: string | null, page: number) => {
   return axiosClient.get(`${END_POINT.GET_PENDING}`, {
     headers: { Authorization: `Bearer ${access_token}` },
-    params: { page }, 
+    params: { page },
   });
 };
 
@@ -91,5 +97,12 @@ export const approveBlog = (blog_id: string, access_token: string | null) => {
 export const rejectBlog = (blog_id: string, access_token: string | null) => {
   return axiosClient.patch(`${END_POINT.REJECT}${blog_id}`, {
     headers: { Authorization: `Bearer ${access_token}` },
+  });
+};
+
+export const searchBlog = (payload: blogSearch) => {
+  return axiosClient.post(END_POINT.SEARCH, {
+    search : payload.search,
+    category_id: payload.category_id,
   });
 };

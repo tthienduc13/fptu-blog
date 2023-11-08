@@ -1,10 +1,17 @@
-export type userInfo = {
+export type UserInfo = {
   user_id: string;
-  first_name: string;
-  last_name: string;
+  fullName: string;
   email: string;
   image: string;
   bio: string;
+  department: string;
+  major: string;
+};
+
+export type Category = {
+  category_id: string;
+  description: string;
+  title: string;
 };
 
 export type dataTypeAdmin = {
@@ -122,4 +129,10 @@ export type Major = {
 export type OptionList = {
   id: string;
   value: string;
+};
+
+export type SearchResult = {
+  blog_id: string;
+  title: string;
+  visual: string;
 };
