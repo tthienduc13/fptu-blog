@@ -16,11 +16,6 @@ type updateData = {
   major: string;
 };
 
-export const getAllMember = (access_token: string | null) => {
-  return axiosClient.get(`${END_POINT.GET}`, {
-    headers: { Authorization: `Bearer ${access_token}` },
-  });
-};
 
 export const getMemberInfo = (
   user_id: string | RequestCookie,

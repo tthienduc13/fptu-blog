@@ -1,5 +1,5 @@
-import CreateComment from "@/components/Comment/CreateComment";
 import React, { useState, useEffect } from "react";
+import CreateComment from "@/components/Comment/CreateComment";
 import CommentList from "@component/Comment/CommentList";
 import { useParams } from "next/navigation";
 import { getAllComments } from "@/apis/comment";
@@ -32,7 +32,7 @@ function Comment({ socket }: CommentProps) {
 
   useEffect(() => {
     handleGetAllComments();
-    socket.on("comment-updated", handleCommentUpdated); 
+    socket.on("comment-updated", handleCommentUpdated);
     return () => {
       socket.off("comment-updated", handleCommentUpdated);
     };
