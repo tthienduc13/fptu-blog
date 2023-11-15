@@ -30,6 +30,26 @@ function EditBlog() {
   const [htmlString, setHtmlStringg] = useState<string>("");
   const router = useRouter();
   const handleCreateBlog = async () => {
+    if (!blogTitle.trim()) {
+      toast.error("Please enter a blog title");
+      return;
+    }
+
+    if (!blogCategory) {
+      toast.error("Please select a blog category");
+      return;
+    }
+
+    if (blogTags.length === 0) {
+      toast.error("Please add at least one blog tag");
+      return;
+    }
+
+    if (!htmlString.trim()) {
+      toast.error("Please enter the blog content");
+      return;
+    }
+
     const access_token = getCookie("accessToken");
     const user_id = getCookie("user_id");
     try {
@@ -49,7 +69,7 @@ function EditBlog() {
           tags: blogTagsId,
         };
         await createBlogTags(newBlogTags);
-        toast.success("Blog posted! Please wait for the modrator!");
+        toast.success("Blog posted! Please wait for the moderator!");
         setTimeout(() => {
           router.push("/blog/posted-blog/list/1");
         }, 500);
