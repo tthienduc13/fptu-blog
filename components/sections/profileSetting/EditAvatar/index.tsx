@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import SampleImage from "@image/sampleImage.png";
-
 import UnlinkButton from "@component/ModifyButton";
 
 import axios from "axios";
 import { toast } from "react-toastify";
 import { getCookie } from "cookies-next";
 import { updateAvatar } from "@/apis/profile";
+import { useRouter } from "next/navigation";
 
 type TProps = {
   image: string;
@@ -16,6 +16,7 @@ type TProps = {
 };
 
 function EditAvatar({ image, fullName, position }: TProps): JSX.Element {
+  const router = useRouter();
   const fileInputRef = useRef(null);
   const [imageState, setImageState] = useState<File | null>(null);
   const [imageSource, setImageSource] = useState<string | undefined | null>(
@@ -54,6 +55,7 @@ function EditAvatar({ image, fullName, position }: TProps): JSX.Element {
         const response = await updateAvatar(avatarUrl, user_id);
         console.log(avatarUrl);
         console.log(response);
+        router.refresh();
         toast.success(response.data.message);
       }
     } catch (error) {
@@ -142,7 +144,7 @@ function EditAvatar({ image, fullName, position }: TProps): JSX.Element {
               method={() => handleBrowseImage()}
               tailwind={"text-white"}
             ></UnlinkButton>
-            {imageState ? (
+            {imageSource ? (
               <UnlinkButton
                 textContent={"Save"}
                 icon={""}

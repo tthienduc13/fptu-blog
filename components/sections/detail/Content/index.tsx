@@ -16,7 +16,7 @@ import { getCookie } from "cookies-next";
 import { getBlogByID, saveBlog, unsaveBlog } from "@/apis/blog";
 import { BlogDetail } from "@/utils/types";
 import { Socket } from "socket.io-client";
-import { checkLikedPost, getLike } from "@/apis/like";
+import { checkLikedPost, checkSavedPost, getLike } from "@/apis/like";
 import { toast } from "react-toastify";
 
 interface ContentDetailProps {
@@ -43,6 +43,19 @@ function Content({ setBlogData, blogData, socket }: ContentDetailProps) {
         }
       };
       checkLiked();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (access_token && blog_id && user_id) {
+      const checkSaved = async () => {
+        const saved = await checkSavedPost(access_token, user_id, blog_id);
+        if (saved.data) {
+          setIsSaved(true);
+        }
+      };
+      checkSaved();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -158,10 +171,6 @@ function Content({ setBlogData, blogData, socket }: ContentDetailProps) {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const handleSavePost = async () => {
-    setIsSaved(!isSaved);
-  };
 
   return (
     <>

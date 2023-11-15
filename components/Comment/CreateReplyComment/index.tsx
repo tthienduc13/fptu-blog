@@ -1,6 +1,6 @@
 import React from "react";
 import { Input } from "antd";
-import ProfileImg from "@icons/header/profileImage.svg";
+import DefaultAvatar from "@icons/header/defaultAvatar.svg";
 import paperAirline from "@icons/components/Button/paper-airplane.svg";
 import Image from "next/image";
 import { getCookie } from "cookies-next";
@@ -59,7 +59,7 @@ function CreateReplyComment({
   };
   return (
     <div className=" flex w-3/5 gap-2 items-center">
-      <Image src={ProfileImg} width={30} height={30} alt="profile"></Image>
+      <Image src={DefaultAvatar} width={30} height={30} alt="profile"></Image>
       <TextArea
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}

@@ -4,8 +4,11 @@ export const END_POINT = {
   UNLIKE_POST: "/likes/unlike-post",
   COUNT_LIKE_BLOG: "likes/blog-like-count/",
   COUNT_LIKE_COMMENT: "likes/comment-like-count/",
+  COUNT_LIKE_COMMENT_REPLY: "/likes//comment-reply-like-count/",
   CHECK_LIKE_BLOG: "/likes/check-liked-post/",
   CHECK_LIKE_COMMENT: "/likes/check-liked-comment/",
+  CHECK_LIKE_COMMENT_REPLY: "/likes/check-liked-comment-reply/",
+  CHECK_SAVE_POST: "/likes/check-saved-post/",
 };
 
 type LikePost = {
@@ -49,6 +52,15 @@ export const getCommentLike = (
   });
 };
 
+export const getCommentReplyLike = (
+  access_token: string | null,
+  comment_id: string
+) => {
+  return axiosClient.get(`${END_POINT.COUNT_LIKE_COMMENT_REPLY}${comment_id}`, {
+    headers: { Authorization: `Bearer ${access_token}` },
+  });
+};
+
 export const checkLikedPost = (
   access_token: string | null,
   user_id: string,
@@ -70,4 +82,27 @@ export const checkedLikedComment = (
       headers: { Authorization: `Bearer ${access_token}` },
     }
   );
+};
+
+export const checkedLikedCommentReply = (
+  access_token: string | null,
+  user_id: string,
+  comment_id: string
+) => {
+  return axiosClient.get(
+    `${END_POINT.CHECK_LIKE_COMMENT_REPLY}${user_id}/${comment_id}`,
+    {
+      headers: { Authorization: `Bearer ${access_token}` },
+    }
+  );
+};
+
+export const checkSavedPost = (
+  access_token: string | null,
+  user_id: string,
+  blog_id: string
+) => {
+  return axiosClient.get(`${END_POINT.CHECK_SAVE_POST}${user_id}/${blog_id}`, {
+    headers: { Authorization: `Bearer ${access_token}` },
+  });
 };

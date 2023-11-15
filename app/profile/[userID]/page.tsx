@@ -26,7 +26,6 @@ function Profile({ params }: pageProps) {
     try {
       if (access_token && params.userID) {
         const response = await getMemberInfo(params.userID, access_token);
-        console.log(response.data);
         setUserData(response.data);
         setIsFetching(false);
       }
@@ -35,7 +34,6 @@ function Profile({ params }: pageProps) {
   useEffect(() => {
     handleGetUserData();
   }, []);
-  console.log(userData);
   return (
     <main
       className={`absolute ${

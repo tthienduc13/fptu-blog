@@ -16,7 +16,7 @@ function Notification({ notiList }: NotificationProps) {
       <div className="flex flex-col gap-1">
         {notiList.map((noti) => (
           <Link
-            href={`notification/detail/${noti.notification_id}`}
+            href={`/notification/detail/${noti.notification_id}`}
             key={noti.notification_id}
           >
             <div className="flex flex-row gap-2 p-2 hover:bg-gray-100 rounded-xl">

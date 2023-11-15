@@ -38,7 +38,6 @@ function GeneralInformation({ userData }: TProps) {
   const [majorOptions, setAllMajorOptions] = useState<OptionList[]>([]);
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const formikRef = useRef<FormikHelpers<TGeneralFieldValues> | null>(null);
-  console.log(userData);
   const onSubmit = async (
     values: TGeneralFieldValues,
     actions: FormikHelpers<TGeneralFieldValues>
@@ -50,7 +49,6 @@ function GeneralInformation({ userData }: TProps) {
       major: values.major,
       department: values.department,
     };
-    console.log(filtedValue);
     const user_id = getCookie("user_id");
     try {
       const access_token = getCookie("accessToken");

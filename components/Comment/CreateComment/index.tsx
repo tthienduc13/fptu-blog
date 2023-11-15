@@ -1,11 +1,9 @@
 import React from "react";
 import { Input } from "antd";
-import ProfileImg from "@icons/header/profileImage.svg";
 import Image from "next/image";
 import ModifyButton from "@component/ModifyButton";
 import { getCookie } from "cookies-next";
 import { useParams } from "next/navigation";
-import { addComment } from "@/apis/comment";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { Socket } from "socket.io-client";

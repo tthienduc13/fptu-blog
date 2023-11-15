@@ -249,7 +249,7 @@ function CommentItem({ comment, socket }: CommentItemProps) {
           </div>
           <div className="w-full mt-[2px]">
             <div className="px-3 border-l-2`">
-              <CommentReplyItem comment={filteredComments} />
+              <CommentReplyItem socket={socket} comment={filteredComments} />
             </div>
             {replyDialog && (
               <CreateReplyComment

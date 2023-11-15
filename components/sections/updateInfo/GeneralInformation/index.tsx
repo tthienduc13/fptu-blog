@@ -22,7 +22,6 @@ function GeneralInformation() {
   const [departmentOptions, setDeparmentOptions] = useState<OptionList[]>([]);
   const [majorOptions, setAllMajorOptions] = useState<OptionList[]>([]);
   const onSubmit = async (values: updateProfile, actions: any) => {
-    console.log(values);
     const accessToken = getCookie("accessToken");
     const user_id = getCookie("user_id") as string;
     try {
