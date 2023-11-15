@@ -8,7 +8,7 @@ import io from "socket.io-client";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { LinearProgress } from "@mui/material";
-const socket = io("http://localhost:5000");
+const socket = io("https://fpt-blog-be-production.up.railway.app");
 function BlogDetail() {
   const [blogData, setBlogData] = useState<BlogDetail>();
   const [isFetchingData, setIsFetchingData] = useState<boolean>(true);
