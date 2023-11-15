@@ -40,11 +40,6 @@ function EditBlog() {
       return;
     }
 
-    if (blogTags.length === 0) {
-      toast.error("Please add at least one blog tag");
-      return;
-    }
-
     if (!htmlString.trim()) {
       toast.error("Please enter the blog content");
       return;
