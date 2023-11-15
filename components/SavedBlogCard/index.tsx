@@ -2,14 +2,13 @@ import React from "react";
 import Image from "next/image";
 import Button from "@/components/Button";
 import SampleImage from "@image/blogSample.png";
-import BlogStatus from "../BlogStatus";
 import { BlogDetail } from "@/utils/types";
 import { timeAgo } from "@/utils/dayFormat";
 
 interface IProps {
   value: BlogDetail;
 }
-function PostedBlogCard({ value }: IProps) {
+function SavedBLogCard({ value }: IProps) {
   const maxContentLength = 250;
   const parser = new DOMParser();
   const doc = parser.parseFromString(value.content, "text/html");
@@ -19,7 +18,7 @@ function PostedBlogCard({ value }: IProps) {
       ? blogText.substring(0, maxContentLength)
       : blogText;
   return (
-    <div className="md:max-w-[calc((100%-60px)/3)] sm:w-full rounded-lg overflow-hidden w-full drop-shadow-lg shadow-lg">
+    <div className="md:max-w-[calc((100%-40px)/2)] sm:w-full rounded-lg overflow-hidden w-full drop-shadow-lg shadow-lg">
       <div className="relative h-[200px]">
         <Image
           src={value.visual ?? SampleImage}
@@ -40,17 +39,17 @@ function PostedBlogCard({ value }: IProps) {
             {value.category_description}
           </p>
         </div>
-        <div className="self-stretch text-justify h-[130px] overflow-hidden text-[14px] font-normal text-gray-500">
+        <div className="self-stretch text-justify h-[90px] overflow-hidden text-[14px] font-normal text-gray-500">
           {truncatedText + "....."}
         </div>
         <div className="w-full flex justify-between items-center ">
-          <div className="w-full flex gap-2 items-center">
+          <div className="w-full flex justify-between items-center">
             <Button
-              textContent="Preview"
+              textContent="Read more"
               icon="arrowRight"
               iconPosition="right"
               backgroundColor="bg-[#0066B2]"
-              href={`/blog/preview/${value.blog_id}`}
+              href={`/blog/detail/${value.blog_id}`}
               tailwind="hover:opacity-80"
             ></Button>
             <div className="text-gray-500 text-[12px] cursor-default font-medium">
@@ -59,11 +58,10 @@ function PostedBlogCard({ value }: IProps) {
                 : timeAgo(value.published_at)}
             </div>
           </div>
-          <BlogStatus status={value.status}></BlogStatus>
         </div>
       </div>
     </div>
   );
 }
 
-export default PostedBlogCard;
+export default SavedBLogCard;

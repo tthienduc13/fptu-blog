@@ -103,7 +103,6 @@ function Header(): JSX.Element {
           setCookie("department", response.data.department, {
             maxAge: 3600,
           });
-          console.log(data);
           setUserData(data);
         }
       }
@@ -264,15 +263,14 @@ function Header(): JSX.Element {
                   ></Skeleton>
                 </div>
               ) : (
-                <Image
-                  width={100}
-                  height={100}
-                  src={
-                    userData?.image == null ? DefaultAvatar : userData?.image
-                  }
-                  alt="Profile Image"
-                  className="w-[30px] rounded-[50%] h-[30px] object-cover"
-                />
+                <div className=" relative w-[30px] h-[30px] overflow-hidden">
+                  <Image
+                    fill
+                    src={userData?.image ?? DefaultAvatar}
+                    alt="Profile Image"
+                    className="  rounded-[50%] object-cover"
+                  />
+                </div>
               )}
               <Image
                 width={100}

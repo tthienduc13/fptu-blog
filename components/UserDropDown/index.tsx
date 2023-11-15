@@ -9,8 +9,10 @@ interface DropDownProps {
   fullName: string | undefined;
   userName: string | undefined;
   image: string;
+  userId: string;
 }
 function UserDropDown({
+  userId,
   userName,
   fullName,
   functionHandleLogout,
@@ -35,7 +37,7 @@ function UserDropDown({
           </div>
         </div>
       </div>
-      <Link href={""}>
+      <Link href={`/profile/${userId}`}>
         <div className="w-full py-[10px] border-b-[1px] hover:text-[#14375F] border-[#E8EBED] text-[#707070]">
           View Profile
         </div>
@@ -44,11 +46,14 @@ function UserDropDown({
         <Link className="hover:text-[#14375F]" href={"/blog/create"}>
           Write Blog
         </Link>
-        <Link className="hover:text-[#14375F]" href={"/posted-blog/list/1"}>
+        <Link
+          className="hover:text-[#14375F]"
+          href={"/blog/posted-blog/list/1"}
+        >
           My Blogs
         </Link>
       </div>
-      <Link href={""}>
+      <Link href={"/blog/saved-blog/list/1"}>
         <div className="w-full py-[10px] border-b-[1px] hover:text-[#14375F] border-[#E8EBED] text-[#707070]">
           Saved Blogs
         </div>

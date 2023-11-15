@@ -5,6 +5,7 @@ export const END_POINT = {
   CREATE_BLOG_TAGS: "/blogs/create/blog-tags",
   GET_POSTED: "/blogs/posted/",
   GET_PENDING: "/blogs/pending",
+  GET_SAVED: "/blogs/saved/",
   GET_BY_ID: "/blogs/",
   GET_BLOG_TAGS: "/blogs/blog-tags/",
   APPROVE: "/blogs/approve/",
@@ -15,6 +16,7 @@ export const END_POINT = {
   GET_LIST_CATEGORY: "/blogs/category-blog/",
   SAVE: "/blogs/save",
   DELETE_SAVE: "/blogs/un-save",
+  DELTE_BLOG: "/blogs/hide/",
 };
 
 type createBlog = {
@@ -96,6 +98,17 @@ export const getPostedBlog = (
   });
 };
 
+export const getSavedBlog = (
+  user_id: string,
+  access_token: string | null,
+  page: number
+) => {
+  return axiosClient.get(`${END_POINT.GET_SAVED}${user_id}`, {
+    headers: { Authorization: `Bearer ${access_token}` },
+    params: { page },
+  });
+};
+
 export const getFeaturedBlog = (access_token: string | null) => {
   return axiosClient.get(`${END_POINT.GET_FEATURED}`, {
     headers: { Authorization: `Bearer ${access_token}` },
@@ -149,6 +162,12 @@ export const approveBlog = (blog_id: string, access_token: string | null) => {
 
 export const rejectBlog = (blog_id: string, access_token: string | null) => {
   return axiosClient.patch(`${END_POINT.REJECT}${blog_id}`, {
+    headers: { Authorization: `Bearer ${access_token}` },
+  });
+};
+
+export const deleteBlog = (blog_id: string, access_token: string | null) => {
+  return axiosClient.patch(`${END_POINT.DELTE_BLOG}${blog_id}`, {
     headers: { Authorization: `Bearer ${access_token}` },
   });
 };

@@ -16,17 +16,21 @@ function DropDown({ fullName, userName, image }: HeaderProps) {
   const role: number = useSelector(
     (state: RootState) => state.user.currentUser.UserRole
   );
+  const userId: string = useSelector(
+    (state: RootState) => state.user.currentUser.sub
+  );
   const router = useRouter();
   const dispatch = useDispatch();
   const handleLogout = () => {
     dispatch(logout());
-    router.push("/unauthenticated");
+    router.push("/auth/sign-in");
   };
 
   return (
     <>
       {role === 0 ? (
         <UserDropDown
+          userId={userId}
           image={image}
           userName={userName}
           fullName={fullName}
@@ -34,6 +38,7 @@ function DropDown({ fullName, userName, image }: HeaderProps) {
         />
       ) : role === 1 ? (
         <MentorDropDown
+          userId={userId}
           image={image}
           userName={userName}
           fullName={fullName}

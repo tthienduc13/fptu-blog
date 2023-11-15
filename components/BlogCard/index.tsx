@@ -18,13 +18,14 @@ function BlogCard({ value }: IProps) {
       : blogText;
   return (
     <div className="md:max-w-[calc((100%-60px)/3)] sm:w-full rounded-lg overflow-hidden w-full drop-shadow-lg shadow-lg">
-      <Image
-        src={value.blogImage ?? SampleImage}
-        alt="image"
-        width={100}
-        height={100}
-        className="w-full max-h-[200px] object-cover"
-      ></Image>
+      <div className="relative h-[200px]">
+        <Image
+          src={value.blogImage ?? SampleImage}
+          alt="image"
+          fill
+          className="w-full object-cover"
+        ></Image>
+      </div>
       <div className="w-full flex gap-2 flex-col p-4">
         <div className="w-full items-stretch  text-[20px] leading-[25px] font-bold ">
           {value.blog_title}

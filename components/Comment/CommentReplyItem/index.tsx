@@ -7,7 +7,7 @@ interface CommentReplyItemProps {
   socket: Socket;
 }
 
-function CommentReplyItem({ comment, socket }: CommentReplyItemProps) {
+function CommentReplyItem({ comment, socket  }: CommentReplyItemProps) {
   return (
     <div className="w-full px-3 mt-2 flex flex-col  gap-2 ">
       {comment.map((comment) => (

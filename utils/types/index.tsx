@@ -68,6 +68,7 @@ export type BlogData = {
 export type BlogDetail = {
   blog_id: string;
   user_name: string;
+  user_id: string;
   blog_title: string;
   category_description: string;
   content: string;

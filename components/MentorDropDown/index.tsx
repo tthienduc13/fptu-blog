@@ -8,8 +8,10 @@ interface DropDownProps {
   fullName: string | undefined;
   userName: string | undefined;
   image: string;
+  userId: string;
 }
 function UserDropDown({
+  userId,
   userName,
   fullName,
   functionHandleLogout,
@@ -43,7 +45,7 @@ function UserDropDown({
         </div>
       </div>
       <div className="py-4 border-b-[1px] gap-[10px] flex flex-col  border-[#E8EBED] text-[#707070]">
-        <Link className="hover:text-[#14375F]" href={""}>
+        <Link className="hover:text-[#14375F]" href={`/profile/${userId}`}>
           View Profile
         </Link>
         <Link
@@ -64,13 +66,16 @@ function UserDropDown({
           My Blogs
         </Link>
       </div>
-      <Link href={""}>
+      <Link href={"/blog/saved-blog/list/1"}>
         <div className="w-full py-[10px] border-b-[1px] hover:text-[#14375F] border-[#E8EBED] text-[#707070]">
           Saved Blogs
         </div>
       </Link>
       <div className="pt-4  gap-[10px] flex flex-col   text-[#707070]">
-        <Link className="hover:text-[#14375F]" href={""}>
+        <Link
+          className="hover:text-[#14375F]"
+          href={`/profile/setting/${userId}`}
+        >
           Settings
         </Link>
         <div onClick={functionHandleLogout} className="hover:text-[#14375F]">
