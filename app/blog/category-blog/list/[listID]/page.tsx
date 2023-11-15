@@ -1,241 +1,94 @@
 "use client";
-import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BlogCard from "@/components/BlogCard";
-import SampleImage from "@image/sampleImage.png";
 import SearchIcon from "@icons/page/blog/searchIcon.svg";
+import { Category, FeaturedCard } from "@/utils/types";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import { getCookie } from "cookies-next";
+import { getAllCategory } from "@/apis/category";
+import { getUserInfoWithCategoryId } from "@/utils/hooks";
+import { getListMajorBlogs } from "@/apis/blog";
+import PagePagination from "@/components/PagePagination";
 interface PageProps {
   params: { listID: string };
 }
 function CategoryBlog({ params }: PageProps) {
-  const sampleData = [
-    {
-      id: 1,
-      image: SampleImage,
-      title: "Noteworthy technology acquisitions 2021",
-      author: "Nguyen Le Thien Duc",
-      category: "Sofware Engineering",
-      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-      time: "a min ago",
-    },
-    {
-      id: 2,
-      image: SampleImage,
-      title: "Noteworthy technology acquisitions 2021",
-      author: "Nguyen Le Thien Duc",
-      category: "Sofware Engineering",
-      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-      time: "a min ago",
-    },
-    {
-      id: 3,
-      image: SampleImage,
-      title: "Noteworthy technology acquisitions 2021",
-      author: "Nguyen Le Thien Duc",
-      category: "Sofware Engineering",
-      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-      time: "a min ago",
-    },
-    {
-      id: 4,
-      image: SampleImage,
-      title: "Noteworthy technology acquisitions 2021",
-      author: "Nguyen Le Thien Duc",
-      category: "Sofware Engineering",
-      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-      time: "a min ago",
-    },
-    {
-      id: 5,
-      image: SampleImage,
-      title: "Noteworthy technology acquisitions 2021",
-      author: "Nguyen Le Thien Duc",
-      category: "Sofware Engineering",
-      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-      time: "a min ago",
-    },
-    {
-      id: 6,
-      image: SampleImage,
-      title: "Noteworthy technology acquisitions 2021",
-      author: "Nguyen Le Thien Duc",
-      category: "Sofware Engineering",
-      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-      time: "a min ago",
-    },
-    {
-      id: 7,
-      image: SampleImage,
-      title: "Noteworthy technology acquisitions 2021",
-      author: "Nguyen Le Thien Duc",
-      category: "Sofware Engineering",
-      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-      time: "a min ago",
-    },
-    {
-      id: 8,
-      image: SampleImage,
-      title: "Noteworthy technology acquisitions 2021",
-      author: "Nguyen Le Thien Duc",
-      category: "Sofware Engineering",
-      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-      time: "a min ago",
-    },
-    {
-      id: 9,
-      image: SampleImage,
-      title: "Noteworthy technology acquisitions 2021",
-      author: "Nguyen Le Thien Duc",
-      category: "Sofware Engineering",
-      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-      time: "a min ago",
-    },
-    {
-      id: 10,
-      image: SampleImage,
-      title: "Noteworthy technology acquisitions 2021",
-      author: "Nguyen Le Thien Duc",
-      category: "Sofware Engineering",
-      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-      time: "a min ago",
-    },
-    {
-      id: 11,
-      image: SampleImage,
-      title: "Noteworthy technology acquisitions 2021",
-      author: "Nguyen Le Thien Duc",
-      category: "Sofware Engineering",
-      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-      time: "a min ago",
-    },
-    {
-      id: 12,
-      image: SampleImage,
-      title: "Noteworthy technology acquisitions 2021",
-      author: "Nguyen Le Thien Duc",
-      category: "Sofware Engineering",
-      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-      time: "a min ago",
-    },
-    {
-      id: 13,
-      image: SampleImage,
-      title: "Noteworthy technology acquisitions 2021",
-      author: "Nguyen Le Thien Duc",
-      category: "Sofware Engineering",
-      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-      time: "a min ago",
-    },
-    {
-      id: 14,
-      image: SampleImage,
-      title: "Noteworthy technology acquisitions 2021",
-      author: "Nguyen Le Thien Duc",
-      category: "Sofware Engineering",
-      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-      time: "a min ago",
-    },
-    {
-      id: 15,
-      image: SampleImage,
-      title: "Noteworthy technology acquisitions 2021",
-      author: "Nguyen Le Thien Duc",
-      category: "Sofware Engineering",
-      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-      time: "a min ago",
-    },
-    {
-      id: 6,
-      image: SampleImage,
-      title: "Noteworthy technology acquisitions 2021",
-      author: "Nguyen Le Thien Duc",
-      category: "Sofware Engineering",
-      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-      time: "a min ago",
-    },
-    {
-      id: 17,
-      image: SampleImage,
-      title: "Noteworthy technology acquisitions 2021",
-      author: "Nguyen Le Thien Duc",
-      category: "Sofware Engineering",
-      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-      time: "a min ago",
-    },
-    {
-      id: 18,
-      image: SampleImage,
-      title: "Noteworthy technology acquisitions 2021",
-      author: "Nguyen Le Thien Duc",
-      category: "Sofware Engineering",
-      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-      time: "a min ago",
-    },
-    {
-      id: 19,
-      image: SampleImage,
-      title: "Noteworthy technology acquisitions 2021",
-      author: "Nguyen Le Thien Duc",
-      category: "Sofware Engineering",
-      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-      time: "a min ago",
-    },
-    {
-      id: 20,
-      image: SampleImage,
-      title: "Noteworthy technology acquisitions 2021",
-      author: "Nguyen Le Thien Duc",
-      category: "Sofware Engineering",
-      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-      time: "a min ago",
-    },
-  ];
-  const increaseIndex = 8;
-  const [blogs, setBlogs] = useState(sampleData.slice(0, increaseIndex + 1));
-  const [countListPage, setCountListPage] = useState(
-    Math.ceil(sampleData.length / increaseIndex)
-  );
-  const pages: { param: string; startIndex: number; endIndex: number }[] = [];
+  const pageNumber = params.listID;
+  const isCollapsed = useSelector((state: RootState) => state.app.isCollapsed);
+  const [blogData, setBlogData] = useState<FeaturedCard[]>([]);
+  const [categoryData, setCategoryData] = useState<Category[]>([]);
+  const [totalPages, setTotalPages] = useState<number>(0);
+
+  useEffect(() => {
+    const handleGetAllCategories = async () => {
+      try {
+        const accessToken = getCookie("accessToken");
+        if (accessToken) {
+          const response = await getAllCategory(accessToken);
+          setCategoryData(response.data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    handleGetAllCategories();
+  }, []);
+
+  const handleGetMajorBlogs = async (page: number) => {
+    try {
+      const accessToken = getCookie("accessToken");
+      if (accessToken) {
+        const department = getCookie("department") as string;
+        if (department && categoryData) {
+          const categoryID = getUserInfoWithCategoryId(
+            department,
+            categoryData
+          );
+          if (categoryID) {
+            const response = await getListMajorBlogs(
+              categoryID,
+              accessToken,
+              page
+            );
+            setBlogData(response.data.data);
+            setTotalPages(response.data.total_pages);
+          }
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    handleGetMajorBlogs(Number(pageNumber));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [categoryData, pageNumber]);
   return (
     <>
-      <main className=" absolute sm:w-full h-full lg:w-[calc(100%-100px)] flex flex-col justify-center right-0 top-[64px] bottom-0 ">
+      <main
+        className={`${
+          isCollapsed ? "lg:w-[calc(100%-90px)]" : "lg:w-[calc(100%-200px)]"
+        } absolute w-full duration-300 flex flex-col gap-[20px] right-0 top-[56px] lg:top-[64px] bottom-0 h-fit p-[20px] lg:p-[40px]`}
+      >
         <div className="w-full h-full ">
-          <div className="mb-[40px] p-[20px] md:p-[40px] w-full">
-            <div className="w-full  mb-5">
-              <h1 className="text-[#14375F] font-bold md:text-[30px] md:leading-[45px] text-3xl">
-                Category Blogs
-              </h1>
-            </div>
-            <div className="flex w-fit h-[38px] rounded-[10px] overflow-hidden mb-5">
-              <select className="w-[84px] leading-4 px-[20px] rounded-tl-[10px] rounded-bl-[10px] border-2 outline-none border-slate-200 bg-gray-100 select-none ">
-                <option value="All" className="">
-                  All
-                </option>
-                <option value="All" className="">
-                  All
-                </option>
-                <option value="All" className="">
-                  All
-                </option>
-              </select>
-              <input
-                type="search"
-                className="w-[392px] border-y-2 border-r px-2   border-l-none border-slate-200 select-none outline-none"
-              />
-              <div className="w-[42px] h-[38px] bg-[#0066B2] flex items-cent  justify-center cursor-pointer">
-                <Image
-                  src={SearchIcon}
-                  height={30}
-                  width={30}
-                  alt="searchIcon"
-                />
-              </div>
-            </div>
-            <div className="w-full flex md:flex-row sm:flex-col lg:gap-y-[30px] sm:gap-y-4 flex-wrap lg:gap-x-[30px] sm:gap-x-4 ">
-              {blogs.map((data) => (
-                <BlogCard key={data.id} value={data}></BlogCard>
-              ))}
-            </div>
+          <div className="w-full  mb-5">
+            <h1 className="text-[#14375F] font-bold md:text-[30px] md:leading-[45px] text-3xl">
+              Category Blogs
+            </h1>
+          </div>
+          <div className="w-full mb-5 flex md:flex-row sm:flex-col lg:gap-y-[30px] sm:gap-y-4 flex-wrap lg:gap-x-[30px] sm:gap-x-4 ">
+            {blogData.map((data) => (
+              <BlogCard key={data.blog_id} value={data}></BlogCard>
+            ))}
+          </div>
+          <div className="w-full flex justify-end">
+            <PagePagination
+              currentPage={pageNumber}
+              totalPages={totalPages}
+              route={"/blog/pending-blog/list/"}
+            ></PagePagination>
           </div>
         </div>
       </main>

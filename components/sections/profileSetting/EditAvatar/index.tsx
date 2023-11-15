@@ -21,7 +21,6 @@ function EditAvatar({ image, fullName, position }: TProps): JSX.Element {
   const [imageSource, setImageSource] = useState<string | undefined | null>(
     null
   );
-  // console.log(imageSource);
 
   const handleBrowseImage = () => {
     document.getElementById("imageImporter")?.click();
@@ -53,6 +52,8 @@ function EditAvatar({ image, fullName, position }: TProps): JSX.Element {
       const access_token = getCookie("accessToken");
       if (access_token && user_id) {
         const response = await updateAvatar(avatarUrl, user_id);
+        console.log(avatarUrl);
+        console.log(response);
         toast.success(response.data.message);
       }
     } catch (error) {

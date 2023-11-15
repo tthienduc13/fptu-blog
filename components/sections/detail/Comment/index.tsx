@@ -14,9 +14,8 @@ function Comment({ socket }: CommentProps) {
   const [inputValue, setInputValue] = useState<string>("");
   const [blogComments, setBlogComments] = useState<Comment[]>([]);
   const param = useParams();
-
   const handleGetAllComments = async () => {
-    const blog_id = param.blogID as string;
+    const blog_id = param.blogId as string;
     const access_token = getCookie("accessToken");
     try {
       if (access_token) {
@@ -38,6 +37,7 @@ function Comment({ socket }: CommentProps) {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  console.log(blogComments);
 
   return (
     <>

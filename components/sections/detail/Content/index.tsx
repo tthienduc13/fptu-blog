@@ -13,10 +13,11 @@ import {
 import { socicalButton } from "@/utils/elements";
 import { timeAgo } from "@/utils/dayFormat";
 import { getCookie } from "cookies-next";
-import { getBlogByID } from "@/apis/blog";
+import { getBlogByID, saveBlog, unsaveBlog } from "@/apis/blog";
 import { BlogDetail } from "@/utils/types";
 import { Socket } from "socket.io-client";
 import { checkLikedPost, getLike } from "@/apis/like";
+import { toast } from "react-toastify";
 
 interface ContentDetailProps {
   setBlogData: React.Dispatch<React.SetStateAction<BlogDetail | undefined>>;
@@ -29,9 +30,9 @@ function Content({ setBlogData, blogData, socket }: ContentDetailProps) {
   const [likeCount, setLikeCount] = useState<number>(0);
   const [isLiked, setIsLiked] = useState<boolean>();
   const [isSaved, setIsSaved] = useState<boolean>(false);
-  const blog_id = param.blogID as string;
+  const blog_id = param.blogId as string;
   const access_token = getCookie("accessToken");
-  const user_id = getCookie("user_id");
+  const user_id = getCookie("user_id") as string;
 
   useEffect(() => {
     if (access_token && blog_id && user_id) {
@@ -51,7 +52,7 @@ function Content({ setBlogData, blogData, socket }: ContentDetailProps) {
       try {
         if (access_token && blog_id) {
           const blogResponse = await getBlogByID(blog_id, access_token);
-          setBlogData(blogResponse.data);
+          setBlogData(blogResponse.data.blogData);
         }
       } catch (error) {}
     };
@@ -106,6 +107,38 @@ function Content({ setBlogData, blogData, socket }: ContentDetailProps) {
     handleGetLikeCount();
   };
 
+  const handleSave = async () => {
+    try {
+      if (access_token) {
+        const blogSave = {
+          blog_id: blog_id,
+          user_id: user_id,
+        };
+        const response = await saveBlog(blogSave);
+        toast.success(response.data.message);
+        setIsSaved(true);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleUnsave = async () => {
+    try {
+      if (access_token) {
+        const blogSave = {
+          blog_id: blog_id,
+          user_id: user_id,
+        };
+        const response = await unsaveBlog(blogSave);
+        toast.success(response.data.message);
+        setIsSaved(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     handleGetLikeCount();
     socket.on("liked", handleUpdateLikeCount);
@@ -158,7 +191,6 @@ function Content({ setBlogData, blogData, socket }: ContentDetailProps) {
           </div>
         </div>
         <div className="w-full flex items-center justify-between">
-          {" "}
           <div className="w-fit flex items-center border-r-[2px] border-gray-500">
             <div className="pr-[10px] border-r-[2px] border-[#0066B2] text-[#0066B2] text-lg">
               {blogData?.user_name}
@@ -178,7 +210,7 @@ function Content({ setBlogData, blogData, socket }: ContentDetailProps) {
             width="30"
             height="30"
             viewBox="0 0 30 30"
-            onClick={handleSavePost}
+            onClick={isSaved ? handleUnsave : handleSave}
             fill={isSaved ? "#EBEB07" : "white"}
           >
             <path

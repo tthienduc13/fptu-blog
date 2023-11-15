@@ -1,6 +1,6 @@
 "use-client";
 import React from "react";
-import ProfileImg from "@icons/header/profileImage.svg";
+import DefaultAvatar from "@icons/header/defaultAvatar.svg";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -20,7 +20,7 @@ function UserDropDown({
     <div className="absolute right-[15px] bottom-[-358px]  w-[300px]  bg-white border-[1px] border-[#E8EBED] rounded-[12px] shadow-lg p-4">
       <div className="w-full pb-4 border-b-[1px] border-[#E8EBED] flex gap-[10px] items-center">
         <Image
-          src={image ?? ProfileImg}
+          src={image ?? DefaultAvatar}
           alt="Profile Image"
           height={60}
           width={60}

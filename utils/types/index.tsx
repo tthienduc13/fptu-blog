@@ -136,3 +136,37 @@ export type SearchResult = {
   title: string;
   visual: string;
 };
+
+export type ProfileData = {
+  user_id: string;
+  fullName: string;
+  email: string;
+  bio: string;
+  position: string;
+  department: string;
+  major: string;
+  image: string;
+  created_at: string;
+};
+
+export type NotificationItem = {
+  notification_id: string;
+  posted_user: string;
+  title: string;
+  content: string;
+  image: string;
+  created_at: string;
+};
+
+export type FeaturedCard = {
+  blog_id: string;
+  user_id: string;
+  blog_title: string;
+  blogImage: string;
+  postedBy: string;
+  userImage: string;
+  content: string;
+  category: string;
+  created_at: string;
+  like_count: number;
+};

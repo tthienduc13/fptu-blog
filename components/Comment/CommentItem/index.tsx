@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import DefaultAvatar from "@icons/header/defaultAvatar.svg";
 import Image from "next/image";
 import CreateReplyComment from "../CreateReplyComment";
 import { Comment, CommentReply } from "@/utils/types";
@@ -70,8 +71,6 @@ function CommentItem({ comment, socket }: CommentItemProps) {
       if (access_token) {
         const response = await getAllReply(comment.comment_id, access_token);
         setCommentReplyItems(response.data);
-        console.log(comment.comment_id);
-        console.log(response.data);
       }
     } catch (error) {}
   };
@@ -186,10 +185,10 @@ function CommentItem({ comment, socket }: CommentItemProps) {
   ];
 
   return (
-    <div className="w-full flex flex-col gap-2">
+    <div key={comment.comment_id} className="w-full flex flex-col gap-2">
       <div className="w-full flex items-start gap-2">
         <Image
-          src={comment.user_image}
+          src={comment.user_image ?? DefaultAvatar}
           width={40}
           height={40}
           alt="profile"

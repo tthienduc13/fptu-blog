@@ -6,13 +6,21 @@ import { RootState } from "@/redux/store";
 import Logo from "@icons/logo/logo.svg";
 import DefaultAvatar from "@icons/header/defaultAvatar.svg";
 import ArrowDown from "@icons/header/arrowDown.svg";
-import NotiIcon from "@icons/header/notiIcon.svg";
-import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import {
+  BellOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+} from "@ant-design/icons";
 import DropDown from "@/components/Dropdown/index";
 import Link from "next/link";
-import { Category, SearchResult, UserInfo } from "@/utils/types";
+import {
+  Category,
+  NotificationItem,
+  SearchResult,
+  UserInfo,
+} from "@/utils/types";
 import { toogleIsCollapsed } from "@/redux/slices/app";
-import { getCookie } from "cookies-next";
+import { getCookie, setCookie } from "cookies-next";
 import { getMemberInfo } from "@/apis/profile";
 import axios from "axios";
 import { Skeleton } from "@mui/material";
@@ -21,19 +29,29 @@ import Search from "../Search";
 import { getAllCategory } from "@/apis/category";
 import { searchBlog } from "@/apis/blog";
 import SearchList from "../SearchList";
+import Notification from "../Notification";
+import { getAllNotification } from "@/apis/notification";
 function Header(): JSX.Element {
   const dispatch = useDispatch();
+  const isCollapsed = useSelector((state: RootState) => state.app.isCollapsed);
+
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isOpenNav, setIsOpenNav] = useState<boolean>(false);
+  const [isOpenNoti, setIsOpenNoti] = useState<boolean>(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
+
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [notiCount, setNotiCount] = useState<number>(0);
+
   const [userData, setUserData] = useState<UserInfo>();
   const [categoryData, setCategoryData] = useState<Category[]>([]);
   const [searchResult, setSearchResult] = useState<SearchResult[]>();
-  const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
-  const isCollapsed = useSelector((state: RootState) => state.app.isCollapsed);
+  const [notiList, setNotiList] = useState<NotificationItem[]>([]);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const notiRef = useRef<HTMLDivElement>(null);
   const handleOpenMenu = (): void => {
     dispatch(toogleIsCollapsed());
+    setIsOpenNoti(false);
   };
 
   const getUserInfoWithCategoryId = (
@@ -50,6 +68,7 @@ function Header(): JSX.Element {
 
   const handleDropdown = (): void => {
     setIsDropdownOpen((prevState) => !prevState);
+    setIsOpenNoti(false);
   };
 
   const handleOutsideClick = (event: MouseEvent): void => {
@@ -61,9 +80,16 @@ function Header(): JSX.Element {
     }
   };
 
+  const handlOutsideNoti = (event: MouseEvent): void => {
+    if (notiRef.current && !notiRef.current.contains(event.target as Node)) {
+      setIsOpenNoti(false);
+    }
+  };
+
   const handleScroll = (): void => {
     setIsOpenNav(false);
     setIsDropdownOpen(false);
+    setIsOpenNoti(false);
   };
 
   const handleGetUserProfile = async () => {
@@ -74,6 +100,10 @@ function Header(): JSX.Element {
         if (userId) {
           const response = await getMemberInfo(userId, access_token);
           const data = response.data;
+          setCookie("department", response.data.department, {
+            maxAge: 3600,
+          });
+          console.log(data);
           setUserData(data);
         }
       }
@@ -116,7 +146,22 @@ function Header(): JSX.Element {
   };
 
   useEffect(() => {
+    const handleGetNotification = async () => {
+      const accessToken = getCookie("accessToken");
+      try {
+        if (accessToken) {
+          const response = await getAllNotification(accessToken);
+          setNotiList(response.data.notifications);
+          setNotiCount(response.data.notificationCount);
+        }
+      } catch (error) {}
+    };
+    handleGetNotification();
+  }, []);
+
+  useEffect(() => {
     handleSearchBlog();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchQuery]);
 
   useEffect(() => {
@@ -127,8 +172,10 @@ function Header(): JSX.Element {
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     document.addEventListener("mousedown", handleOutsideClick);
+    document.addEventListener("mousedown", handlOutsideNoti);
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      document.addEventListener("mousedown", handlOutsideNoti);
       document.removeEventListener("mousedown", handleOutsideClick);
     };
   }, []);
@@ -164,10 +211,16 @@ function Header(): JSX.Element {
         </div>
         <div className="w-[40%]">
           <div className="w-full relative">
-            <Search setSearchQuery={setSearchQuery}></Search>
+            <Search
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+            ></Search>
             <div className="w-full top-[3rem] absolute">
               {searchQuery && searchResult && searchResult.length > 0 ? (
-                <SearchList result={searchResult!}></SearchList>
+                <SearchList
+                  setSearchQuery={setSearchQuery}
+                  result={searchResult!}
+                ></SearchList>
               ) : (
                 ""
               )}
@@ -232,16 +285,20 @@ function Header(): JSX.Element {
               />
             </div>
           </div>
-          <Space size="small">
-            <Badge size="small" count={5}>
-              <Image
-                src={NotiIcon}
-                alt="Notification Icon"
-                style={{ width: "28px", height: "28px" }}
-                className=" object-cover"
-              />
-            </Badge>
-          </Space>
+          <div ref={notiRef} className="relative">
+            <div onClick={() => setIsOpenNoti(!isOpenNoti)}>
+              <Space size="small">
+                <Badge size="small" count={notiCount}>
+                  <BellOutlined style={{ fontSize: "28px" }} />
+                </Badge>
+              </Space>
+            </div>
+            {isOpenNoti && (
+              <div className="absolute duration-300 right-0 top-12">
+                <Notification notiList={notiList}></Notification>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

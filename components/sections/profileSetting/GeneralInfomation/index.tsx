@@ -11,11 +11,10 @@ import EditIconPause from "@icons/components/Button/edit_pause.png";
 import { Department, Major, OptionList, UserSetting } from "@/utils/types";
 import axios from "axios";
 import { getCookie } from "cookies-next";
-import { getAllCategory } from "@/apis/category";
-import { formatDateToMMDDYYYY, formatDateToYYYYMMDD } from "@/utils/dayFormat";
-import { getAllTag } from "@/apis/tag";
+import { formatDateToYYYYMMDD } from "@/utils/dayFormat";
 import { getAllDepartments } from "@/apis/department";
 import { getAllMajors } from "@/apis/major";
+import { updateMemberGeneral } from "@/apis/profile";
 type TGeneralFieldValues = {
   firstName: string;
   lastName: string;
@@ -47,17 +46,16 @@ function GeneralInformation({ userData }: TProps) {
     const filtedValue = {
       firstName: values.firstName,
       lastName: values.lastName,
-      positionId: values.position,
-      majorID: values.major,
+      position: values.position,
+      major: values.major,
       department: values.department,
-      joinDate: values.joinDate,
     };
     console.log(filtedValue);
-
+    const user_id = getCookie("user_id");
     try {
       const access_token = getCookie("accessToken");
-      if (access_token) {
-        // const res = await patchGeneralInfo(access_token, filtedValue);
+      if (access_token && user_id) {
+        await updateMemberGeneral(filtedValue, user_id);
         toast.success(`Update general information successfully!`);
         actions.resetForm();
       }
@@ -125,16 +123,6 @@ function GeneralInformation({ userData }: TProps) {
     handleGetAllDeparment();
     handleGetAllMajors();
   }, []);
-
-  const parseDataToId = (list: TOptionsList[], data: string): string => {
-    let getValue = list?.filter((item: any) => item.value === data);
-
-    if (getValue.length > 0) {
-      return getValue[0].id;
-    } else {
-      return "";
-    }
-  };
 
   return (
     <div className="flex flex-col gap-[20px] p-[24px] shadow-primary rounded-[10px]">

@@ -24,6 +24,7 @@ function directToUnauthenticated(
       url.includes("/blog/create") ||
       url.includes("/user") ||
       url.includes("/admin") ||
+      url.includes("/notification") ||
       url.includes("/profile") ||
       url.includes("/update-info") ||
       url === "http://localhost:3000/")

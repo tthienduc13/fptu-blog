@@ -1,60 +1,52 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import MoreIcon from "@icons/home/moreIcon.png";
 import BlogCard from "@/components/BlogCard";
-import SampleImage from "@image/sampleImage.png";
+import { getCookie } from "cookies-next";
+import { Category, FeaturedCard } from "@/utils/types";
+import { getUserInfoWithCategoryId } from "@/utils/hooks";
+import { getAllCategory } from "@/apis/category";
+import { getMajorBlogs } from "@/apis/blog";
 function MajorBlog() {
-  const sampleData = [
-    {
-      image: SampleImage,
-      title: "Noteworthy technology acquisitions 2021",
-      author: "Nguyen Le Thien Duc",
-      category: "Sofware Engineering",
-      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-      time: "a min ago",
-    },
-    {
-      image: SampleImage,
-      title: "Noteworthy technology acquisitions 2021",
-      author: "Nguyen Le Thien Duc",
-      category: "Language",
-      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-      time: "a min ago",
-    },
-    {
-      image: SampleImage,
-      title: "Noteworthy technology acquisitions 2021",
-      author: "Nguyen Le Thien Duc",
-      category: "Business",
-      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-      time: "a min ago",
-    },
-    {
-      image: SampleImage,
-      title: "Noteworthy technology acquisitions 2021",
-      author: "Nguyen Le Thien Duc",
-      category: "Sofware Engineering",
-      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-      time: "a min ago",
-    },
-    {
-      image: SampleImage,
-      title: "Noteworthy technology acquisitions 2021",
-      author: "Nguyen Le Thien Duc",
-      category: "Language",
-      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-      time: "a min ago",
-    },
-    {
-      image: SampleImage,
-      title: "Noteworthy technology acquisitions 2021",
-      author: "Nguyen Le Thien Duc",
-      category: "Business",
-      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-      time: "a min ago",
-    },
-  ];
+  const [majorBlog, setMajorBlog] = useState<FeaturedCard[]>([]);
+  const [categoryData, setCategoryData] = useState<Category[]>([]);
+  const handleGetAllCategories = async () => {
+    const accessToken = getCookie("accessToken");
+    try {
+      if (accessToken) {
+        const response = await getAllCategory(accessToken);
+        setCategoryData(response.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    handleGetAllCategories();
+  }, []);
+
+  useEffect(() => {
+    const handleGetMajorBlogs = async () => {
+      const accessToken = getCookie("accessToken");
+      if (accessToken) {
+        const department = getCookie("department") as string;
+        if (department && categoryData) {
+          const categoryID = getUserInfoWithCategoryId(
+            department,
+            categoryData
+          );
+          if (categoryID) {
+            const response = await getMajorBlogs(categoryID, accessToken);
+            setMajorBlog(response.data);
+          }
+        }
+      }
+    };
+    handleGetMajorBlogs();
+  }, [categoryData]);
   return (
     <>
       <div className="mb-[40px] p-[20px] md:p-[40px] w-full">
@@ -79,8 +71,8 @@ function MajorBlog() {
           </Link>
         </div>
         <div className="w-full flex md:flex-row sm:flex-col lg:gap-y-[30px] sm:gap-y-4 flex-wrap justify-between">
-          {sampleData.map((data, index) => (
-            <BlogCard key={index} value={data}></BlogCard>
+          {majorBlog.map((data) => (
+            <BlogCard key={data.blog_id} value={data}></BlogCard>
           ))}
         </div>
       </div>

@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import ProfileImg from "@icons/header/profileImage.svg";
+import DefaultAvatar from "@icons/header/defaultAvatar.svg";
 import VerifiedMentor from "@icons/header/verifiedMentor.svg";
 import Image from "next/image";
 interface DropDownProps {
@@ -19,11 +19,11 @@ function UserDropDown({
     <div className="absolute right-[15px] bottom-[-415px]  w-[330px]  bg-white border-[1px] border-[#E8EBED] rounded-[12px] shadow-lg p-4">
       <div className="w-full pb-4 border-b-[1px] border-[#E8EBED] flex gap-[10px] items-center">
         <Image
-          src={image ?? ProfileImg}
+          src={image ?? DefaultAvatar}
           alt="Profile Image"
           width={60}
           height={60}
-          className="object-cover rounded-[50%]"
+          className="object-cover  rounded-[50%]"
         ></Image>
         <div className="flex w-full flex-col gap-[4px]">
           <div className="flex ">

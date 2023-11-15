@@ -1,64 +1,36 @@
-import React from "react";
-import Image from "next/image";
-import Link from "next/link";
-import MoreIcon from "@icons/home/moreIcon.png";
-import SampleImage from "@image/sampleImage.png";
+"use client";
+import React, { useEffect, useState } from "react";
 import HorizonCard from "@/components/HorizonCard";
+import { FeaturedCard } from "@/utils/types";
+import { getCookie } from "cookies-next";
+import { getFeaturedBlog } from "@/apis/blog";
+
 function FeaturedBlog() {
-  const sampleData = [
-    {
-      id: 1,
-      image: SampleImage,
-      title: "Noteworthy technology acquisitions 2021",
-      author: "Nguyen Le Thien Duc",
-      category: "Sofware Engineering",
-      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-      time: "a min ago",
-    },
-    {
-      id: 2,
-      image: SampleImage,
-      title: "Noteworthy technology acquisitions 2021",
-      author: "Nguyen Le Thien Duc",
-      category: "Language",
-      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-      time: "a min ago",
-    },
-    {
-      id: 3,
-      image: SampleImage,
-      title: "Noteworthy technology acquisitions 2021",
-      author: "Nguyen Le Thien Duc",
-      category: "Business",
-      desc: "Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.",
-      time: "a min ago",
-    },
-  ];
+  const [featuredList, setFeaturedList] = useState<FeaturedCard[]>([]);
+  useEffect(() => {
+    const handleGetFeaturedPosts = async () => {
+      const accessToken = getCookie("accessToken");
+      try {
+        if (accessToken) {
+          const response = await getFeaturedBlog(accessToken);
+          setFeaturedList(response.data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    handleGetFeaturedPosts();
+  }, []);
   return (
     <div className=" p-[20px] md:p-[40px] w-full">
       <div className="w-full flex items-center justify-between mb-5">
         <h1 className="text-[#14375F] font-bold md:text-[30px] md:leading-[45px] text-2xl">
-          Featured Blogs
+          Feature Posts
         </h1>
-        <Link
-          href={"blog/featured-blog/list/1"}
-          className="flex items-center gap-[6px] cursor-pointer hover:gap-[10px] duration-300"
-        >
-          <Image
-            src={MoreIcon}
-            className="md:h-[20px] md:w-[20px] w-[16px] h-[16px]"
-            height={20}
-            width={20}
-            alt="viewmore"
-          ></Image>
-          <div className="text-[#0066B2] text-base md:text-xl md:leading-[24px] font-medium ">
-            View more
-          </div>
-        </Link>
       </div>
       <div className="w-full flex flex-col gap-4 flex-wrap justify-between">
-        {sampleData.map((data, index) => (
-          <HorizonCard key={index} value={data}></HorizonCard>
+        {featuredList.map((data) => (
+          <HorizonCard key={data.blog_id} value={data}></HorizonCard>
         ))}
       </div>
     </div>

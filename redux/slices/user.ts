@@ -40,6 +40,7 @@ export const counterSlice = createSlice({
       state.currentUser = initialState.currentUser;
       setCookie("accessToken", "", { maxAge: 0 });
       setCookie("user_id", "", { maxAge: 0 });
+      setCookie("department", "", { maxAge: 0 });
     },
     refreshUserInfoFromStorage: (state, action: PayloadAction<User>) => {
       state.currentUser = action.payload;

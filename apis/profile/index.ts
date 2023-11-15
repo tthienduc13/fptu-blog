@@ -9,13 +9,20 @@ export const END_POINT = {
   UPDATE_BIO: "/users/profile/update-bio/",
 };
 
+type updateGeneral = {
+  firstName: string;
+  lastName: string;
+  department: string;
+  major: string;
+  position: string;
+};
+
 type updateData = {
   first_name: string;
   last_name: string;
   department: string;
   major: string;
 };
-
 
 export const getMemberInfo = (
   user_id: string | RequestCookie,
@@ -39,6 +46,19 @@ export const updateInfo = (payload: updateData, user_id: string) => {
     department_id: payload.department,
     major_id: payload.major,
     isUpdated: true,
+  });
+};
+
+export const updateMemberGeneral = (
+  payload: updateGeneral,
+  user_id: string
+) => {
+  return axiosClient.post(`${END_POINT.UPDATE_PROFILE}${user_id}`, {
+    first_name: payload.firstName,
+    last_name: payload.lastName,
+    department_id: payload.department,
+    major_id: payload.major,
+    position: payload.position,
   });
 };
 

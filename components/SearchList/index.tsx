@@ -6,9 +6,13 @@ import Link from "next/link";
 
 interface ResultProp {
   result: SearchResult[];
+  setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
 }
 
-function SearchList({ result }: ResultProp) {
+function SearchList({ result, setSearchQuery }: ResultProp) {
+  const handleView = () => {
+    setSearchQuery("");
+  };
   return (
     <div className="w-full flex overflow-y-scroll flex-col border-[1px] drop-shadow-md bg-white rounded-[10px] max-h-[300px] h-full">
       {result && result.length > 0 ? (
@@ -27,8 +31,13 @@ function SearchList({ result }: ResultProp) {
                 className="object-cover"
               ></Image>
             </div>
-            <Link href={`blog/detail/${item.blog_id}`}>
-              <div className="text-sm font-semibold">{item.title}</div>
+            <Link href={`/blog/detail/${item.blog_id}`}>
+              <div
+                onClick={handleView}
+                className="text-sm hover:underline font-semibold"
+              >
+                {item.title}
+              </div>
             </Link>
           </div>
         ))

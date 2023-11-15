@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Input, Mentions } from "antd";
+import React from "react";
+import { Input } from "antd";
 import ProfileImg from "@icons/header/profileImage.svg";
 import Image from "next/image";
 import ModifyButton from "@component/ModifyButton";
@@ -9,6 +9,7 @@ import { addComment } from "@/apis/comment";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { Socket } from "socket.io-client";
+import DefaultAvatar from "@icons/header/defaultAvatar.svg";
 
 interface CreateCommentProps {
   inputValue: string;
@@ -32,7 +33,7 @@ function CreateComment({
           toast.error("Please do not leave a blank");
         } else {
           const newComment = {
-            blog_id: param.blogID as string,
+            blog_id: param.blogId as string,
             user_id: user_id,
             content: inputValue,
           };
@@ -58,7 +59,7 @@ function CreateComment({
   return (
     <>
       <div className="w-4/5 flex flex-row items-center gap-3">
-        <Image src={ProfileImg} width={40} height={40} alt="profile"></Image>
+        <Image src={DefaultAvatar} width={40} height={40} alt="profile"></Image>
         <TextArea
           value={inputValue}
           size="large"

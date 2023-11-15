@@ -10,6 +10,11 @@ export const END_POINT = {
   APPROVE: "/blogs/approve/",
   REJECT: "/blogs/reject/",
   SEARCH: "/blogs/search",
+  GET_FEATURED: "/blogs/featured",
+  GET_MAJOR: "/blogs/major/",
+  GET_LIST_CATEGORY: "/blogs/category-blog/",
+  SAVE: "/blogs/save",
+  DELETE_SAVE: "/blogs/un-save",
 };
 
 type createBlog = {
@@ -29,6 +34,16 @@ type blogTags = {
 type blogSearch = {
   search: string;
   category_id: string;
+};
+
+type blogSave = {
+  blog_id: string;
+  user_id: string;
+};
+
+type blogUnsave = {
+  blog_id: string;
+  user_id: string;
 };
 
 export const createBlog = async (payload: createBlog) => {
@@ -58,12 +73,50 @@ export const createBlogTags = (payload: blogTags) => {
   });
 };
 
+export const saveBlog = (payload: blogSave) => {
+  return axiosClient.post(END_POINT.SAVE, {
+    blog_id: payload.blog_id,
+    user_id: payload.user_id,
+  });
+};
+
+export const unsaveBlog = (payload: blogUnsave) => {
+  const { blog_id, user_id } = payload;
+  return axiosClient.delete(`${END_POINT.DELETE_SAVE}/${blog_id}/${user_id}`);
+};
+
 export const getPostedBlog = (
   user_id: string,
   access_token: string | null,
   page: number
 ) => {
   return axiosClient.get(`${END_POINT.GET_POSTED}${user_id}`, {
+    headers: { Authorization: `Bearer ${access_token}` },
+    params: { page },
+  });
+};
+
+export const getFeaturedBlog = (access_token: string | null) => {
+  return axiosClient.get(`${END_POINT.GET_FEATURED}`, {
+    headers: { Authorization: `Bearer ${access_token}` },
+  });
+};
+
+export const getMajorBlogs = (
+  category_id: string,
+  access_token: string | null
+) => {
+  return axiosClient.get(`${END_POINT.GET_MAJOR}${category_id}`, {
+    headers: { Authorization: `Bearer ${access_token}` },
+  });
+};
+
+export const getListMajorBlogs = (
+  category_id: string,
+  access_token: string | null,
+  page: number
+) => {
+  return axiosClient.get(`${END_POINT.GET_LIST_CATEGORY}${category_id}`, {
     headers: { Authorization: `Bearer ${access_token}` },
     params: { page },
   });
@@ -102,7 +155,7 @@ export const rejectBlog = (blog_id: string, access_token: string | null) => {
 
 export const searchBlog = (payload: blogSearch) => {
   return axiosClient.post(END_POINT.SEARCH, {
-    search : payload.search,
+    search: payload.search,
     category_id: payload.category_id,
   });
 };

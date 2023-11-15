@@ -11,9 +11,9 @@ function CommentList({ blogComments, socket }: CommentProps) {
     <div className="w-full flex p-5 flex-col  gap-5">
       {blogComments.map((comment, index) => (
         <CommentItem
+          key={comment.comment_id}
           socket={socket}
           comment={comment}
-          key={comment.comment_id}
         ></CommentItem>
       ))}
     </div>

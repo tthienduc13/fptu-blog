@@ -39,10 +39,9 @@ function Sidebar(): JSX.Element {
     getItem("Create Blog", "/blog/create", <AppstoreAddOutlined />),
 
     getItem("Blogs", "sub1", <AppstoreOutlined />, [
-      getItem("Featured Posts", "/blog/featured-blog/list/1"),
       getItem("Related Posts", "/blog/category-blog/list/1"),
       getItem("Posted Posts", "/blog/posted-blog/list/1"),
-      getItem("Saved Posts", "8"),
+      getItem("Saved Posts", "/blog/saved-blog/list/1"),
     ]),
 
     getItem("Profile", "sub2", <UserOutlined />, [

@@ -23,7 +23,7 @@ function BlogDetail() {
           isCollapsed ? "lg:w-[calc(100%-90px)]" : "lg:w-[calc(100%-200px)]"
         } flex  duration-300 flex-col gap-[20px] right-0 top-[56px] lg:top-[64px] bottom-0 h-fit p-[20px] lg:p-[40px]`}
       >
-        {isFetchingData && socket ? (
+        {isFetchingData ? (
           <LinearProgress></LinearProgress>
         ) : (
           <div>
