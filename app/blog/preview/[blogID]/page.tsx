@@ -96,7 +96,7 @@ function DetailBLogList() {
             <div className="w-full h-full p-5 flex flex-col gap-4 rounded-[10px]  border-[2px]">
               <div className="w-full items-center justify-between flex">
                 <h1 className="w-[90%] font-bold  text-3xl">
-                  {blogData?.blog_title}
+                  {blogData?.blog_title ?? "No title"}
                 </h1>
                 {currentUser === blogData?.user_id && (
                   <Popconfirm
@@ -147,20 +147,24 @@ function DetailBLogList() {
                 <div className="flex w-full items-center gap-2">
                   <Image src={TagIcon} alt="Tag" height={24} width={24}></Image>
                   <div className="bg-blue-100 cursor-default rounded-[6px] text-blue-800 text-sm px-[10px] py-1 font-medium">
-                    {blogData?.category_description}
+                    {blogData?.category_description ?? "No category choosen"}
                   </div>
                 </div>
                 <div className="flex w-full items-center gap-2">
                   <Image src={TagIcon} alt="Tag" height={24} width={24}></Image>
                   <div className="w-full flex items-center gap-[10px]">
-                    {blogData?.tag_titles.map((tag, index) => (
-                      <div
-                        key={index}
-                        className="bg-green-100 cursor-default rounded-[6px] text-green-800 text-sm px-[10px] py-1 font-medium"
-                      >
-                        {tag}
-                      </div>
-                    ))}
+                    {blogData?.tag_titles ? (
+                      blogData.tag_titles.map((tag, index) => (
+                        <div
+                          key={index}
+                          className="bg-green-100 cursor-default rounded-[6px] text-green-800 text-sm px-[10px] py-1 font-medium"
+                        >
+                          {tag}
+                        </div>
+                      ))
+                    ) : (
+                      <p>No tag available</p>
+                    )}
                   </div>
                 </div>
               </div>
@@ -177,7 +181,7 @@ function DetailBLogList() {
                 <div
                   className="w-full text-justify"
                   dangerouslySetInnerHTML={{
-                    __html: blogData?.content as string,
+                    __html: blogData ? blogData.content : "No content",
                   }}
                 ></div>
               </div>

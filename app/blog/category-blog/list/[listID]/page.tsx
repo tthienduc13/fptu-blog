@@ -87,7 +87,7 @@ function CategoryBlog({ params }: PageProps) {
             <PagePagination
               currentPage={pageNumber}
               totalPages={totalPages}
-              route={"/blog/pending-blog/list/"}
+              route={"/blog/category-blog/list/"}
             ></PagePagination>
           </div>
         </div>
