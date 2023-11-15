@@ -27,7 +27,7 @@ function directToUnauthenticated(
       url.includes("/notification") ||
       url.includes("/profile") ||
       url.includes("/update-info") ||
-      url === "http://localhost:3000/")
+      url === "https://fptu-blog.vercel.app/")
   );
 }
 
