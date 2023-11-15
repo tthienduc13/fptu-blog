@@ -59,9 +59,7 @@ function Profile({ params }: pageProps) {
                 <div className="flex flex-col gap-[8px]">
                   <div className="w-[120px] h-[120px] object-cover overflow-hidden rounded-[16px]">
                     <Image
-                      src={
-                        userData?.image === "" ? sampleAvatar : userData?.image!
-                      }
+                      src={userData?.image! ?? sampleAvatar}
                       alt="avatar"
                       width={1200}
                       height={800}
@@ -75,7 +73,7 @@ function Profile({ params }: pageProps) {
                   <div className="flex flex-row gap-[12px]">
                     <BranchesOutlined />
                     <span className="font-[400] text-[16px]">
-                      {userData?.position == ""
+                      {userData?.position === null
                         ? "Not set yet"
                         : userData?.position}
                     </span>
@@ -89,7 +87,9 @@ function Profile({ params }: pageProps) {
                   </div>
                   <div className="flex flex-row">
                     <span className="font-[700] text-[16px]">
-                      {userData?.email == "" ? "Not set yet" : userData?.email}
+                      {userData?.email === null
+                        ? "Not set yet"
+                        : userData?.email}
                     </span>
                   </div>
                 </div>
@@ -108,7 +108,7 @@ function Profile({ params }: pageProps) {
                     className="font-[400] text-[16px] text-justify"
                     id="aboutMember"
                   >
-                    {renderHtmlString(userData?.bio!)}
+                    {renderHtmlString(userData?.bio! ?? "No bio yet!")}
                   </div>
                 </div>
                 <div className="flex flex-row gap-[80px]">
@@ -121,7 +121,7 @@ function Profile({ params }: pageProps) {
                       </div>
                       <div className="flex flex-row">
                         <span className="font-[700] text-[16px]">
-                          {userData?.department == ""
+                          {userData?.department === null
                             ? "Not set yet"
                             : userData?.department}
                         </span>
@@ -133,7 +133,7 @@ function Profile({ params }: pageProps) {
                       </div>
                       <div className="flex flex-row">
                         <span className="font-[700] text-[16px]">
-                          {userData?.position == ""
+                          {userData?.position === null
                             ? "Not set yet"
                             : userData?.position}
                         </span>
@@ -147,7 +147,7 @@ function Profile({ params }: pageProps) {
                       </div>
                       <div className="flex flex-row">
                         <span className="font-[700] text-[16px]">
-                          {userData?.major == ""
+                          {userData?.major === null
                             ? "Not set yet"
                             : userData?.major}
                         </span>

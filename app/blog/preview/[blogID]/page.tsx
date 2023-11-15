@@ -181,7 +181,9 @@ function DetailBLogList() {
                 <div
                   className="w-full text-justify"
                   dangerouslySetInnerHTML={{
-                    __html: blogData ? blogData.content : "No content",
+                    __html: blogData?.content!
+                      ? blogData.content
+                      : "No content",
                   }}
                 ></div>
               </div>
