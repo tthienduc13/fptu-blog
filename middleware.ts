@@ -27,7 +27,7 @@ function directToUnauthenticated(
       url.includes("/notification") ||
       url.includes("/profile") ||
       url.includes("/update-info") ||
-      url === "https://fptu-blog.vercel.app/")
+      url === "http://localhost:3000/")
   );
 }
 
@@ -49,19 +49,15 @@ export default function middleware(
   let url = req.url;
 
   if (directToUnauthenticated(verify, url)) {
-    return NextResponse.redirect("https://fptu-blog.vercel.app/auth/sign-in");
+    return NextResponse.redirect("http://localhost:3000/auth/sign-in");
   }
 
-  if (
-    verify &&
-    !isUserUpdated(verify) &&
-    url === "https://fptu-blog.vercel.app/"
-  ) {
-    return NextResponse.redirect("https://fptu-blog.vercel.app/update-info");
+  if (verify && !isUserUpdated(verify) && url === "http://localhost:3000/") {
+    return NextResponse.redirect("http://localhost:3000/update-info");
   }
 
   if (verify && url.includes("/auth")) {
-    return NextResponse.redirect("https://fptu-blog.vercel.app/");
+    return NextResponse.redirect("http://localhost:3000/");
   }
 
   return NextResponse.next();

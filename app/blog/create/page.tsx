@@ -16,13 +16,14 @@ import ModifyButton from "@component/ModifyButton";
 import { Skeleton } from "@mui/material";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
+import paperAirline from "@icons/components/Button/paper-airplane.svg";
 
 function EditBlog() {
   const isCollapsed = useSelector((state: RootState) => state.app.isCollapsed);
   const [blogTitle, setBlogTitle] = useState<string>("");
   const [blogCategory, setBlogCategory] = useState<string>("");
   const [blogCategoryId, setBlogCategoryId] = useState<string>("");
-
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [blogTags, setBlogTags] = useState<string[]>([]);
   const [blogTagsId, setBlogTagsId] = useState<string[]>([]);
   const [importedImage, setImportedImage] = useState<File | null>(null);
@@ -39,16 +40,11 @@ function EditBlog() {
       toast.error("Please select a blog category");
       return;
     }
-
-    if (!htmlString.trim()) {
-      toast.error("Please enter the blog content");
-      return;
-    }
-
     const access_token = getCookie("accessToken");
     const user_id = getCookie("user_id");
     try {
       if (access_token && user_id) {
+        setIsLoading(true);
         const newBlog = {
           user_id: user_id,
           blogTitle: blogTitle,
@@ -68,10 +64,12 @@ function EditBlog() {
         setTimeout(() => {
           router.push("/blog/posted-blog/list/1");
         }, 500);
+        setIsLoading(false);
       }
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.log(err);
+        setIsLoading(false);
       }
     }
   };
@@ -165,16 +163,28 @@ function EditBlog() {
 
         <div className="mt-[12px] flex flex-row justify-between">
           <div>
-            <ModifyButton
-              textContent={"Publish Blog"}
-              icon={"public"}
-              iconPosition={"left"}
-              backgroundColor={"bg-blue-700"}
-              method={() => {
-                handleCreateBlog();
-              }}
-              tailwind={"text-white"}
-            ></ModifyButton>
+            <button
+              className={`rounded-[8px]  disabled:opacity-80 px-[12px] py-[8px] text-[12px] bg-blue-700 text-white`}
+              onClick={handleCreateBlog}
+              disabled={isLoading}
+            >
+              <div
+                className="flex gap-[8px]"
+                // style={{
+                //   flexDirection: "left",
+                // }}
+              >
+                <Image
+                  src={paperAirline}
+                  alt="public"
+                  style={{
+                    width: "16px",
+                    height: "17px",
+                  }}
+                />
+                <p>Publish blog</p>
+              </div>
+            </button>
           </div>
         </div>
       </main>
